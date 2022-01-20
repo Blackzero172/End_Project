@@ -46,4 +46,4 @@ const putUser = async (req, res) => {
 		res.status(500).send(e.message);
 	}
 };
-module.exports = { getUsers, getUser, postUser };
+module.exports = { getUsers, getUser, postUser, getReact };
