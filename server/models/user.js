@@ -6,11 +6,6 @@ const User = mongoose.model("User", {
 		type: String,
 		required: true,
 	},
-	Id: {
-		type: Number,
-		required: true,
-		unique: true,
-	},
 	cash: {
 		type: Number,
 		default: 0,

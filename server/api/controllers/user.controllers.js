@@ -6,12 +6,13 @@ app.use(express.json());
 const getUsers = async (req, res) => {
 	try {
 		const users = await getData();
-		if (!user[0]) {
+		if (!users[0]) {
 			return res.status(404).send("No users found");
 		}
 		res.send(users);
 	} catch (e) {
 		res.status(500).send(e.message);
+		console.log(e);
 	}
 };
 const getUser = async (req, res) => {

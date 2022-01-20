@@ -17,7 +17,8 @@ const addUser = async (user) => {
 	return newUser;
 };
 const editUser = async (id, newData) => {
-	const user = await User.findByIdAndUpdate(id, newData, { new: true, runValidators: true });
+	let user = await User.findByIdAndUpdate(id, newData, { new: true, runValidators: true });
+
 	return user;
 };
 module.exports = { getData, addUser, editUser, getReact };
