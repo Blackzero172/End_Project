@@ -1,11 +1,8 @@
 const express = require("express");
-const path = require("path");
 const { getData, addUser, editUser } = require("./utils/utils");
 const app = express();
 app.use(express.json());
-const getReact = async (req, res) => {
-	res.sendFile(path.join(__dirname, "../../client/public/index.html"));
-};
+
 const getUsers = async (req, res) => {
 	try {
 		const users = await getData();
@@ -46,4 +43,4 @@ const putUser = async (req, res) => {
 		res.status(500).send(e.message);
 	}
 };
-module.exports = { getUsers, getUser, postUser, getReact };
+module.exports = { getUsers, getUser, postUser, putUser };

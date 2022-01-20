@@ -1,5 +1,8 @@
 const User = require("../../../models/user");
-
+const path = require("path");
+const getReact = () => {
+	return path.resolve(__dirname, "../../../../client/build");
+};
 const getData = async (id) => {
 	let users;
 	if (!id) {
@@ -17,4 +20,4 @@ const editUser = async (id, newData) => {
 	const user = await User.findByIdAndUpdate(id, newData, { new: true, runValidators: true });
 	return user;
 };
-module.exports = { getData, addUser, editUser };
+module.exports = { getData, addUser, editUser, getReact };
