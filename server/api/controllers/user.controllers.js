@@ -1,5 +1,5 @@
 const express = require("express");
-const { getData, addUser, editUser } = require("./utils/utils");
+const { getData, addUser, editUser, withdraw, deposit, setCredit, transfer } = require("./utils/utils");
 const app = express();
 app.use(express.json());
 
@@ -18,7 +18,7 @@ const getUsers = async (req, res) => {
 const getUser = async (req, res) => {
 	try {
 		const user = await getData(req.params.id);
-		if (!user[0]) {
+		if (!user) {
 			return res.status(404).send("No users found");
 		}
 		res.send(user);
@@ -32,16 +32,41 @@ const postUser = async (req, res) => {
 		await user.save();
 		res.status(201).send(user);
 	} catch (e) {
-		if (e.message.includes("E11000")) res.status(400).send("User already exists");
-		res.status(500).send(e.message);
+		if (e.message.includes("E11000")) return res.status(400).send("User already exists");
+		res.status(500).send(e);
 	}
 };
-const putUser = async (req, res) => {
+const doAction = async (req, res) => {
+	const { id, action } = req.params;
+	const amount = req.body.amount;
+	let actionFunction;
+	switch (action) {
+		case "withdraw":
+			actionFunction = withdraw;
+			break;
+		case "deposit":
+			actionFunction = deposit;
+			break;
+		case "transfer":
+			actionFunction = transfer;
+			break;
+		case "setCredit":
+			actionFunction = setCredit;
+			break;
+	}
+
 	try {
-		const updatedUser = await editUser(req.params.id, req.body);
-		res.send(updatedUser);
+		const targetID = req.body.targetID;
+		let users = [];
+		if (!targetID) {
+			users = await actionFunction(id, amount);
+		} else {
+			users = await actionFunction(id, targetID, amount);
+		}
+		res.send(users);
 	} catch (e) {
+		if (e.message.includes("validation") || e.message.includes("Not")) return res.status(400).send(e.message);
 		res.status(500).send(e.message);
 	}
 };
-module.exports = { getUsers, getUser, postUser, putUser };
+module.exports = { getUsers, getUser, postUser, doAction };

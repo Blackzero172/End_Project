@@ -8,7 +8,7 @@ const getData = async (id) => {
 	if (!id) {
 		users = await User.find({});
 	} else {
-		users = await User.find({ Id: id });
+		users = await User.findById(id);
 	}
 	return users;
 };
@@ -17,8 +17,49 @@ const addUser = async (user) => {
 	return newUser;
 };
 const editUser = async (id, newData) => {
-	let user = await User.findByIdAndUpdate(id, newData, { new: true, runValidators: true });
-
+	const user = await User.findByIdAndUpdate(id, newData, { new: true, runValidators: true });
 	return user;
 };
-module.exports = { getData, addUser, editUser, getReact };
+const withdraw = async (id, amountToWithdraw) => {
+	const user = await User.findById(id);
+	user.cash -= amountToWithdraw;
+	await user.save();
+	return user;
+};
+const deposit = async (id, amountToDeposit) => {
+	const user = await User.findById(id);
+	user.cash += amountToDeposit;
+	await user.save();
+	return user;
+};
+const setCredit = async (id, newCredit) => {
+	const user = await User.findById(id);
+	user.credit = newCredit;
+	await user.save();
+	return user;
+};
+const checkCashAndCredit = ({ cash, credit }, amount) => {
+	if (cash + credit < amount) {
+		throw new Error("Not enough cash");
+	} else if (cash < amount) {
+		amount -= cash;
+		cash = 0;
+		credit -= amount;
+	} else {
+		cash -= amount;
+	}
+	return { cash, credit };
+};
+const transfer = async (id, targetID, amountToTransfer) => {
+	const user = await User.findById(id);
+	const validate = checkCashAndCredit(user, amountToTransfer);
+	user.cash = validate.cash;
+	user.credit = validate.credit;
+	await user.save();
+	const targetUser = await User.findById(targetID);
+	targetUser.cash += amountToTransfer;
+	await targetUser.save();
+	return [user, targetUser];
+};
+
+module.exports = { getData, addUser, editUser, getReact, withdraw, deposit, setCredit, transfer };
