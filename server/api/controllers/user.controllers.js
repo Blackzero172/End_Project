@@ -75,6 +75,9 @@ const doAction = async (req, res) => {
 		} else {
 			users = await actionFunction(id, targetID, amount);
 		}
+		if (!users[0]) {
+			return res.status(404).send("User not found");
+		}
 		res.send(users);
 	} catch (e) {
 		if (e.message.includes("validation") || e.message.includes("Not")) return res.status(400).send(e.message);
