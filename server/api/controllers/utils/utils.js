@@ -61,5 +61,8 @@ const transfer = async (id, targetID, amountToTransfer) => {
 	await targetUser.save();
 	return [user, targetUser];
 };
-
-module.exports = { getData, addUser, editUser, getReact, withdraw, deposit, setCredit, transfer };
+const deleteUser = async (id) => {
+	const user = await User.findByIdAndDelete(id);
+	return user;
+};
+module.exports = { getData, addUser, editUser, getReact, withdraw, deposit, setCredit, transfer, deleteUser };

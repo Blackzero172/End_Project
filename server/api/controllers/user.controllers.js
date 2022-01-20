@@ -1,5 +1,5 @@
 const express = require("express");
-const { getData, addUser, editUser, withdraw, deposit, setCredit, transfer } = require("./utils/utils");
+const { getData, addUser, deleteUser, withdraw, deposit, setCredit, transfer } = require("./utils/utils");
 const app = express();
 app.use(express.json());
 
@@ -36,6 +36,18 @@ const postUser = async (req, res) => {
 		res.status(500).send(e);
 	}
 };
+const removeUser = async (req, res) => {
+	const { id } = req.params;
+	try {
+		const user = await deleteUser(id);
+		if (!user) {
+			return res.status(404).send("No users found");
+		}
+		res.send(user);
+	} catch (e) {
+		res.status(500).send(e.message);
+	}
+};
 const doAction = async (req, res) => {
 	const { id, action } = req.params;
 	const amount = req.body.amount;
@@ -69,4 +81,4 @@ const doAction = async (req, res) => {
 		res.status(500).send(e.message);
 	}
 };
-module.exports = { getUsers, getUser, postUser, doAction };
+module.exports = { getUsers, getUser, postUser, doAction, removeUser };
