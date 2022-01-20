@@ -5,12 +5,12 @@
 		"express": "^4.17.2",
 		"mongo": "^0.1.0",
 		"mongoose": "^6.1.7",
+		"path": "^0.12.7",
 		"validator": "^13.7.0"
 	},
 	"name": "bankapi-fullstack",
 	"version": "1.0.0",
 	"main": "index.js",
-	"devDependencies": {},
 	"scripts": {
 		"start": "node server/server.js",
 		"server": "nodemon server/server.js",
