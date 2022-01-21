@@ -1,10 +1,10 @@
 import React from "react";
 import "./CustomButton.styles.css";
-const CustomButton = ({ text, children, onClick, userid, sortType, label }) => {
+const CustomButton = ({ text, children, onClick, userid, label }) => {
 	return (
 		<div>
 			<label>{label}</label>
-			<button type="button" onClick={onClick} userid={userid} sortType={sortType}>
+			<button type="button" onClick={onClick} userid={userid}>
 				{children}
 				{text}
 			</button>
