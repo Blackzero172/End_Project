@@ -1,0 +1,23 @@
+.user {
+	margin: auto;
+	border-radius: 0.5rem;
+	background: #eee;
+	width: 100%;
+}
+.user:hover {
+	background: #ddd;
+}
+.user:active {
+	background: #aaa;
+}
+.user * {
+	pointer-events: none;
+}
+.user p {
+	padding-left: 1rem;
+	font-size: 1.1rem;
+	margin-bottom: 0.25rem;
+}
+.user.selected {
+	background: #bbb;
+}

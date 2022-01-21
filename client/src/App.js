@@ -1,6 +1,7 @@
 import "./App.css";
 import CustomInput from "./components/CustomInput/CustomInput.components";
 import CustomButton from "./components/CustomButton/CustomButton.components";
+import UserCard from "./components/UserCard/UserCard.components";
 import Spinner from "./components/Spinner/Spinner.components";
 import { useEffect, useRef, useState } from "react";
 import { getUsers, sortArray, capFirstLetter, selectItem } from "./utils/utils";
@@ -54,6 +55,7 @@ function App() {
 			data.filter((user) => user.name.toLowerCase().includes(name)),
 			"cash"
 		);
+		if (!filteredUsers.includes(selectedUser)) selectUser({});
 		filterData(filteredUsers);
 	};
 	const changeSort = () => {
@@ -70,7 +72,7 @@ function App() {
 	};
 	const selectNewUser = (e) => {
 		const id = selectItem(usersRef, e.target.getAttribute("userid"));
-		console.log(data.find((user) => user.id === id));
+		selectUser(data.find((user) => user._id === id));
 	};
 
 	return (
@@ -88,13 +90,7 @@ function App() {
 				</div>
 				<div className="users-container" ref={usersRef}>
 					{filteredData.map((user) => {
-						return (
-							<div key={user._id} className="user" userid={user._id} onClick={selectNewUser}>
-								<p>Name: {user.name}</p>
-								<p>Cash: {user.cash}</p>
-								<p>Credit: {user.credit}</p>
-							</div>
-						);
+						return <UserCard key={user._id} userid={user._id} onClick={selectNewUser} user={user} />;
 					})}
 				</div>
 			</div>
