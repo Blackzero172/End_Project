@@ -87,7 +87,10 @@ function App() {
 							sortingTypes[currentSorting].isAsc ? "Lowest to Highest" : "Highest to Lowest"
 						}`}
 						label="Sorting Type"
-						onActivate={changeSort}
+						onActivate={(e) => {
+							e.stopPropagation();
+							changeSort();
+						}}
 					/>
 				</div>
 				<div className="users-container" ref={usersRef}>

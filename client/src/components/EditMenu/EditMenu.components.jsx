@@ -1,22 +1,14 @@
 import "./EditMenu.styles.css";
+import Property from "../Property/Property.components";
 const EditMenu = ({ user }) => {
 	if (!user.name) {
 		return <div className="right-menu"></div>;
 	} else {
 		return (
 			<div className="right-menu">
-				<div className="property">
-					<label>Name:</label>
-					<p>{user.name}</p>
-				</div>
-				<div className="property">
-					<label>Cash:</label>
-					<p>{user.cash}</p>
-				</div>
-				<div className="property">
-					<label>Credit:</label>
-					<p>{user.credit}</p>
-				</div>
+				<Property label="Name" text={user.name} />
+				<Property label="Cash" text={user.cash} />
+				<Property label="Credit" text={user.credit} />
 			</div>
 		);
 	}
