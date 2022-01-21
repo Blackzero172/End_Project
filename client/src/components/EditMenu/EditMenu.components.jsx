@@ -2,9 +2,13 @@ import "./EditMenu.styles.css";
 import Property from "../Property/Property.components";
 import CustomButton from "../CustomButton/CustomButton.components";
 import ActionMenu from "../Popup/ActionMenu.components";
-const EditMenu = ({ user, setAction, currentAction }) => {
+const EditMenu = ({ user, setAction, currentAction, data }) => {
 	if (!user.name) {
-		return <div className="right-menu"></div>;
+		return (
+			<div className="right-menu">
+				<CustomButton text="Add User" type="button" />
+			</div>
+		);
 	} else {
 		return (
 			<div className="right-menu">
@@ -20,7 +24,7 @@ const EditMenu = ({ user, setAction, currentAction }) => {
 					<CustomButton text="Set new credit" type="button" action="credit" onClick={setAction} />
 					<CustomButton text="Delete" type="button" action="delete" onClick={setAction} />
 				</div>
-				<ActionMenu action={currentAction} />
+				<ActionMenu action={currentAction} data={data} />
 			</div>
 		);
 	}

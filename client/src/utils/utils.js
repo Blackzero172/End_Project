@@ -25,4 +25,8 @@ const selectItem = (ref, id) => {
 	});
 	return correctId;
 };
-export { getUsers, sortArray, capFirstLetter, selectItem };
+const searchArray = (arr, query) => {
+	const newArr = arr.filter((item) => item.name.includes(query));
+	return newArr;
+};
+export { getUsers, sortArray, capFirstLetter, selectItem, searchArray };

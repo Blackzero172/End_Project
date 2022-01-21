@@ -1,14 +1,3 @@
-.input label {
-	display: inline-block;
-	line-height: 1;
-	margin: 0 0.14rem;
-	background-color: #e8e8e8;
-	padding: 0.58rem 0.83rem;
-	color: rgba(0, 0, 0, 0.6);
-	text-transform: none;
-	font-weight: bold;
-	border-radius: 0.28rem;
-}
 input {
 	border: #eee 1px solid;
 	border-radius: 0.3rem;
@@ -19,4 +8,14 @@ input {
 
 input:focus {
 	outline: none;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+	-moz-appearance: textfield;
 }

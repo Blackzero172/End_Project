@@ -5,7 +5,17 @@
 	box-sizing: border-box;
 	font-family: "Outfit", Courier, monospace;
 }
-
+label {
+	display: inline-block;
+	line-height: 1;
+	margin: 0 0.14rem;
+	background-color: #e8e8e8;
+	padding: 0.58rem 0.83rem;
+	color: rgba(0, 0, 0, 0.6);
+	text-transform: none;
+	font-weight: bold;
+	border-radius: 0.28rem;
+}
 .app {
 	display: flex;
 }

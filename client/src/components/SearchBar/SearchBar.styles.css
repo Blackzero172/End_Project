@@ -1,0 +1,21 @@
+.search-bar {
+	position: relative;
+}
+.result-container {
+	position: absolute;
+	top: 100%;
+	width: 100%;
+	background: #eee;
+	padding: 0.25rem;
+	overflow-y: scroll;
+	max-height: 30vh;
+}
+.result-container .button {
+	display: block;
+	width: 100%;
+	margin: 0.5rem 0;
+}
+.result-container .button button {
+	width: 100%;
+	text-align: left;
+}

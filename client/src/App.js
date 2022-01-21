@@ -5,7 +5,7 @@ import UserCard from "./components/UserCard/UserCard.components";
 import EditMenu from "./components/EditMenu/EditMenu.components";
 import Spinner from "./components/Spinner/Spinner.components";
 import { useEffect, useRef, useState } from "react";
-import { getUsers, sortArray, capFirstLetter, selectItem } from "./utils/utils";
+import { getUsers, sortArray, capFirstLetter, selectItem, searchArray } from "./utils/utils";
 function App() {
 	const [data, setData] = useState([]);
 	const [filteredData, filterData] = useState([]);
@@ -52,11 +52,7 @@ function App() {
 	}, []);
 	const searchUsers = (e) => {
 		const name = e.target.value.toLowerCase();
-		const filteredUsers = sortArray(
-			false,
-			data.filter((user) => user.name.toLowerCase().includes(name)),
-			"cash"
-		);
+		const filteredUsers = sortArray(false, searchArray(data, name), "cash");
 		if (!filteredUsers.includes(selectedUser)) selectUser({});
 		filterData(filteredUsers);
 	};
@@ -73,14 +69,14 @@ function App() {
 		filterData(newArr);
 	};
 	const selectNewUser = (e) => {
+		updateAction("");
 		const id = selectItem(usersRef, e.target.getAttribute("userid"));
 		if (id) selectUser(data.find((user) => user._id === id));
 		else selectUser({});
 	};
 	const updateAction = (e) => {
-		console.log(e.target);
-		setAction(e.target.getAttribute("action"));
-		console.log(e.target.getAttribute("action"));
+		if (e !== "") setAction(e.target.getAttribute("action"));
+		else setAction(e);
 	};
 	return (
 		<div className="app">
@@ -105,7 +101,7 @@ function App() {
 					})}
 				</div>
 			</div>
-			<EditMenu user={selectedUser} setAction={updateAction} currentAction={currentAction} />
+			<EditMenu user={selectedUser} setAction={updateAction} currentAction={currentAction} data={data} />
 			<Spinner spinnerRef={spinnerRef} />
 		</div>
 	);

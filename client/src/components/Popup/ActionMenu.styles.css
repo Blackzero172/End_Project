@@ -5,10 +5,12 @@
 	align-items: center;
 	margin-top: 2rem;
 }
-.action-menu .input input {
+.action-menu .input input,
+.action-menu .search-bar input {
 	display: inline-block;
 }
-.action-menu .input label {
+.action-menu .input label,
+.action-menu .search-bar label {
 	margin: 0.5rem;
 }
 .action-menu .button {
