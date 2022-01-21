@@ -1,7 +1,8 @@
 import "./EditMenu.styles.css";
 import Property from "../Property/Property.components";
 import CustomButton from "../CustomButton/CustomButton.components";
-const EditMenu = ({ user }) => {
+import ActionMenu from "../Popup/ActionMenu.components";
+const EditMenu = ({ user, setAction, currentAction }) => {
 	if (!user.name) {
 		return <div className="right-menu"></div>;
 	} else {
@@ -13,12 +14,13 @@ const EditMenu = ({ user }) => {
 					<Property label="Credit" text={user.credit} />
 				</div>
 				<div className="buttons-container">
-					<CustomButton text="Withdraw" type="button" />
-					<CustomButton text="Deposit" type="button" />
-					<CustomButton text="Transfer" type="button" />
-					<CustomButton text="Set new credit" type="button" />
-					<CustomButton text="Delete" type="button" />
+					<CustomButton text="Withdraw" type="button" action="withdraw" onClick={setAction} />
+					<CustomButton text="Deposit" type="button" action="deposit" onClick={setAction} />
+					<CustomButton text="Transfer" type="button" action="transfer" onClick={setAction} />
+					<CustomButton text="Set new credit" type="button" action="credit" onClick={setAction} />
+					<CustomButton text="Delete" type="button" action="delete" onClick={setAction} />
 				</div>
+				<ActionMenu action={currentAction} />
 			</div>
 		);
 	}

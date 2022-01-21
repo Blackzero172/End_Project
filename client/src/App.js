@@ -11,6 +11,7 @@ function App() {
 	const [filteredData, filterData] = useState([]);
 	const [selectedUser, selectUser] = useState({});
 	const [currentSorting, setSort] = useState(0);
+	const [currentAction, setAction] = useState("");
 	const spinnerRef = useRef();
 	const usersRef = useRef();
 	const sortingTypes = [
@@ -76,7 +77,11 @@ function App() {
 		if (id) selectUser(data.find((user) => user._id === id));
 		else selectUser({});
 	};
-
+	const updateAction = (e) => {
+		console.log(e.target);
+		setAction(e.target.getAttribute("action"));
+		console.log(e.target.getAttribute("action"));
+	};
 	return (
 		<div className="app">
 			<div className="left-menu" onClick={selectNewUser}>
@@ -87,7 +92,7 @@ function App() {
 							sortingTypes[currentSorting].isAsc ? "Lowest to Highest" : "Highest to Lowest"
 						}`}
 						label="Sorting Type"
-						onActivate={(e) => {
+						onClick={(e) => {
 							e.stopPropagation();
 							changeSort();
 						}}
@@ -100,7 +105,7 @@ function App() {
 					})}
 				</div>
 			</div>
-			<EditMenu user={selectedUser} />
+			<EditMenu user={selectedUser} setAction={updateAction} currentAction={currentAction} />
 			<Spinner spinnerRef={spinnerRef} />
 		</div>
 	);
