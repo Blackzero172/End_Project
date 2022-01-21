@@ -5,8 +5,24 @@ const getUsers = async () => {
 	return users;
 };
 const sortArray = (isAsc, arr, prop) => {
-	if (isAsc) arr.sort((a, b) => a[prop] - b[prop]);
-	else arr.sort((a, b) => b[prop] - a[prop]);
-	return arr;
+	const arrCopy = [...arr];
+	if (!isAsc) arrCopy.sort((a, b) => b[prop] - a[prop]);
+	else arrCopy.sort((a, b) => a[prop] - b[prop]);
+	return arrCopy;
 };
-export { getUsers, sortArray };
+const capFirstLetter = (string) => {
+	return string[0].toUpperCase() + string.substring(1);
+};
+const selectItem = (ref, id) => {
+	const refChildren = Array.from(ref.current.children);
+	let correctId;
+	refChildren.forEach((child) => {
+		if (child.getAttribute("userid") !== id) child.classList.remove("selected");
+		else {
+			correctId = child.getAttribute("userid");
+			child.classList.add("selected");
+		}
+	});
+	return correctId;
+};
+export { getUsers, sortArray, capFirstLetter, selectItem };

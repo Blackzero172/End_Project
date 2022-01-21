@@ -1,27 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap");
 * {
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
-	font-family: "Courier New", Courier, monospace;
+	font-family: "Outfit", Courier, monospace;
+}
+.app {
+	display: flex;
+	height: 100vh;
+}
+.left-menu {
+	background: #fefefe;
+	min-width: 375px;
+	width: 35%;
+	height: 100%;
+	border-right: 1px solid lightgray;
+}
+.right-menu {
+	width: 10%;
+	height: 100%;
 }
 .input-container {
 	display: flex;
-	justify-content: center;
-	margin-top: 2%;
+	margin-left: 1rem;
+	padding-top: 1rem;
 }
 .input-container input,
 .input-container button {
 	margin: 1rem;
 }
+
 .users-container {
-	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-	width: 100%;
+	grid-template-columns: 1fr;
+	width: 90%;
+	margin-left: 1rem;
 	display: grid;
 	justify-content: center;
-	/* padding: 0 7rem; */
+
 	gap: 0.5rem;
-	border: red 3px solid;
 }
-.users-container div {
+.user {
 	margin: auto;
+	border-radius: 0.5rem;
+	background: #eee;
+	width: 100%;
+}
+.user:hover {
+	background: #ddd;
+}
+.user:active {
+	background: #aaa;
+}
+.user * {
+	pointer-events: none;
+}
+.user p {
+	padding-left: 1rem;
+	font-size: 1.1rem;
+	margin-bottom: 0.25rem;
+}
+.user.selected {
+	background: #bbb;
 }
