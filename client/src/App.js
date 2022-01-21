@@ -2,6 +2,7 @@ import "./App.css";
 import CustomInput from "./components/CustomInput/CustomInput.components";
 import CustomButton from "./components/CustomButton/CustomButton.components";
 import UserCard from "./components/UserCard/UserCard.components";
+import EditMenu from "./components/EditMenu/EditMenu.components";
 import Spinner from "./components/Spinner/Spinner.components";
 import { useEffect, useRef, useState } from "react";
 import { getUsers, sortArray, capFirstLetter, selectItem } from "./utils/utils";
@@ -72,12 +73,13 @@ function App() {
 	};
 	const selectNewUser = (e) => {
 		const id = selectItem(usersRef, e.target.getAttribute("userid"));
-		selectUser(data.find((user) => user._id === id));
+		if (id) selectUser(data.find((user) => user._id === id));
+		else selectUser({});
 	};
 
 	return (
 		<div className="app">
-			<div className="left-menu">
+			<div className="left-menu" onClick={selectNewUser}>
 				<div className="input-container">
 					<CustomInput placeHolder="Enter username..." label="Name" onChange={searchUsers} />
 					<CustomButton
@@ -85,7 +87,7 @@ function App() {
 							sortingTypes[currentSorting].isAsc ? "Lowest to Highest" : "Highest to Lowest"
 						}`}
 						label="Sorting Type"
-						onClick={changeSort}
+						onActivate={changeSort}
 					/>
 				</div>
 				<div className="users-container" ref={usersRef}>
@@ -94,7 +96,7 @@ function App() {
 					})}
 				</div>
 			</div>
-			<div className="right-menu"></div>
+			<EditMenu user={selectedUser} />
 			<Spinner spinnerRef={spinnerRef} />
 		</div>
 	);

@@ -4,9 +4,9 @@ button {
 	display: block;
 }
 button:hover {
-	color: blue;
+	color: #999;
 	cursor: pointer;
 }
 button:active {
-	color: darkblue;
+	color: #333;
 }

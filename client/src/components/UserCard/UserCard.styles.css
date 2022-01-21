@@ -10,14 +10,17 @@
 .user:active {
 	background: #aaa;
 }
-.user * {
-	pointer-events: none;
-}
+
 .user p {
 	padding-left: 1rem;
 	font-size: 1.1rem;
 	margin-bottom: 0.25rem;
+	pointer-events: none;
 }
 .user.selected {
 	background: #bbb;
+}
+.user label {
+	background: inherit;
+	pointer-events: none;
 }
