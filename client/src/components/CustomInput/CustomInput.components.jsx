@@ -2,7 +2,7 @@ import React from "react";
 import "./CustomInput.styles.css";
 const CustomInput = ({ type, onChange, placeHolder, label, name }) => {
 	return (
-		<div>
+		<div className="input">
 			<label htmlFor={name}>{label}</label>
 			<input
 				type={type}

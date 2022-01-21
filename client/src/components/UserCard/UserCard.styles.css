@@ -23,4 +23,12 @@
 .user label {
 	background: inherit;
 	pointer-events: none;
+	display: inline-block;
+	line-height: 1;
+	margin: 0 0.14rem;
+	padding: 0.58rem 0.83rem;
+	color: rgba(0, 0, 0, 0.6);
+	text-transform: none;
+	font-weight: bold;
+	border-radius: 0.28rem;
 }

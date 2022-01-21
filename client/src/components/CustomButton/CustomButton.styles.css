@@ -1,12 +1,36 @@
-button {
+.link button {
 	background: transparent;
 	border: none;
 	display: block;
 }
-button:hover {
+.link button:hover {
 	color: #999;
 	cursor: pointer;
 }
-button:active {
+.link button:active {
 	color: #333;
+}
+.link label {
+	display: inline-block;
+	line-height: 1;
+	margin: 0 0.14rem;
+	background-color: #e8e8e8;
+	padding: 0.58rem 0.83rem;
+	color: rgba(0, 0, 0, 0.6);
+	text-transform: none;
+	font-weight: bold;
+	border-radius: 0.28rem;
+}
+.button button {
+	background: #8e8e8e;
+	color: #fff;
+	border: none;
+	padding: 0.5rem 1rem;
+	border-radius: 0.2rem;
+}
+.button button:hover {
+	background: #aeaeae;
+}
+.button button:active {
+	background: #999;
 }

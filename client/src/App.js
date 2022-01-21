@@ -91,6 +91,7 @@ function App() {
 							e.stopPropagation();
 							changeSort();
 						}}
+						type="link"
 					/>
 				</div>
 				<div className="users-container" ref={usersRef}>
