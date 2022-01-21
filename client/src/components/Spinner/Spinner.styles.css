@@ -1,0 +1,36 @@
+.spinner {
+	width: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	backdrop-filter: blur(2.5px);
+	transition: opacity 1s ease;
+	transition-property: opacity, visibility;
+	z-index: 2;
+	visibility: visible;
+	opacity: 1;
+}
+.full_circle {
+	width: 100px;
+	height: 100px;
+	border: solid 5px gray;
+	border-bottom-color: #2ff;
+	border-radius: 50%;
+	animation: Circle 0.75s forwards linear infinite;
+}
+@keyframes Circle {
+	from {
+		transform: rotateZ(0deg);
+	}
+	to {
+		transform: rotateZ(360deg);
+	}
+}
+.hidden {
+	visibility: hidden;
+	opacity: 0;
+}
