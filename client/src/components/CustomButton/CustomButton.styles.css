@@ -1,0 +1,11 @@
+button {
+	background: transparent;
+	border: none;
+}
+button:hover {
+	color: blue;
+	cursor: pointer;
+}
+button:active {
+	color: darkblue;
+}

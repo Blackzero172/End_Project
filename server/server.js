@@ -2,7 +2,6 @@ require("dotenv").config();
 const express = require("express");
 require("./db/mongoose");
 const path = require("path");
-
 const { getReact } = require("./api/controllers/utils/utils");
 const cors = require("cors");
 const User = require("./models/user");

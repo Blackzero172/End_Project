@@ -1,11 +1,14 @@
 import React from "react";
-
-const CustomButton = ({ text, children, onClick, userID, edit }) => {
+import "./CustomButton.styles.css";
+const CustomButton = ({ text, children, onClick, userid, sortType, label }) => {
 	return (
-		<button type="button" onClick={onClick} userID={userID} edit={edit}>
-			{children}
-			{text}
-		</button>
+		<div>
+			<label>{label}</label>
+			<button type="button" onClick={onClick} userid={userid} sortType={sortType}>
+				{children}
+				{text}
+			</button>
+		</div>
 	);
 };
 export default CustomButton;
