@@ -29,4 +29,10 @@ const searchArray = (arr, query) => {
 	const newArr = arr.filter((item) => item.name.includes(query));
 	return newArr;
 };
-export { getUsers, sortArray, capFirstLetter, selectItem, searchArray };
+const doAction = async (id, action, amount) => {
+	const res = await api.put(`/users/${action}/${id}`, {
+		amount,
+	});
+	console.log("Sending Put Request", res);
+};
+export { getUsers, sortArray, capFirstLetter, selectItem, searchArray, doAction };

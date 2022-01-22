@@ -62,7 +62,7 @@ const doAction = async (req, res) => {
 		case "transfer":
 			actionFunction = transfer;
 			break;
-		case "setCredit":
+		case "credit":
 			actionFunction = setCredit;
 			break;
 	}

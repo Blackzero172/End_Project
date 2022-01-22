@@ -2,7 +2,15 @@ import "./EditMenu.styles.css";
 import Property from "../Property/Property.components";
 import CustomButton from "../CustomButton/CustomButton.components";
 import ActionMenu from "../Popup/ActionMenu.components";
-const EditMenu = ({ user, setAction, currentAction, data }) => {
+import { doAction } from "../../utils/utils";
+
+const EditMenu = ({ user, setAction, currentAction, data, getData, setLoading }) => {
+	let Loading = false;
+	const onConfirm = async (amount) => {
+		setLoading();
+		await doAction(user._id, currentAction, amount);
+		getData();
+	};
 	if (!user.name) {
 		return (
 			<div className="right-menu">
@@ -24,7 +32,7 @@ const EditMenu = ({ user, setAction, currentAction, data }) => {
 					<CustomButton text="Set new credit" type="button" action="credit" onClick={setAction} />
 					<CustomButton text="Delete" type="button" action="delete" onClick={setAction} />
 				</div>
-				<ActionMenu action={currentAction} data={data} />
+				<ActionMenu action={currentAction} data={data} onConfirm={onConfirm} />
 			</div>
 		);
 	}

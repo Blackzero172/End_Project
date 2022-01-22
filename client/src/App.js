@@ -32,9 +32,13 @@ function App() {
 			isAsc: true,
 		},
 	];
+	const setLoading = () => {
+		spinnerRef.current.classList.remove("hidden");
+	};
 	const getData = async () => {
 		try {
 			const users = await getUsers();
+			console.log("Getting Data", users);
 			spinnerRef.current.classList.add("hidden");
 			setData(users.data);
 			const sortedArray = sortArray(
@@ -50,6 +54,9 @@ function App() {
 	useEffect(() => {
 		getData();
 	}, []);
+	useEffect(() => {
+		if (selectedUser) selectUser(selectedUser._id);
+	}, [data]);
 	const searchUsers = (e) => {
 		const name = e.target.value.toLowerCase();
 		const filteredUsers = sortArray(false, searchArray(data, name), "cash");
@@ -101,7 +108,14 @@ function App() {
 					})}
 				</div>
 			</div>
-			<EditMenu user={selectedUser} setAction={updateAction} currentAction={currentAction} data={data} />
+			<EditMenu
+				user={selectedUser}
+				setAction={updateAction}
+				currentAction={currentAction}
+				data={data}
+				getData={getData}
+				setLoading={setLoading}
+			/>
 			<Spinner spinnerRef={spinnerRef} />
 		</div>
 	);
