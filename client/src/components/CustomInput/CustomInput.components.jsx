@@ -1,9 +1,11 @@
 import React from "react";
 import "./CustomInput.styles.css";
-const CustomInput = ({ type, onChange, placeHolder, label, name, inputRef }) => {
+const CustomInput = ({ type, onChange, placeHolder, label, name, inputRef, required }) => {
 	return (
 		<div className="input">
-			<label htmlFor={name}>{label}</label>
+			<label htmlFor={name}>
+				{label} <span className="red">{required ? "*" : ""}</span>
+			</label>
 			<input
 				type={type}
 				onChange={onChange}

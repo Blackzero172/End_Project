@@ -10,6 +10,7 @@ function App() {
 	const [data, setData] = useState([]);
 	const [filteredData, filterData] = useState([]);
 	const [selectedUser, selectUser] = useState({});
+	const [targetUser, selectTargetUser] = useState({});
 	const [currentSorting, setSort] = useState(0);
 	const [currentAction, setAction] = useState("");
 	const spinnerRef = useRef();
@@ -39,7 +40,6 @@ function App() {
 	const getData = async () => {
 		try {
 			const users = await getUsers();
-			console.log("Getting Data", users);
 			setLoading(false);
 			setData(users.data);
 			const sortedArray = sortArray(
@@ -49,7 +49,7 @@ function App() {
 			);
 			filterData(sortedArray);
 		} catch (e) {
-			console.log(e.message);
+			console.log(e);
 		}
 	};
 	useEffect(() => {
@@ -78,13 +78,35 @@ function App() {
 	};
 	const selectNewUser = (e) => {
 		updateAction("");
-		const id = selectItem(usersRef, e.target.getAttribute("userid"));
-		if (id) selectUser(data.find((user) => user._id === id));
-		else selectUser({});
+		if (typeof e === "object") {
+			if (e.hasOwnProperty("target") && e.target.getAttribute("userid")) {
+				const id = selectItem(usersRef, e.target.getAttribute("userid"));
+				if (id) selectUser(data.find((user) => user._id === id));
+			} else {
+				console.log(e);
+				selectUser(e);
+				selectItem(usersRef, e._id);
+			}
+		} else {
+			selectItem(usersRef, "");
+			selectUser({});
+		}
 	};
 	const updateAction = (e) => {
-		if (e !== "") setAction(e.target.getAttribute("action"));
+		if (typeof e === "object") setAction(e.target.getAttribute("action"));
 		else setAction(e);
+		selectTargetUser({});
+	};
+	const setTargetUser = (e, ref) => {
+		const id = e.target.getAttribute("userid");
+		if (id) {
+			const user = data.find((user) => user._id === id);
+			selectTargetUser(user);
+			ref.current.value = user.name;
+		} else {
+			selectTargetUser({});
+			ref.current.value = "";
+		}
 	};
 	return (
 		<div className="app">
@@ -111,11 +133,14 @@ function App() {
 			</div>
 			<EditMenu
 				user={selectedUser}
+				setUser={selectNewUser}
+				targetUser={targetUser}
 				setAction={updateAction}
 				currentAction={currentAction}
 				data={data}
 				getData={getData}
 				setLoading={setLoading}
+				setTargetUser={setTargetUser}
 			/>
 			<Spinner spinnerRef={spinnerRef} />
 		</div>

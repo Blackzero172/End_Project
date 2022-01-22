@@ -17,6 +17,9 @@
 	padding: 0.5rem 1rem;
 	border-radius: 0.2rem;
 }
+.button p {
+	pointer-events: none;
+}
 .button button:hover {
 	background: #aeaeae;
 }

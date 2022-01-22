@@ -16,3 +16,6 @@
 .action-menu .button {
 	display: inline-block;
 }
+.action-menu .buttons-container {
+	margin: 0.5rem;
+}

@@ -26,13 +26,22 @@ const selectItem = (ref, id) => {
 	return correctId;
 };
 const searchArray = (arr, query) => {
-	const newArr = arr.filter((item) => item.name.includes(query));
+	const newArr = arr.filter((item) => item.name.toLowerCase().includes(query.toLowerCase()));
 	return newArr;
 };
-const doAction = async (id, action, amount) => {
-	const res = await api.put(`/users/${action}/${id}`, {
-		amount,
-	});
-	console.log("Sending Put Request", res);
+const doAction = async (id, action, body) => {
+	if (action !== "delete" && action !== "create") {
+		await api.put(`/users/${action}/${id}`, body);
+	} else if (action === "delete") {
+		await api.delete(`/users/${id}`);
+	} else {
+		const user = await api.post("/users", body);
+		return user;
+	}
 };
-export { getUsers, sortArray, capFirstLetter, selectItem, searchArray, doAction };
+const onNumberInputChange = (e) => {
+	const regex = /[\d]+/g;
+	const newArr = e.target.value.split("").filter((x) => x.match(regex));
+	e.target.value = newArr.join("");
+};
+export { getUsers, sortArray, capFirstLetter, selectItem, searchArray, doAction, onNumberInputChange };
