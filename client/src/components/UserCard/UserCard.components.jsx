@@ -5,9 +5,9 @@ const UserCard = ({ userid, onClick, user }) => {
 			<label>Name:</label>
 			<p>{user.name}</p>
 			<label>Cash:</label>
-			<p>{user.cash}</p>
+			<p>{user.cash}&#8362;</p>
 			<label>Credit:</label>
-			<p>{user.credit}</p>
+			<p>{user.credit}&#8362;</p>
 		</div>
 	);
 };

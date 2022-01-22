@@ -1,12 +1,11 @@
 import "./EditMenu.styles.css";
 import Property from "../Property/Property.components";
 import CustomButton from "../CustomButton/CustomButton.components";
-import ActionMenu from "../Popup/ActionMenu.components";
+import ActionMenu from "../ActionMenu/ActionMenu.components";
 import ConfirmCancelMenu from "../ConfirmCancelMenu/ConfirmCancelMenu.components";
 import { doAction, onNumberInputChange } from "../../utils/utils";
 import { useRef } from "react";
 import CustomInput from "../CustomInput/CustomInput.components";
-import { set } from "mongoose";
 let timerID;
 const EditMenu = ({
 	user,
