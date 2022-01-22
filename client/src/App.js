@@ -32,14 +32,15 @@ function App() {
 			isAsc: true,
 		},
 	];
-	const setLoading = () => {
-		spinnerRef.current.classList.remove("hidden");
+	const setLoading = (state) => {
+		if (state) spinnerRef.current.classList.remove("hidden");
+		else if (!state) spinnerRef.current.classList.add("hidden");
 	};
 	const getData = async () => {
 		try {
 			const users = await getUsers();
 			console.log("Getting Data", users);
-			spinnerRef.current.classList.add("hidden");
+			setLoading(false);
 			setData(users.data);
 			const sortedArray = sortArray(
 				sortingTypes[currentSorting].isAsc,
@@ -55,7 +56,7 @@ function App() {
 		getData();
 	}, []);
 	useEffect(() => {
-		if (selectedUser) selectUser(selectedUser._id);
+		if (selectedUser._id) selectUser(data.find((user) => user._id === selectedUser._id));
 	}, [data]);
 	const searchUsers = (e) => {
 		const name = e.target.value.toLowerCase();
