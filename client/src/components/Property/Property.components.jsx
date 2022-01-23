@@ -2,7 +2,10 @@ const Property = ({ label, text }) => {
 	return (
 		<div className="property">
 			<label>{label}</label>
-			<p>{text}</p>
+			<p>
+				{text}
+				{typeof text === "number" ? <>&#8362;</> : ""}
+			</p>
 		</div>
 	);
 };
