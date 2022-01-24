@@ -6,17 +6,31 @@ import EditMenu from "./components/EditMenu/EditMenu.components";
 import Spinner from "./components/Spinner/Spinner.components";
 import LoginPage from "./pages/LoginPage/LoginPage.pages";
 import { useEffect, useRef, useState } from "react";
-import { getAccounts, sortArray, capFirstLetter, selectItem, searchArray } from "./utils/utils";
+import {
+	getAccounts,
+	sortArray,
+	capFirstLetter,
+	selectItem,
+	searchArray,
+	loginRequest,
+	logoutRequest,
+	displayErrorMessage,
+} from "./utils/utils";
+let timerID;
 function App() {
 	const [data, setData] = useState([]);
 	const [filteredData, filterData] = useState([]);
 	const [selectedUser, selectUser] = useState({});
+	const [loggedInUser, loginUser] = useState({});
 	const [targetUser, selectTargetUser] = useState({});
 	const [currentSorting, setSort] = useState(0);
 	const [currentAction, setAction] = useState("");
-	const token = window.localStorage.getItem("token");
+	let token = window.localStorage.getItem("token");
+	const emailRef = useRef();
+	const passRef = useRef();
 	const spinnerRef = useRef();
 	const usersRef = useRef();
+	const loginErrorTextRef = useRef();
 	const sortingTypes = [
 		{
 			type: "cash",
@@ -42,8 +56,12 @@ function App() {
 	const getData = async () => {
 		try {
 			const accounts = await getAccounts();
+			if (!accounts) {
+				setData([]);
+			} else {
+				setData(accounts.data);
+			}
 			setLoading(false);
-			setData(accounts.data);
 			const sortedArray = sortArray(
 				sortingTypes[currentSorting].isAsc,
 				accounts.data,
@@ -54,7 +72,33 @@ function App() {
 			console.log(e);
 		}
 	};
-	const login = async () => {};
+	const login = async () => {
+		try {
+			let user;
+			if (!token) {
+				const [email, password] = [emailRef.current.value.toLowerCase(), passRef.current.value];
+				user = await loginRequest(email, password);
+				window.localStorage.setItem("token", user.data.genToken);
+			}
+			if (token) {
+				user = await loginRequest("", "", token);
+			}
+			loginUser(user.data.user);
+		} catch (e) {
+			timerID = displayErrorMessage(loginErrorTextRef, e.response.data, timerID);
+		}
+	};
+	const logout = async () => {
+		try {
+			const token = window.localStorage.getItem("token");
+			const res = await logoutRequest(token);
+			window.localStorage.removeItem("token");
+			loginUser({});
+			console.log(res);
+		} catch (e) {
+			console.error(e.response);
+		}
+	};
 	useEffect(() => {
 		if (token) login();
 	}, []);
@@ -111,9 +155,12 @@ function App() {
 			ref.current.value = "";
 		}
 	};
+	if (!loggedInUser.hasOwnProperty("name"))
+		return (
+			<LoginPage onClick={login} emailRef={emailRef} passRef={passRef} errorTextRef={loginErrorTextRef} />
+		);
 	return (
 		<div className="app">
-			<LoginPage />
 			<div className="left-menu" onClick={selectNewUser}>
 				<div className="input-container">
 					<CustomInput placeHolder="Enter username..." label="Name" onChange={searchUsers} />
@@ -145,6 +192,7 @@ function App() {
 				getData={getData}
 				setLoading={setLoading}
 				setTargetUser={setTargetUser}
+				logout={logout}
 			/>
 			<Spinner spinnerRef={spinnerRef} />
 		</div>

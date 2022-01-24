@@ -3,7 +3,7 @@ import Property from "../Property/Property.components";
 import CustomButton from "../CustomButton/CustomButton.components";
 import ActionMenu from "../ActionMenu/ActionMenu.components";
 import ConfirmCancelMenu from "../ConfirmCancelMenu/ConfirmCancelMenu.components";
-import { doAction, onNumberInputChange } from "../../utils/utils";
+import { doAction, onNumberInputChange, displayErrorMessage } from "../../utils/utils";
 import { useRef } from "react";
 import CustomInput from "../CustomInput/CustomInput.components";
 let timerID;
@@ -17,6 +17,7 @@ const EditMenu = ({
 	targetUser,
 	setTargetUser,
 	setUser,
+	logout,
 }) => {
 	let loading = false;
 	const errorTextRef = useRef();
@@ -27,7 +28,8 @@ const EditMenu = ({
 		if (!loading) {
 			try {
 				const id = user._id;
-				if (amount === "" || amount === 0) return displayErrorMessage("Amount can't be 0 or empty");
+				if (amount === "" || amount === 0)
+					return (timerID = displayErrorMessage(errorTextRef, "Amount can't be 0 or empty", timerID));
 				if (timerID) clearTimeout(timerID);
 				errorTextRef.current.innerText = "";
 				setLoading(true);
@@ -39,8 +41,13 @@ const EditMenu = ({
 			} catch (e) {
 				console.error(e);
 				if (e.response.data.includes("validation"))
-					displayErrorMessage("There's not enough money in the account");
-				if (e.response.status === 500) displayErrorMessage("Something went wrong,Please try again later.");
+					timerID = displayErrorMessage(errorTextRef, "There's not enough money in the account", timerID);
+				if (e.response.status === 500)
+					timerID = displayErrorMessage(
+						errorTextRef,
+						"Something went wrong,Please try again later.",
+						timerID
+					);
 			} finally {
 				loading = false;
 				setLoading(false);
@@ -70,22 +77,17 @@ const EditMenu = ({
 				setUser(user.data);
 			} catch (e) {
 				console.error(e.response.data);
-				displayErrorMessage(e.response.data);
+				timerID = displayErrorMessage(errorTextRef, e.response.data, timerID);
 			} finally {
 				loading = false;
 				setLoading(false);
 			}
 		} else {
 			console.error("Empty");
-			displayErrorMessage("Name Input is empty");
+			timerID = displayErrorMessage(errorTextRef, "Name Input is empty", timerID);
 		}
 	};
-	const displayErrorMessage = (message) => {
-		errorTextRef.current.innerText = message;
-		timerID = setTimeout(() => {
-			errorTextRef.current.innerText = "";
-		}, 3000);
-	};
+
 	const onAddClick = (e) => {
 		setAction("add");
 	};
@@ -93,11 +95,13 @@ const EditMenu = ({
 		return (
 			<div className="right-menu">
 				<CustomButton text="Add User" type="button" onClick={onAddClick} />
+				<CustomButton text="Logout" type="button" classes="logout-btn" onClick={logout} />
 			</div>
 		);
 	} else if (currentAction === "add") {
 		return (
 			<div className="add-menu">
+				<CustomButton text="Logout" type="button" classes="logout-btn" onClick={logout} />
 				<label style={{ fontSize: "2rem", marginBottom: "3rem" }}>New User</label>
 				<CustomInput label="Name" required placeHolder="Enter name..." inputRef={nameInputRef} />
 				<CustomInput
@@ -119,6 +123,8 @@ const EditMenu = ({
 	} else {
 		return (
 			<div className="right-menu">
+				<CustomButton text="Logout" type="button" classes="logout-btn" onClick={logout} />
+
 				<div className="labels">
 					<Property label="Name" text={user.name} />
 					<Property label="Cash" text={user.cash} />

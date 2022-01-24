@@ -1,6 +1,6 @@
 const Account = require("../../../models/account");
+const User = require("../../../models/user");
 const path = require("path");
-const { default: api } = require("../../../../client/src/api/api");
 const getReact = () => {
 	return path.resolve(__dirname, "../../../../client/build");
 };
@@ -21,13 +21,7 @@ const addUser = async (user) => {
 	const newUser = new User(user);
 	return newUser;
 };
-const loginRequest = async (email, password, token) => {
-	if (token) {
-		const user = await api.post("/users/login", { token });
-		return user;
-	} else {
-	}
-};
+
 const editAccount = async (id, newData) => {
 	const account = await Account.findByIdAndUpdate(id, newData, { new: true, runValidators: true });
 	return account;

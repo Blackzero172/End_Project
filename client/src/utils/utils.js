@@ -44,4 +44,38 @@ const onNumberInputChange = (e) => {
 	const newArr = e.target.value.split("").filter((x) => x.match(regex));
 	e.target.value = newArr.join("");
 };
-export { getAccounts, sortArray, capFirstLetter, selectItem, searchArray, doAction, onNumberInputChange };
+const loginRequest = async (email, password, token) => {
+	const user = await api.post("/users/login", { email, password, token });
+	return user;
+};
+const logoutRequest = async (token) => {
+	const res = await api.post(
+		"/users/logout",
+		{},
+		{
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+	);
+	return res;
+};
+const displayErrorMessage = (ref, message, id) => {
+	ref.current.innerText = message;
+	id = setTimeout(() => {
+		ref.current.innerText = "";
+	}, 3000);
+	return id;
+};
+export {
+	getAccounts,
+	sortArray,
+	capFirstLetter,
+	selectItem,
+	searchArray,
+	doAction,
+	onNumberInputChange,
+	loginRequest,
+	displayErrorMessage,
+	logoutRequest,
+};

@@ -61,3 +61,11 @@
 .add-menu .input input {
 	margin: 1rem;
 }
+.logout-btn {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+}
+.add-menu .logout-btn {
+	top: -1rem;
+}
