@@ -1,7 +1,7 @@
 import api from "../api/api";
 
-const getUsers = async () => {
-	const users = await api.get("/users");
+const getAccounts = async () => {
+	const users = await api.get("/accounts");
 	return users;
 };
 const sortArray = (isAsc, arr, prop) => {
@@ -44,4 +44,4 @@ const onNumberInputChange = (e) => {
 	const newArr = e.target.value.split("").filter((x) => x.match(regex));
 	e.target.value = newArr.join("");
 };
-export { getUsers, sortArray, capFirstLetter, selectItem, searchArray, doAction, onNumberInputChange };
+export { getAccounts, sortArray, capFirstLetter, selectItem, searchArray, doAction, onNumberInputChange };

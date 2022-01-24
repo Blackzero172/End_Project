@@ -4,8 +4,9 @@ import CustomButton from "./components/CustomButton/CustomButton.components";
 import UserCard from "./components/UserCard/UserCard.components";
 import EditMenu from "./components/EditMenu/EditMenu.components";
 import Spinner from "./components/Spinner/Spinner.components";
+import LoginPage from "./pages/LoginPage/LoginPage.pages";
 import { useEffect, useRef, useState } from "react";
-import { getUsers, sortArray, capFirstLetter, selectItem, searchArray } from "./utils/utils";
+import { getAccounts, sortArray, capFirstLetter, selectItem, searchArray } from "./utils/utils";
 function App() {
 	const [data, setData] = useState([]);
 	const [filteredData, filterData] = useState([]);
@@ -13,6 +14,7 @@ function App() {
 	const [targetUser, selectTargetUser] = useState({});
 	const [currentSorting, setSort] = useState(0);
 	const [currentAction, setAction] = useState("");
+	const token = window.localStorage.getItem("token");
 	const spinnerRef = useRef();
 	const usersRef = useRef();
 	const sortingTypes = [
@@ -39,12 +41,12 @@ function App() {
 	};
 	const getData = async () => {
 		try {
-			const users = await getUsers();
+			const accounts = await getAccounts();
 			setLoading(false);
-			setData(users.data);
+			setData(accounts.data);
 			const sortedArray = sortArray(
 				sortingTypes[currentSorting].isAsc,
-				users.data,
+				accounts.data,
 				sortingTypes[currentSorting].type
 			);
 			filterData(sortedArray);
@@ -52,8 +54,9 @@ function App() {
 			console.log(e);
 		}
 	};
+	const login = async () => {};
 	useEffect(() => {
-		getData();
+		if (token) login();
 	}, []);
 	useEffect(() => {
 		if (selectedUser._id) selectUser(data.find((user) => user._id === selectedUser._id));
@@ -110,6 +113,7 @@ function App() {
 	};
 	return (
 		<div className="app">
+			<LoginPage />
 			<div className="left-menu" onClick={selectNewUser}>
 				<div className="input-container">
 					<CustomInput placeHolder="Enter username..." label="Name" onChange={searchUsers} />

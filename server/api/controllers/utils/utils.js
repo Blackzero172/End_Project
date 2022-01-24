@@ -1,42 +1,54 @@
-const User = require("../../../models/user");
+const Account = require("../../../models/account");
 const path = require("path");
+const { default: api } = require("../../../../client/src/api/api");
 const getReact = () => {
 	return path.resolve(__dirname, "../../../../client/build");
 };
 const getData = async (id) => {
-	let users;
+	let accounts;
 	if (!id) {
-		users = await User.find({});
+		accounts = await Account.find({});
 	} else {
-		users = await User.findById(id);
+		accounts = await Account.findById(id);
 	}
-	return users;
+	return accounts;
+};
+const addAccount = async (account) => {
+	const newAccount = new Account(account);
+	return newAccount;
 };
 const addUser = async (user) => {
 	const newUser = new User(user);
 	return newUser;
 };
-const editUser = async (id, newData) => {
-	const user = await User.findByIdAndUpdate(id, newData, { new: true, runValidators: true });
-	return user;
+const loginRequest = async (email, password, token) => {
+	if (token) {
+		const user = await api.post("/users/login", { token });
+		return user;
+	} else {
+	}
+};
+const editAccount = async (id, newData) => {
+	const account = await Account.findByIdAndUpdate(id, newData, { new: true, runValidators: true });
+	return account;
 };
 const withdraw = async (id, amountToWithdraw) => {
-	const user = await User.findById(id);
-	user.cash -= amountToWithdraw;
-	await user.save();
-	return user;
+	const account = await Account.findById(id);
+	account.cash -= amountToWithdraw;
+	await account.save();
+	return account;
 };
 const deposit = async (id, amountToDeposit) => {
-	const user = await User.findById(id);
-	user.cash += amountToDeposit;
-	await user.save();
-	return user;
+	const account = await Account.findById(id);
+	account.cash += amountToDeposit;
+	await account.save();
+	return account;
 };
 const setCredit = async (id, newCredit) => {
-	const user = await User.findById(id);
-	user.credit = newCredit;
-	await user.save();
-	return user;
+	const account = await Account.findById(id);
+	account.credit = newCredit;
+	await account.save();
+	return account;
 };
 const checkCashAndCredit = ({ cash, credit }, amount) => {
 	if (cash + credit < amount) {
@@ -51,18 +63,29 @@ const checkCashAndCredit = ({ cash, credit }, amount) => {
 	return { cash, credit };
 };
 const transfer = async (id, targetID, amountToTransfer) => {
-	const user = await User.findById(id);
+	const account = await Account.findById(id);
 	const validate = checkCashAndCredit(user, amountToTransfer);
-	user.cash = validate.cash;
-	user.credit = validate.credit;
-	await user.save();
-	const targetUser = await User.findById(targetID);
-	targetUser.cash += amountToTransfer;
-	await targetUser.save();
-	return [user, targetUser];
+	account.cash = validate.cash;
+	account.credit = validate.credit;
+	await account.save();
+	const targetAccount = await Account.findById(targetID);
+	targetAccount.cash += amountToTransfer;
+	await targetAccount.save();
+	return [account, targetAccount];
 };
-const deleteUser = async (id) => {
-	const user = await User.findByIdAndDelete(id);
+const deleteAccount = async (id) => {
+	const user = await Account.findByIdAndDelete(id);
 	return user;
 };
-module.exports = { getData, addUser, editUser, getReact, withdraw, deposit, setCredit, transfer, deleteUser };
+module.exports = {
+	getData,
+	addAccount,
+	editAccount,
+	getReact,
+	withdraw,
+	deposit,
+	setCredit,
+	transfer,
+	deleteAccount,
+	addUser,
+};
