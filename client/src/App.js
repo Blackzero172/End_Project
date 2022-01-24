@@ -16,6 +16,7 @@ import {
 	logoutRequest,
 	displayErrorMessage,
 } from "./utils/utils";
+import api from "./api/api";
 let timerID;
 function App() {
 	const [data, setData] = useState([]);
@@ -55,6 +56,7 @@ function App() {
 	};
 	const getData = async () => {
 		try {
+			setLoading(true);
 			const accounts = await getAccounts();
 			if (!accounts) {
 				setData([]);
@@ -73,6 +75,7 @@ function App() {
 		}
 	};
 	const login = async () => {
+		setLoading(true);
 		try {
 			let user;
 			if (!token) {
@@ -84,19 +87,28 @@ function App() {
 				user = await loginRequest("", "", token);
 			}
 			loginUser(user.data.user);
+			api.defaults.headers.common["Authorization"] = user.data.genToken;
 		} catch (e) {
+			window.localStorage.removeItem("token");
 			timerID = displayErrorMessage(loginErrorTextRef, e.response.data, timerID);
+		} finally {
+			setLoading(false);
 		}
 	};
 	const logout = async () => {
+		setLoading(true);
 		try {
 			const token = window.localStorage.getItem("token");
 			const res = await logoutRequest(token);
 			window.localStorage.removeItem("token");
 			loginUser({});
-			console.log(res);
+			setData([]);
+			filterData([]);
+			delete api.defaults.headers.common["Authorization"];
 		} catch (e) {
 			console.error(e.response);
+		} finally {
+			setLoading(false);
 		}
 	};
 	useEffect(() => {
@@ -105,6 +117,11 @@ function App() {
 	useEffect(() => {
 		if (selectedUser._id) selectUser(data.find((user) => user._id === selectedUser._id));
 	}, [data]);
+	useEffect(() => {
+		if (loggedInUser.hasOwnProperty("name")) {
+			getData();
+		}
+	}, [loggedInUser]);
 	const searchUsers = (e) => {
 		const name = e.target.value.toLowerCase();
 		const filteredUsers = sortArray(false, searchArray(data, name), "cash");
@@ -157,7 +174,10 @@ function App() {
 	};
 	if (!loggedInUser.hasOwnProperty("name"))
 		return (
-			<LoginPage onClick={login} emailRef={emailRef} passRef={passRef} errorTextRef={loginErrorTextRef} />
+			<>
+				<LoginPage onClick={login} emailRef={emailRef} passRef={passRef} errorTextRef={loginErrorTextRef} />
+				<Spinner spinnerRef={spinnerRef} />
+			</>
 		);
 	return (
 		<div className="app">

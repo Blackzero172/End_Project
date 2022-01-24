@@ -31,11 +31,11 @@ const searchArray = (arr, query) => {
 };
 const doAction = async (id, action, body) => {
 	if (action !== "delete" && action !== "create") {
-		await api.put(`/users/${action}/${id}`, body);
+		await api.put(`/accounts/${action}/${id}`, body);
 	} else if (action === "delete") {
-		await api.delete(`/users/${id}`);
+		await api.delete(`/accounts/${id}`);
 	} else {
-		const user = await api.post("/users", body);
+		const user = await api.post("/accounts", body);
 		return user;
 	}
 };
@@ -49,15 +49,7 @@ const loginRequest = async (email, password, token) => {
 	return user;
 };
 const logoutRequest = async (token) => {
-	const res = await api.post(
-		"/users/logout",
-		{},
-		{
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		}
-	);
+	const res = await api.post("/users/logout");
 	return res;
 };
 const displayErrorMessage = (ref, message, id) => {
