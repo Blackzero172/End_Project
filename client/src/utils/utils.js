@@ -11,7 +11,7 @@ const sortArray = (isAsc, arr, prop) => {
 	return arrCopy;
 };
 const capFirstLetter = (string) => {
-	return string[0].toUpperCase() + string.substring(1);
+	return string && string[0].toUpperCase() + string.substring(1);
 };
 const selectItem = (ref, id) => {
 	const refChildren = Array.from(ref.current.children);
