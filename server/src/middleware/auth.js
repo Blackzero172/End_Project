@@ -15,4 +15,5 @@ const auth = async (req, res, next) => {
 		res.status(401).send("Please Authenticate");
 	}
 };
+
 module.exports = auth;

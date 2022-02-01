@@ -1,5 +1,5 @@
 const express = require("express");
-const User = require("../../models/user");
+const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const { addUser } = require("./utils/utils");
 const app = express();
@@ -15,6 +15,7 @@ const postUser = async (req, res) => {
 		res.status(500).send(e.message);
 	}
 };
+
 const login = async (req, res) => {
 	const { email, password, token } = req.body;
 	let user;
@@ -42,6 +43,7 @@ const login = async (req, res) => {
 		res.status(400).send(e.message);
 	}
 };
+
 const logout = async (req, res) => {
 	try {
 		req.user.tokens = req.user.tokens.filter((token) => token.token !== req.token);
@@ -51,4 +53,5 @@ const logout = async (req, res) => {
 		res.status(500).send(e.message);
 	}
 };
+
 module.exports = { postUser, login, logout };
