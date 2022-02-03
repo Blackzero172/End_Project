@@ -20,7 +20,6 @@
 	"scripts": {
 		"start": "node server/server.js",
 		"server": "nodemon server/server.js",
-		"serverlocal" : "concurrently \"A:/mongodb/bin/mongod.exe --dbpath=A:\\EndProjectDB\" \"npm run server\"",
 		"client": "npm run start --prefix client",
 		"db": "A:/mongodb/bin/mongod.exe --dbpath=A:\\EndProjectDB\\",
 		"dev": "concurrently \"A:/mongodb/bin/mongod.exe --dbpath=A:\\EndProjectDB\" \"npm run server\" \"npm run client\"",

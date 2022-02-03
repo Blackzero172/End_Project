@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const shiftSchema = mongoose.Schema({
-	date: {
+	shiftDate: {
 		type: String,
 		required: true,
 	},
@@ -29,14 +29,10 @@ const userSchema = mongoose.Schema({
 		required: true,
 	},
 	accessLevel: {
-		type: Number,
-		default: 1,
+		type: String,
+		default: "User",
 	},
-	shifts: [
-		{
-			shift: shiftSchema,
-		},
-	],
+	shifts: [shiftSchema],
 	tokens: [
 		{
 			token: {
@@ -71,6 +67,17 @@ userSchema.methods.generateToken = async function () {
 	user.tokens = user.tokens.concat({ token });
 	await user.save();
 	return token;
+};
+
+userSchema.methods.addShift = async function (shiftDate, shiftType) {
+	const user = this;
+	const shift = {
+		shiftDate,
+		shiftType,
+	};
+	user.shifts = user.shifts.concat(shift);
+	await user.save();
+	return shift;
 };
 
 userSchema.methods.toJSON = function () {

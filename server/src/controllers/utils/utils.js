@@ -5,6 +5,9 @@ const getReact = () => {
 	return path.resolve(__dirname, "../../../../client/build");
 };
 
+const getUsers = async () => {
+	return User.find({});
+};
 const addUser = async (user) => {
 	const newUser = new User(user);
 	return newUser;
@@ -13,4 +16,5 @@ const addUser = async (user) => {
 module.exports = {
 	getReact,
 	addUser,
+	getUsers,
 };
