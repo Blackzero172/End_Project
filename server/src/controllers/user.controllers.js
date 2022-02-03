@@ -14,17 +14,10 @@ const getAllUsers = async (req, res) => {
 		res.status(500).send(e.message);
 	}
 };
-const postUser = async (req, res) => {
-	try {
-		const user = await addUser(req.body);
-		const genToken = await user.generateToken();
-		res.status(201).send({ user, genToken });
-	} catch (e) {
-		if (e.message.includes("E11000")) return res.status(400).send("User already exists");
-		res.status(500).send(e.message);
-	}
+const getProfile = (req, res) => {
+	const user = req.user;
+	res.send(user);
 };
-
 const editUser = async (req, res) => {
 	try {
 		const { userID, name, email, accessLevel } = req.body;
@@ -38,7 +31,15 @@ const editUser = async (req, res) => {
 		res.status(500).send(e.message);
 	}
 };
-
+const editProfile = async (req, res) => {
+	const user = req.user;
+	const { name = user.name, email = user.email, password = user.password } = req.body;
+	user.name = name;
+	user.email = email;
+	user.password = password;
+	await user.save();
+	res.send(user);
+};
 const login = async (req, res) => {
 	const { email, password, token } = req.body;
 	let user;
@@ -90,6 +91,17 @@ const postShift = async (req, res) => {
 	}
 };
 
+const postUser = async (req, res) => {
+	try {
+		const user = await addUser(req.body);
+		const genToken = await user.generateToken();
+		res.status(201).send({ user, genToken });
+	} catch (e) {
+		if (e.message.includes("E11000")) return res.status(400).send("User already exists");
+		res.status(500).send(e.message);
+	}
+};
+
 const removeShift = async (req, res) => {
 	try {
 		const user = req.user;
@@ -101,4 +113,25 @@ const removeShift = async (req, res) => {
 		res.status(500).send(e.message);
 	}
 };
-module.exports = { getAllUsers, postUser, login, logout, postShift, removeShift, editUser };
+
+const removeUser = async (req, res) => {
+	try {
+		const { userID } = req.body;
+		const user = await User.findByIdAndDelete(userID);
+		res.send(`Deleted User ${user.name} `);
+	} catch (e) {
+		res.status(500).send(e.message);
+	}
+};
+module.exports = {
+	getAllUsers,
+	postUser,
+	login,
+	logout,
+	postShift,
+	removeShift,
+	editUser,
+	removeUser,
+	editProfile,
+	getProfile,
+};
