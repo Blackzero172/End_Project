@@ -7,7 +7,7 @@ import Spinner from "./components/Spinner/Spinner.components";
 import LoginPage from "./pages/LoginPage/LoginPage.pages";
 import { useEffect, useRef, useState } from "react";
 import {
-	getAccounts,
+	getUsers,
 	sortArray,
 	capFirstLetter,
 	selectItem,
@@ -57,16 +57,16 @@ function App() {
 	const getData = async () => {
 		try {
 			setLoading(true);
-			const accounts = await getAccounts();
-			if (!accounts) {
+			const users = await getUsers();
+			if (!users) {
 				setData([]);
 			} else {
-				setData(accounts.data);
+				setData(users.data);
 			}
 			setLoading(false);
 			const sortedArray = sortArray(
 				sortingTypes[currentSorting].isAsc,
-				accounts.data,
+				users.data,
 				sortingTypes[currentSorting].type
 			);
 			filterData(sortedArray);
@@ -81,15 +81,9 @@ function App() {
 			if (!token) {
 				const [email, password] = [emailRef.current.value.toLowerCase(), passRef.current.value];
 				user = await loginRequest(email, password);
-				window.localStorage.setItem("token", user.data.genToken);
-			}
-			if (token) {
-				user = await loginRequest("", "", token);
 			}
 			loginUser(user.data.user);
-			api.defaults.headers.common["Authorization"] = user.data.genToken;
 		} catch (e) {
-			window.localStorage.removeItem("token");
 			timerID = displayErrorMessage(loginErrorTextRef, e.response.data, timerID);
 		} finally {
 			setLoading(false);
@@ -100,11 +94,9 @@ function App() {
 		try {
 			const token = window.localStorage.getItem("token");
 			const res = await logoutRequest(token);
-			window.localStorage.removeItem("token");
 			loginUser({});
 			setData([]);
 			filterData([]);
-			delete api.defaults.headers.common["Authorization"];
 		} catch (e) {
 			console.error(e.response);
 		} finally {

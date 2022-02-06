@@ -1,7 +1,7 @@
 import api from "../api/api";
 
-const getAccounts = async () => {
-	const users = await api.get("/accounts");
+const getUsers = async () => {
+	const users = await api.get("/users");
 	return users;
 };
 const sortArray = (isAsc, arr, prop) => {
@@ -44,8 +44,8 @@ const onNumberInputChange = (e) => {
 	const newArr = e.target.value.split("").filter((x) => x.match(regex));
 	e.target.value = newArr.join("");
 };
-const loginRequest = async (email, password, token) => {
-	const user = await api.post("/users/login", { email, password, token });
+const loginRequest = async (email, password) => {
+	const user = await api.post("/users/login", { email, password });
 	return user;
 };
 const logoutRequest = async (token) => {
@@ -60,7 +60,7 @@ const displayErrorMessage = (ref, message, id) => {
 	return id;
 };
 export {
-	getAccounts,
+	getUsers,
 	sortArray,
 	capFirstLetter,
 	selectItem,

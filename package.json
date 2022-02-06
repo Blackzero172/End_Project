@@ -4,6 +4,7 @@
 		"axios": "^0.25.0",
 		"bcryptjs": "^2.4.3",
 		"concurrently": "^7.0.0",
+		"cookie-parser": "^1.4.6",
 		"cors": "^2.8.5",
 		"create-react-app": "^5.0.0",
 		"dotenv": "^14.2.0",
