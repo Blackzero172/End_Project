@@ -1,4 +1,4 @@
-.login-page {
+.signup-page {
 	display: flex;
 	position: absolute;
 	width: 100%;
@@ -9,25 +9,25 @@
 	align-items: center;
 	flex-direction: column;
 }
-.login-page .window {
+.signup-page .window {
 	background-color: darkred;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	padding: 2rem;
+	padding: 2rem 5rem;
 }
-.login-page .input {
+.signup-page .input {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
 	align-items: center;
 	margin: 1rem;
 }
-.login-page .input label {
+.signup-page .input label {
 	margin-bottom: 1rem;
 }
-.login-page h2 {
+.signup-page h2 {
 	color: var(--secondary-color);
 	margin-bottom: 1rem;
 }

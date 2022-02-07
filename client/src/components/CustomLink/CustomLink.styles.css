@@ -1,4 +1,14 @@
 a {
-	color: black;
+	color: var(--secondary-color);
 	text-decoration: none;
+	border: 2px solid var(--secondary-color);
+	padding: 0.5rem;
+	border-radius: 7px;
+	transition: color 0.3s ease;
+	transition-property: color, background-color;
+	font-weight: 700;
+}
+a:hover {
+	color: var(--main-color);
+	background-color: var(--secondary-color);
 }

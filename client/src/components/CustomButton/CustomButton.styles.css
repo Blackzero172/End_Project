@@ -1,31 +1,22 @@
-.link button {
-	background: transparent;
-	border: none;
-	display: block;
-}
-.link button:hover {
-	color: #999;
-	cursor: pointer;
-}
-.link button:active {
-	color: #333;
-}
-.button button {
-	background: #8e8e8e;
+button {
+	background: var(--main-color);
 	color: #fff;
-	border: none;
+	border: 2px solid var(--secondary-color);
 	padding: 0.5rem 1rem;
 	border-radius: 0.2rem;
+	transition: color 0.3s ease;
+	transition-property: color, background-color;
+	font-weight: 700;
+	cursor: pointer;
 }
-.button p {
+button p {
 	pointer-events: none;
 }
-.button button:hover {
-	background: #aeaeae;
+button:hover {
+	background: var(--secondary-color);
+	color: var(--main-color);
 }
-.button button:active {
-	background: #999;
-}
-.button label {
-	display: none;
+button:active {
+	border-color: var(--secondary-color-active);
+	background: var(--secondary-color-active);
 }

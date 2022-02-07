@@ -1,4 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap");
+:root {
+	--main-color: darkred;
+	--secondary-color: white;
+	--secondary-color-active: #c8c8c8;
+}
 * {
 	padding: 0;
 	margin: 0;
@@ -9,12 +14,13 @@ label {
 	display: inline-block;
 	line-height: 1;
 	margin: 0 0.14rem;
-	background-color: #e8e8e8;
+	background-color: var(--main-color);
 	padding: 0.58rem 0.83rem;
-	color: rgba(0, 0, 0, 0.6);
+	color: var(--secondary-color);
 	text-transform: none;
 	font-weight: bold;
 	border-radius: 0.28rem;
+	border: 2px solid var(--secondary-color);
 }
 .app {
 	display: flex;
