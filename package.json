@@ -22,8 +22,7 @@
 		"start": "node server/server.js",
 		"server": "nodemon server/server.js",
 		"client": "npm run start --prefix client",
-		"db": "A:/mongodb/bin/mongod.exe --dbpath=A:\\EndProjectDB\\",
-		"dev": "concurrently \"A:/mongodb/bin/mongod.exe --dbpath=A:\\EndProjectDB\" \"npm run server\" \"npm run client\"",
+		"dev": "concurrently  \"npm run server\" \"npm run client\"",
 		"heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
 	},
 	"keywords": [],

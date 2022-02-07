@@ -1,0 +1,18 @@
+nav {
+	background-color: red;
+
+	position: sticky;
+	top: 0;
+}
+nav ul {
+	display: flex;
+	align-items: center;
+}
+li {
+	display: inline-block;
+
+	padding: 1rem;
+}
+.right-btns {
+	margin: 0 1rem 0 auto;
+}
