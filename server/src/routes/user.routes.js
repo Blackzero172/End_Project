@@ -20,7 +20,7 @@ UserRouter.get("/users", [auth, checkPermissions], getAllUsers);
 UserRouter.get("/users/me", auth, getProfile);
 
 UserRouter.post("/users/login", login);
-UserRouter.post("/users/signup", auth, postUser);
+UserRouter.post("/users/signup", postUser);
 UserRouter.post("/users/logout", auth, logout);
 UserRouter.post("/users/shifts", [auth, checkPermissions], postShift);
 

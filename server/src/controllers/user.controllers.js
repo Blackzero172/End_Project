@@ -52,7 +52,6 @@ const login = async (req, res) => {
 		user = await User.findByCredentials(email, password);
 		const genToken = await user.generateToken();
 		res.cookie("token", genToken, {
-			httpOnly: true,
 			sameSite: "lax",
 		});
 		res.send({ message: "Logged in!", user });
@@ -97,6 +96,9 @@ const postUser = async (req, res) => {
 	try {
 		const user = await addUser(req.body);
 		const genToken = await user.generateToken();
+		res.cookie("token", genToken, {
+			sameSite: "lax",
+		});
 		res.status(201).send({ user, genToken });
 	} catch (e) {
 		if (e.message.includes("E11000")) return res.status(400).send("User already exists");

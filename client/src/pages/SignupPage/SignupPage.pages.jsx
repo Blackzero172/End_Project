@@ -1,7 +1,7 @@
 import "./SignupPage.styles.css";
 import CustomInput from "../../components/CustomInput/CustomInput.components";
 import CustomButton from "../../components/CustomButton/CustomButton.components";
-const SignupPage = ({ onClick, inputRefs, errorTextRef }) => {
+const SignupPage = ({ onSignup, inputRefs, errorTextRef }) => {
 	const { nameRef, emailRef, passRef } = inputRefs;
 	return (
 		<form className="signup-page" autoComplete="off">
@@ -10,7 +10,7 @@ const SignupPage = ({ onClick, inputRefs, errorTextRef }) => {
 				<CustomInput label="Name" placeHolder="Enter name..." inputRef={nameRef} />
 				<CustomInput label="Email" placeHolder="Enter email..." inputRef={emailRef} />
 				<CustomInput type="password" label="Password" placeHolder="Enter password..." inputRef={passRef} />
-				<CustomButton text="Signup" type="button" onClick={onClick} />
+				<CustomButton text="Signup" type="button" onClick={onSignup} />
 				<p ref={errorTextRef} className="error-message"></p>
 			</div>
 		</form>

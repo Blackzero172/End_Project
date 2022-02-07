@@ -1,7 +1,8 @@
 import "./Navbar.styles.css";
 import React from "react";
 import CustomLink from "../CustomLink/CustomLink.components";
-const Navbar = () => {
+import CustomButton from "../CustomButton/CustomButton.components";
+const Navbar = ({ loggedIn, username, onLogout }) => {
 	return (
 		<nav>
 			<ul>
@@ -14,12 +15,26 @@ const Navbar = () => {
 					</li>
 				</div>
 				<div className="right-btns">
-					<li>
-						<CustomLink text="Login" path="/login" />
-					</li>
-					<li>
-						<CustomLink text="Signup" path="/signup" />
-					</li>
+					{!loggedIn && (
+						<li>
+							<CustomLink text="Login" path="/login" />
+						</li>
+					)}
+					{!loggedIn && (
+						<li>
+							<CustomLink text="Signup" path="/signup" />
+						</li>
+					)}
+					{loggedIn && (
+						<li>
+							<p>Welcome, {username}</p>
+						</li>
+					)}
+					{loggedIn && (
+						<li>
+							<CustomButton text="Logout" onClick={onLogout} />
+						</li>
+					)}
 				</div>
 			</ul>
 		</nav>

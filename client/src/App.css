@@ -9,6 +9,7 @@
 	margin: 0;
 	box-sizing: border-box;
 	font-family: "Outfit", Courier, monospace;
+	color: white;
 }
 label {
 	display: inline-block;

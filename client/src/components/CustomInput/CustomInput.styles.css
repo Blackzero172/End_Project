@@ -4,6 +4,7 @@ input {
 	height: 2rem;
 	display: block;
 	text-indent: 1rem;
+	color: black;
 }
 
 input:focus {

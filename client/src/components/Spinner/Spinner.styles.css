@@ -40,7 +40,7 @@
 .color-dots > div {
 	width: 30px;
 	height: 30px;
-	background-color: var(--secondary-color);
+	background-color: #555;
 	border-radius: 50%;
 	margin: 20px;
 }
@@ -69,6 +69,6 @@
 	}
 	50% {
 		transform: translateY(0px);
-		background-color: var(--secondary-color);
+		background-color: #555;
 	}
 }

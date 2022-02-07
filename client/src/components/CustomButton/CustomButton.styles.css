@@ -5,7 +5,7 @@ button {
 	padding: 0.5rem 1rem;
 	border-radius: 0.2rem;
 	transition: color 0.3s ease;
-	transition-property: color, background-color;
+	transition-property: color, background-color, border-color;
 	font-weight: 700;
 	cursor: pointer;
 }

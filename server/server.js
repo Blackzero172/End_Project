@@ -9,8 +9,12 @@ const Router = require("./src/Router");
 
 const port = process.env.PORT || 5555;
 const server = express();
+const corsOptions = {
+	origin: "http://localhost:3000",
+	credentials: true,
+};
 
-server.use(cors());
+server.use(cors(corsOptions));
 server.use(cookieParser());
 server.use(express.json());
 server.use("/api", Router);

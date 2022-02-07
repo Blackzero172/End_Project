@@ -1,13 +1,14 @@
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import LoginPage from "../pages/LoginPage/LoginPage.pages";
 import Dashboard from "../pages/Dashboard/Dashboard.pages";
 import HomePage from "../pages/HomePage/HomePage.pages";
 import Navbar from "../components/Navbar/Navbar.components";
 import SignupPage from "../pages/SignupPage/SignupPage.pages";
-const Router = ({ inputRefs, onLogin }) => {
+const Router = ({ inputRefs, onLogin, onSignup, onLogout, loggedIn, username }) => {
 	return (
 		<>
-			<Navbar />
+			{loggedIn && <Redirect to="/" />}
+			<Navbar loggedIn={loggedIn} username={username} onLogout={onLogout} />
 			<Switch>
 				<Route path="/" exact>
 					<HomePage />
@@ -19,7 +20,7 @@ const Router = ({ inputRefs, onLogin }) => {
 					<Dashboard />
 				</Route>
 				<Route path="/signup">
-					<SignupPage />
+					<SignupPage inputRefs={inputRefs} onSignup={onSignup} />
 				</Route>
 			</Switch>
 		</>
