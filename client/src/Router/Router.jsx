@@ -7,11 +7,11 @@ import SignupPage from "../pages/SignupPage/SignupPage.pages";
 const Router = ({ inputRefs, onLogin, onSignup, onLogout, loggedIn, username }) => {
 	return (
 		<>
-			{loggedIn && <Redirect to="/" />}
+			{loggedIn && <Redirect to="/dashboard" />}
 			<Navbar loggedIn={loggedIn} username={username} onLogout={onLogout} />
 			<Switch>
 				<Route path="/" exact>
-					<HomePage />
+					<HomePage loggedIn={loggedIn} />
 				</Route>
 				<Route path="/login">
 					<LoginPage inputRefs={inputRefs} onLogin={onLogin} />

@@ -1,11 +1,9 @@
 import React from "react";
 import "./CustomInput.styles.css";
-const CustomInput = ({ type, onChange, placeHolder, label, name, inputRef, required }) => {
+const CustomInput = ({ type, onChange, placeHolder, label, name, inputRef, required, autocomplete }) => {
 	return (
 		<div className="input">
-			<label htmlFor={name}>
-				{label} <span className="red">{required ? "*" : ""}</span>
-			</label>
+			<label htmlFor={name}>{label}</label>
 			<input
 				type={type}
 				onChange={onChange}
@@ -13,6 +11,8 @@ const CustomInput = ({ type, onChange, placeHolder, label, name, inputRef, requi
 				id={name}
 				onClick={(e) => e.stopPropagation()}
 				ref={inputRef}
+				required={required}
+				autoComplete={autocomplete}
 			/>
 		</div>
 	);

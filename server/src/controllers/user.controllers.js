@@ -52,6 +52,7 @@ const login = async (req, res) => {
 		user = await User.findByCredentials(email, password);
 		const genToken = await user.generateToken();
 		res.cookie("token", genToken, {
+			httpOnly: true,
 			sameSite: "lax",
 		});
 		res.send({ message: "Logged in!", user });
