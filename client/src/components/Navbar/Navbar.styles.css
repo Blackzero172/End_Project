@@ -12,7 +12,7 @@ nav ul {
 	align-items: center;
 	width: 100%;
 }
-li {
+nav ul li {
 	display: inline-block;
 	padding: 1rem;
 }

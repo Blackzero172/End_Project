@@ -1,0 +1,27 @@
+.dashboard {
+	display: flex;
+	height: 93vh;
+}
+.dashboard ul {
+	width: 10%;
+	border-right: 2px solid grey;
+	height: 100%;
+}
+.dashboard ul li {
+	margin-bottom: 1rem;
+}
+.dashboard button {
+	width: 100%;
+	border-radius: 0;
+	border: transparent;
+	color: #999;
+	text-align: left;
+	background-color: transparent;
+	text-indent: 0.5rem;
+}
+.dashboard button:hover {
+	color: var(--main-color);
+}
+.dashboard button:active {
+	color: var(--main-color-active);
+}

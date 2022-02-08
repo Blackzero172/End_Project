@@ -30,6 +30,7 @@ const Navbar = ({ loggedIn, username, onLogout }) => {
 							<p>Welcome, {username}</p>
 						</li>
 					)}
+					{loggedIn && <CustomLink text="Profile" path="/profile" />}
 					{loggedIn && (
 						<li>
 							<CustomButton text="Logout" onClick={onLogout} />

@@ -9,6 +9,7 @@ const SignupPage = ({ onSignup, inputRefs, errorTextRef }) => {
 	};
 	return (
 		<form className="signup-page" onSubmit={handleFormSubmit}>
+			<div className="background"></div>
 			<div className="window">
 				<h2>Signup</h2>
 				<CustomInput label="Name" placeHolder="Enter name..." inputRef={nameRef} required />

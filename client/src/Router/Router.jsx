@@ -4,6 +4,7 @@ import Dashboard from "../pages/Dashboard/Dashboard.pages";
 import HomePage from "../pages/HomePage/HomePage.pages";
 import Navbar from "../components/Navbar/Navbar.components";
 import SignupPage from "../pages/SignupPage/SignupPage.pages";
+import Profile from "../pages/Profile/Profile.pages";
 const Router = ({ inputRefs, onLogin, onSignup, onLogout, loggedIn, username }) => {
 	return (
 		<>
@@ -21,6 +22,9 @@ const Router = ({ inputRefs, onLogin, onSignup, onLogout, loggedIn, username }) 
 				</Route>
 				<Route path="/signup">
 					<SignupPage inputRefs={inputRefs} onSignup={onSignup} />
+				</Route>
+				<Route path="/profile">
+					<Profile />
 				</Route>
 			</Switch>
 		</>

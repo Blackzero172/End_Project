@@ -11,6 +11,7 @@ const LoginPage = ({ onLogin, inputRefs, errorTextRef }) => {
 	};
 	return (
 		<form className="login-page" onSubmit={handleFormSubmit} ref={formRef}>
+			<div className="background"></div>
 			<div className="window">
 				<h2>Login</h2>
 				<CustomInput
