@@ -47,7 +47,7 @@ const login = async (req, res) => {
 	let user;
 	try {
 		if (token) {
-			return res.send(await verifyToken(token));
+			await verifyToken(token);
 		}
 		user = await User.findByCredentials(email, password);
 		const genToken = await user.generateToken();
@@ -58,11 +58,11 @@ const login = async (req, res) => {
 		res.send({ message: "Logged in!", user });
 	} catch (e) {
 		if (e.message.includes("expired")) {
+			res.clearCookie("token");
 			const user = await User.findByToken(token);
 			if (user) {
 				user.tokens = user.tokens.filter((currentToken) => currentToken.token !== token);
 				await user.save();
-				res.clearCookie();
 			}
 		}
 		res.status(500).send(e.message);

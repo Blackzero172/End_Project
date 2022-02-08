@@ -2,6 +2,7 @@ import "./LoginPage.styles.css";
 import CustomInput from "../../components/CustomInput/CustomInput.components";
 import CustomButton from "../../components/CustomButton/CustomButton.components";
 import { useRef } from "react";
+import CustomLink from "../../components/CustomLink/CustomLink.components";
 const LoginPage = ({ onLogin, inputRefs, errorTextRef }) => {
 	const { emailRef, passRef } = inputRefs;
 	const formRef = useRef();
@@ -29,7 +30,10 @@ const LoginPage = ({ onLogin, inputRefs, errorTextRef }) => {
 					required
 					autocomplete="password"
 				/>
-				<CustomButton text="Login" type="button" type="submit" />
+				<CustomButton text="Login" type="submit" />
+				<p>
+					Don't have an account? <CustomLink text="Signup" path="/signup" />
+				</p>
 				<p ref={errorTextRef} className="error-message"></p>
 			</div>
 		</form>

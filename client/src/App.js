@@ -68,8 +68,8 @@ function App() {
 				inputRefs={inputRefs}
 				onLogin={onLogin}
 				onSignup={onSignup}
-				loggedIn={loggedInUser.hasOwnProperty("name")}
-				username={loggedInUser.name}
+				isLoggedIn={loggedInUser.hasOwnProperty("name")}
+				loggedInUser={loggedInUser}
 				onLogout={onLogout}
 			/>
 			<Spinner spinnerRef={spinnerRef} />

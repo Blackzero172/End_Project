@@ -1,6 +1,7 @@
 import "./SignupPage.styles.css";
 import CustomInput from "../../components/CustomInput/CustomInput.components";
 import CustomButton from "../../components/CustomButton/CustomButton.components";
+import CustomLink from "../../components/CustomLink/CustomLink.components";
 const SignupPage = ({ onSignup, inputRefs, errorTextRef }) => {
 	const { nameRef, emailRef, passRef } = inputRefs;
 	const handleFormSubmit = (e) => {
@@ -22,6 +23,9 @@ const SignupPage = ({ onSignup, inputRefs, errorTextRef }) => {
 					required
 				/>
 				<CustomButton text="Signup" type="submit" />
+				<p>
+					Already have an account? <CustomLink text="Login " path="/login" />
+				</p>
 				<p ref={errorTextRef} className="error-message"></p>
 			</div>
 		</form>

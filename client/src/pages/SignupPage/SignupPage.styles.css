@@ -29,3 +29,18 @@
 	color: var(--secondary-color);
 	margin-bottom: 1rem;
 }
+.signup-page p {
+	color: var(--secondary-color);
+	margin-top: 1rem;
+}
+.signup-page a {
+	border: 0;
+	color: #ff0000;
+	transition: text-decoration 0.3s ease;
+	transition-property: text-decoration, color;
+}
+.signup-page a:hover {
+	color: #bb0000;
+	background-color: transparent;
+	text-decoration: underline;
+}

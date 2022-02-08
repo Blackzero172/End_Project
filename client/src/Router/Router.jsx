@@ -5,14 +5,14 @@ import HomePage from "../pages/HomePage/HomePage.pages";
 import Navbar from "../components/Navbar/Navbar.components";
 import SignupPage from "../pages/SignupPage/SignupPage.pages";
 import Profile from "../pages/Profile/Profile.pages";
-const Router = ({ inputRefs, onLogin, onSignup, onLogout, loggedIn, username }) => {
+const Router = ({ inputRefs, onLogin, onSignup, onLogout, isLoggedIn, loggedInUser }) => {
 	return (
 		<>
-			{loggedIn && <Redirect to="/dashboard" />}
-			<Navbar loggedIn={loggedIn} username={username} onLogout={onLogout} />
+			{isLoggedIn && <Redirect to="/dashboard" />}
+			<Navbar isLoggedIn={isLoggedIn} username={isLoggedIn && loggedInUser.name} onLogout={onLogout} />
 			<Switch>
 				<Route path="/" exact>
-					<HomePage loggedIn={loggedIn} />
+					<HomePage isLoggedIn={isLoggedIn} />
 				</Route>
 				<Route path="/login">
 					<LoginPage inputRefs={inputRefs} onLogin={onLogin} />
@@ -24,7 +24,7 @@ const Router = ({ inputRefs, onLogin, onSignup, onLogout, loggedIn, username }) 
 					<SignupPage inputRefs={inputRefs} onSignup={onSignup} />
 				</Route>
 				<Route path="/profile">
-					<Profile />
+					<Profile loggedInUser={loggedInUser} />
 				</Route>
 			</Switch>
 		</>
