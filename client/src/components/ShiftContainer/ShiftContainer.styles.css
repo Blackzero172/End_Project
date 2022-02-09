@@ -1,0 +1,14 @@
+.shift {
+	background-color: var(--main-color);
+	border-radius: 10px;
+	margin: 0 1rem 1rem;
+	position: relative;
+	color: var(--secondary-color);
+}
+.shift-info-container {
+	width: 100%;
+}
+.btns-container {
+	right: 1rem;
+	position: absolute;
+}
