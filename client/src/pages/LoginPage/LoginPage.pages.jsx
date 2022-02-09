@@ -11,9 +11,9 @@ const LoginPage = ({ onLogin, inputRefs, errorTextRef }) => {
 		onLogin();
 	};
 	return (
-		<form className="login-page" onSubmit={handleFormSubmit} ref={formRef}>
+		<form className="login-page flex-both flex-column" onSubmit={handleFormSubmit} ref={formRef}>
 			<div className="background"></div>
-			<div className="window">
+			<div className="window flex-both flex-column">
 				<h2>Login</h2>
 				<CustomInput
 					label="Email"

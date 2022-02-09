@@ -2,14 +2,10 @@ nav {
 	background-color: darkred;
 	height: 7vh;
 	position: sticky;
-	display: flex;
-	align-items: center;
 	top: 0;
 	z-index: 2;
 }
 nav ul {
-	display: flex;
-	align-items: center;
 	width: 100%;
 }
 nav ul li {

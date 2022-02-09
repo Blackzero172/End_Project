@@ -4,15 +4,13 @@ import CustomLink from "../CustomLink/CustomLink.components";
 import CustomButton from "../CustomButton/CustomButton.components";
 const Navbar = ({ isLoggedIn, username, onLogout }) => {
 	return (
-		<nav>
-			<ul>
+		<nav className="flex-items">
+			<ul className="flex-items">
 				<div className="left-btns">
 					<li>
 						<CustomLink text="Home" path="/" />
 					</li>
-					<li>
-						<CustomLink text="Dashboard" path="/dashboard" />
-					</li>
+					<li>{isLoggedIn && <CustomLink text="Dashboard" path="/dashboard" />}</li>
 				</div>
 				<div className="right-btns">
 					{!isLoggedIn && (

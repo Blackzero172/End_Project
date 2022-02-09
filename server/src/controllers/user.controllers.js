@@ -47,7 +47,8 @@ const login = async (req, res) => {
 	let user;
 	try {
 		if (token) {
-			await verifyToken(token);
+			const verify = await verifyToken(token);
+			return res.send(verify);
 		}
 		user = await User.findByCredentials(email, password);
 		const genToken = await user.generateToken();

@@ -58,6 +58,10 @@ const userSchema = mongoose.Schema({
 			},
 		},
 	],
+	createdAt: {
+		type: Date,
+		required: true,
+	},
 });
 
 userSchema.pre("save", async function (next) {
@@ -92,6 +96,10 @@ userSchema.methods.addShift = async function (shiftDate, shiftType) {
 		shiftDate,
 		shiftType,
 	};
+	user.shifts.forEach((currentShift) => {
+		if (currentShift.shiftDate === shift.shiftDate && currentShift.shiftType === shift.shiftType)
+			throw new Error("Shift Already Exists!");
+	});
 	user.shifts = user.shifts.concat(shift);
 	await user.save();
 	return shift;

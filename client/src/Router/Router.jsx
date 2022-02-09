@@ -8,7 +8,6 @@ import Profile from "../pages/Profile/Profile.pages";
 const Router = ({ inputRefs, onLogin, onSignup, onLogout, isLoggedIn, loggedInUser }) => {
 	return (
 		<>
-			{isLoggedIn && <Redirect to="/dashboard" />}
 			<Navbar
 				isLoggedIn={isLoggedIn}
 				username={isLoggedIn && `${loggedInUser.firstName} ${loggedInUser.lastName}`}
@@ -19,16 +18,14 @@ const Router = ({ inputRefs, onLogin, onSignup, onLogout, isLoggedIn, loggedInUs
 					<HomePage isLoggedIn={isLoggedIn} />
 				</Route>
 				<Route path="/login">
-					<LoginPage inputRefs={inputRefs} onLogin={onLogin} />
+					{isLoggedIn ? <Redirect to="/dashboard" /> : <LoginPage inputRefs={inputRefs} onLogin={onLogin} />}
 				</Route>
-				<Route path="/dashboard">
-					<Dashboard />
-				</Route>
+				<Route path="/dashboard">{isLoggedIn ? <Dashboard /> : <Redirect to="/" />}</Route>
 				<Route path="/signup">
 					<SignupPage inputRefs={inputRefs} onSignup={onSignup} />
 				</Route>
 				<Route path="/profile">
-					<Profile loggedInUser={loggedInUser} />
+					{isLoggedIn ? <Profile loggedInUser={loggedInUser} /> : <Redirect to="/" />}
 				</Route>
 			</Switch>
 		</>

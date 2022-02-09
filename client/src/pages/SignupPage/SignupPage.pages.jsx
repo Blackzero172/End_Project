@@ -10,9 +10,9 @@ const SignupPage = ({ onSignup, inputRefs, errorTextRef }) => {
 		onSignup();
 	};
 	return (
-		<form className="signup-page" onSubmit={handleFormSubmit}>
+		<form className="signup-page flex-both flex-column" onSubmit={handleFormSubmit}>
 			<div className="background"></div>
-			<div className="window">
+			<div className="window flex-both flex-column">
 				<h2>Signup</h2>
 				<div className="inputs-container">
 					<div className="name-inputs">

@@ -1,4 +1,5 @@
 import "./App.css";
+import "./utils/utils.css";
 import Router from "./Router/Router";
 import Spinner from "./components/Spinner/Spinner.components";
 import { BrowserRouter } from "react-router-dom";
@@ -60,6 +61,7 @@ function App() {
 			birthDate: birthDateInput.value,
 			email: emailInput.value,
 			password: passInput.value,
+			createdAt: new Date(),
 		};
 		try {
 			const res = await api.post("/users/signup", credentials);

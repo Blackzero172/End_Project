@@ -1,20 +1,41 @@
 img {
 	width: 100px;
 }
-.profile-icon p {
-	display: inline-block;
-	font-size: 2rem;
-	margin-left: 2rem;
+.window .profile-icon p {
+	font-size: 1.5rem;
+	margin-left: 1rem;
 }
 .profile-page .window {
-	justify-content: center;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding: 3% 30%;
+	align-items: flex-start;
+	padding: 3% 20%;
 }
-.profile-icon {
-	align-self: flex-start;
+.profile-page .window .info-container {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+	justify-content: center;
+	width: 100%;
+	gap: 2rem;
+}
+.info-container p {
+	display: flex;
+	justify-content: center;
+}
+.profile-page p {
+	font-size: 1.3rem;
+	margin: 0.5rem 0;
+}
+.email-text {
+	color: blue;
+	text-decoration: underline;
+}
+.shifts-container {
 	display: flex;
 	align-items: center;
+	flex-direction: column;
+	width: 100%;
+}
+.shifts-grid {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }

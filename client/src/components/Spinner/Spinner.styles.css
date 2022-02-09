@@ -4,9 +4,6 @@
 	left: 0;
 	top: 0;
 	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	backdrop-filter: blur(2.5px);
 	transition: opacity 1s ease;
 	transition-property: opacity, visibility;
