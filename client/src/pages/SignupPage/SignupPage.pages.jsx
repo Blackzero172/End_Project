@@ -2,8 +2,9 @@ import "./SignupPage.styles.css";
 import CustomInput from "../../components/CustomInput/CustomInput.components";
 import CustomButton from "../../components/CustomButton/CustomButton.components";
 import CustomLink from "../../components/CustomLink/CustomLink.components";
+import { onNumberInputChange } from "../../utils/utils";
 const SignupPage = ({ onSignup, inputRefs, errorTextRef }) => {
-	const { nameRef, emailRef, passRef } = inputRefs;
+	const { firstNameRef, lastNameRef, idNumberRef, birthDateRef, emailRef, passRef } = inputRefs;
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
 		onSignup();
@@ -13,15 +14,43 @@ const SignupPage = ({ onSignup, inputRefs, errorTextRef }) => {
 			<div className="background"></div>
 			<div className="window">
 				<h2>Signup</h2>
-				<CustomInput label="Name" placeHolder="Enter name..." inputRef={nameRef} required />
-				<CustomInput label="Email" placeHolder="Enter email..." inputRef={emailRef} required />
-				<CustomInput
-					type="password"
-					label="Password"
-					placeHolder="Enter password..."
-					inputRef={passRef}
-					required
-				/>
+				<div className="inputs-container">
+					<div className="name-inputs">
+						<CustomInput
+							label="First Name"
+							placeHolder="Enter first name..."
+							inputRef={firstNameRef}
+							required
+						/>
+						<CustomInput label="Last Name" placeHolder="Enter last name..." inputRef={lastNameRef} required />
+					</div>
+					<div className="id-birthdate-inputs">
+						<CustomInput
+							label="ID Number"
+							placeHolder="Enter ID number..."
+							inputRef={idNumberRef}
+							required
+							onChange={onNumberInputChange}
+						/>
+						<CustomInput
+							label="Date of Birth"
+							placeHolder="Enter Date of Birth"
+							inputRef={birthDateRef}
+							required
+							type="Date"
+						/>
+					</div>
+					<div className="email-password-inputs">
+						<CustomInput label="Email" placeHolder="Enter email..." inputRef={emailRef} required />
+						<CustomInput
+							type="password"
+							label="Password"
+							placeHolder="Enter password..."
+							inputRef={passRef}
+							required
+						/>
+					</div>
+				</div>
 				<CustomButton text="Signup" type="submit" />
 				<p>
 					Already have an account? <CustomLink text="Login " path="/login" />

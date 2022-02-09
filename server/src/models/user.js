@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const validator = require("validator");
 const shiftSchema = mongoose.Schema({
 	shiftDate: {
 		type: String,
@@ -14,9 +14,26 @@ const shiftSchema = mongoose.Schema({
 });
 
 const userSchema = mongoose.Schema({
-	name: {
+	firstName: {
 		type: String,
 		required: true,
+	},
+	lastName: {
+		type: String,
+		required: true,
+	},
+	birthDate: {
+		type: Date,
+		required: true,
+	},
+	IdNumber: {
+		type: String,
+		required: true,
+		validate(val) {
+			if (!validator.isIdentityCard(val, "he-IL")) {
+				throw new Error("Invalid ID number");
+			}
+		},
 	},
 	email: {
 		type: String,

@@ -6,12 +6,18 @@ import api from "./api/api";
 import { useEffect, useRef, useState } from "react";
 function App() {
 	const [loggedInUser, setUser] = useState({});
-	const nameRef = useRef();
+	const firstNameRef = useRef();
+	const lastNameRef = useRef();
+	const idNumberRef = useRef();
+	const birthDateRef = useRef();
 	const emailRef = useRef();
 	const passRef = useRef();
 	const spinnerRef = useRef();
 	const inputRefs = {
-		nameRef,
+		firstNameRef,
+		lastNameRef,
+		idNumberRef,
+		birthDateRef,
 		emailRef,
 		passRef,
 	};
@@ -39,8 +45,22 @@ function App() {
 	}, []);
 	const onSignup = async () => {
 		setLoading();
-		const [nameInput, emailInput, passInput] = [nameRef.current, emailRef.current, passRef.current];
-		const credentials = { name: nameInput.value, email: emailInput.value, password: passInput.value };
+		const [firstNameInput, lastNameInput, idNumberInput, birthDateInput, emailInput, passInput] = [
+			firstNameRef.current,
+			lastNameRef.current,
+			idNumberRef.current,
+			birthDateRef.current,
+			emailRef.current,
+			passRef.current,
+		];
+		const credentials = {
+			firstName: firstNameInput.value,
+			lastName: lastNameInput.value,
+			IdNumber: idNumberInput.value,
+			birthDate: birthDateInput.value,
+			email: emailInput.value,
+			password: passInput.value,
+		};
 		try {
 			const res = await api.post("/users/signup", credentials);
 			setUser(res.data.user);
@@ -68,7 +88,7 @@ function App() {
 				inputRefs={inputRefs}
 				onLogin={onLogin}
 				onSignup={onSignup}
-				isLoggedIn={loggedInUser.hasOwnProperty("name")}
+				isLoggedIn={loggedInUser.hasOwnProperty("firstName")}
 				loggedInUser={loggedInUser}
 				onLogout={onLogout}
 			/>

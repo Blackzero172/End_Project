@@ -9,7 +9,11 @@ const Router = ({ inputRefs, onLogin, onSignup, onLogout, isLoggedIn, loggedInUs
 	return (
 		<>
 			{isLoggedIn && <Redirect to="/dashboard" />}
-			<Navbar isLoggedIn={isLoggedIn} username={isLoggedIn && loggedInUser.name} onLogout={onLogout} />
+			<Navbar
+				isLoggedIn={isLoggedIn}
+				username={isLoggedIn && `${loggedInUser.firstName} ${loggedInUser.lastName}`}
+				onLogout={onLogout}
+			/>
 			<Switch>
 				<Route path="/" exact>
 					<HomePage isLoggedIn={isLoggedIn} />

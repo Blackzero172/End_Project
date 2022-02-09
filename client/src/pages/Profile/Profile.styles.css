@@ -3,4 +3,18 @@ img {
 }
 .profile-icon p {
 	display: inline-block;
+	font-size: 2rem;
+	margin-left: 2rem;
+}
+.profile-page .window {
+	justify-content: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 3% 30%;
+}
+.profile-icon {
+	align-self: flex-start;
+	display: flex;
+	align-items: center;
 }
