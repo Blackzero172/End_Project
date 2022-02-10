@@ -2,13 +2,19 @@ import profileIcon from "../../assets/img/blank_profile.png";
 import "./Profile.styles.css";
 import Property from "../../components/Property/Property.components";
 import ShiftContainer from "../../components/ShiftContainer/ShiftContainer.components";
-import CustomButton from "../../components/CustomButton/CustomButton.components";
+import moment from "moment";
+import { dateIsPast } from "../../utils/utils";
 const Profile = ({ loggedInUser }) => {
 	const { firstName, lastName, birthDate, IdNumber, email, shifts } = loggedInUser;
-	const birthDateFormat = new Date(birthDate);
-	const birthDateText = `${birthDateFormat.getDate()}/${
-		birthDateFormat.getMonth() + 1
-	}/${birthDateFormat.getFullYear()}`;
+	const birthDateText = moment(birthDate).format("DD MMMM YYYY");
+	const pastShifts = [];
+	const upcomingShifts = [];
+	shifts.forEach((shift) => {
+		const shiftDate = moment(shift.shiftDate);
+		const today = moment();
+		if (shiftDate.isBefore(today)) pastShifts.push(shift);
+		else upcomingShifts.push(shift);
+	});
 	return (
 		<div className="profile-page">
 			<div className="window flex-column">
@@ -25,12 +31,18 @@ const Profile = ({ loggedInUser }) => {
 					<Property label="ID Number: " text={IdNumber} />
 				</div>
 				<hr width="100%" />
-				<div className="shifts-container">
-					{loggedInUser.accessLevel === "Manager" && <CustomButton text="Add Shift" />}
-					<Property label="Shifts: " />
-					<div className="shifts-grid">
-						{shifts.map((shift) => {
-							return <ShiftContainer shift={shift} accessLevel={loggedInUser.accessLevel} />;
+				<div className="shifts-container flex-content">
+					<div className="past-shifts">
+						<Property text="Past Shifts: " />
+						{pastShifts.map((shift) => {
+							return <ShiftContainer shift={shift} />;
+						})}
+					</div>
+					<div className="upcoming-shifts">
+						<Property text="Upcoming Shifts: " />
+
+						{upcomingShifts.map((shift) => {
+							return <ShiftContainer shift={shift} />;
 						})}
 					</div>
 				</div>

@@ -29,9 +29,10 @@ img {
 	text-decoration: underline;
 }
 .shifts-container {
-	display: flex;
-	align-items: center;
-	flex-direction: column;
+	width: 100%;
+}
+.shifts-container .past-shifts,
+.shifts-container .upcoming-shifts {
 	width: 100%;
 }
 .shifts-grid {

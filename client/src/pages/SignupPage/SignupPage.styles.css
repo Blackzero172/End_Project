@@ -5,13 +5,11 @@
 }
 .signup-page .window {
 	background-color: darkred;
-
 	padding: 2rem 5rem;
 }
-.signup-page .name-inputs,
-.signup-page .email-password-inputs,
-.signup-page .id-birthdate-inputs {
-	display: flex;
+.signup-page .inputs-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
 }
 .signup-page .input {
 	display: flex;

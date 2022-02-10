@@ -31,11 +31,11 @@ const LoginPage = ({ onLogin, inputRefs, errorTextRef }) => {
 					autocomplete="password"
 				/>
 				<CustomButton text="Login" type="submit" />
-				<p>
-					Don't have an account? <CustomLink text="Signup" path="/signup" />
-				</p>
 				<p ref={errorTextRef} className="error-message"></p>
 			</div>
+			<p>
+				Don't have an account? <CustomLink text="Signup" path="/signup" />
+			</p>
 		</form>
 	);
 };

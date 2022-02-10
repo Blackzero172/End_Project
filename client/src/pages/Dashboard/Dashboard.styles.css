@@ -25,3 +25,12 @@
 .dashboard button:active {
 	color: var(--main-color-active);
 }
+.main-content {
+	width: 100%;
+}
+.month-selector {
+	margin: 1rem 3rem 0 auto;
+}
+.month-selector i {
+	margin: 0.3rem 0.75rem;
+}

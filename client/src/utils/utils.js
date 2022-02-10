@@ -59,6 +59,17 @@ const displayErrorMessage = (ref, message, id) => {
 	}, 3000);
 	return id;
 };
+const getWeekDays = (date) => {
+	const end = date.endOf("week").toString();
+	const currentWeekDay = date.startOf("week");
+	const weekDays = [];
+	while (currentWeekDay.isBefore(end)) {
+		weekDays.push(currentWeekDay.format("dddd D"));
+		currentWeekDay.add(1, "d");
+	}
+	return weekDays;
+};
+
 export {
 	getUsers,
 	sortArray,
@@ -70,4 +81,5 @@ export {
 	loginRequest,
 	displayErrorMessage,
 	logoutRequest,
+	getWeekDays,
 };

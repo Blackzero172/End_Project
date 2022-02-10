@@ -14,49 +14,45 @@ const SignupPage = ({ onSignup, inputRefs, errorTextRef }) => {
 			<div className="background"></div>
 			<div className="window flex-both flex-column">
 				<h2>Signup</h2>
-				<div className="inputs-container">
-					<div className="name-inputs">
-						<CustomInput
-							label="First Name"
-							placeHolder="Enter first name..."
-							inputRef={firstNameRef}
-							required
-						/>
-						<CustomInput label="Last Name" placeHolder="Enter last name..." inputRef={lastNameRef} required />
-					</div>
-					<div className="id-birthdate-inputs">
-						<CustomInput
-							label="ID Number"
-							placeHolder="Enter ID number..."
-							inputRef={idNumberRef}
-							required
-							onChange={onNumberInputChange}
-						/>
-						<CustomInput
-							label="Date of Birth"
-							placeHolder="Enter Date of Birth"
-							inputRef={birthDateRef}
-							required
-							type="Date"
-						/>
-					</div>
-					<div className="email-password-inputs">
-						<CustomInput label="Email" placeHolder="Enter email..." inputRef={emailRef} required />
-						<CustomInput
-							type="password"
-							label="Password"
-							placeHolder="Enter password..."
-							inputRef={passRef}
-							required
-						/>
-					</div>
+				<div className="inputs-grid">
+					<CustomInput
+						label="First Name"
+						placeHolder="Enter first name..."
+						inputRef={firstNameRef}
+						required
+					/>
+					<CustomInput label="Last Name" placeHolder="Enter last name..." inputRef={lastNameRef} required />
+
+					<CustomInput
+						label="ID Number"
+						placeHolder="Enter ID number..."
+						inputRef={idNumberRef}
+						required
+						onChange={onNumberInputChange}
+					/>
+					<CustomInput
+						label="Date of Birth"
+						placeHolder="Enter Date of Birth"
+						inputRef={birthDateRef}
+						required
+						type="Date"
+					/>
+
+					<CustomInput label="Email" placeHolder="Enter email..." inputRef={emailRef} required />
+					<CustomInput
+						type="password"
+						label="Password"
+						placeHolder="Enter password..."
+						inputRef={passRef}
+						required
+					/>
 				</div>
 				<CustomButton text="Signup" type="submit" />
-				<p>
-					Already have an account? <CustomLink text="Login " path="/login" />
-				</p>
 				<p ref={errorTextRef} className="error-message"></p>
 			</div>
+			<p>
+				Already have an account? <CustomLink text="Login " path="/login" />
+			</p>
 		</form>
 	);
 };
