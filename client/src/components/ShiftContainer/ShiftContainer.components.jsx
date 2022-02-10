@@ -1,6 +1,7 @@
 import Property from "../Property/Property.components";
 import "./ShiftContainer.styles.css";
-const ShiftContainer = ({ shift }) => {
+import CustomButton from "../CustomButton/CustomButton.components";
+const ShiftContainer = ({ shift, accessLevel }) => {
 	const { shiftDate: date, shiftType: type } = shift;
 	return (
 		<div className="shift flex-content">
@@ -8,10 +9,16 @@ const ShiftContainer = ({ shift }) => {
 				<Property label="Date: " text={date} />
 				<Property label="Type: " text={type} />
 			</div>
-			<div className="btns-container">
-				<p>Delete</p>
-				<p>Edit</p>
-			</div>
+			{accessLevel === "Manager" && (
+				<div className="btns-container flex-content flex-column">
+					<CustomButton>
+						<i className="fas fa-times"></i>
+					</CustomButton>
+					<CustomButton>
+						<i className="fas fa-edit"></i>
+					</CustomButton>
+				</div>
+			)}
 		</div>
 	);
 };

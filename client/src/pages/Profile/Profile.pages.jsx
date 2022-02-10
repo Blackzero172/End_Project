@@ -2,6 +2,7 @@ import profileIcon from "../../assets/img/blank_profile.png";
 import "./Profile.styles.css";
 import Property from "../../components/Property/Property.components";
 import ShiftContainer from "../../components/ShiftContainer/ShiftContainer.components";
+import CustomButton from "../../components/CustomButton/CustomButton.components";
 const Profile = ({ loggedInUser }) => {
 	const { firstName, lastName, birthDate, IdNumber, email, shifts } = loggedInUser;
 	const birthDateFormat = new Date(birthDate);
@@ -25,10 +26,11 @@ const Profile = ({ loggedInUser }) => {
 				</div>
 				<hr width="100%" />
 				<div className="shifts-container">
+					{loggedInUser.accessLevel === "Manager" && <CustomButton text="Add Shift" />}
 					<Property label="Shifts: " />
 					<div className="shifts-grid">
 						{shifts.map((shift) => {
-							return <ShiftContainer shift={shift} />;
+							return <ShiftContainer shift={shift} accessLevel={loggedInUser.accessLevel} />;
 						})}
 					</div>
 				</div>

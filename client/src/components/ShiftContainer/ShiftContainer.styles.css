@@ -8,7 +8,17 @@
 .shift-info-container {
 	width: 100%;
 }
+.shift i::before {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
 .btns-container {
 	right: 1rem;
 	position: absolute;
+	height: 100%;
+}
+.btns-container button {
+	padding: 0.4rem;
+	margin: 0.1rem 0;
 }
