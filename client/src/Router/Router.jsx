@@ -24,7 +24,11 @@ const Router = ({ inputRefs, onLogin, onSignup, onLogout, isLoggedIn, loggedInUs
 					{isLoggedIn ? <Dashboard setLoading={setLoading} /> : <Redirect to="/" />}
 				</Route>
 				<Route path="/signup">
-					<SignupPage inputRefs={inputRefs} onSignup={onSignup} />
+					{isLoggedIn ? (
+						<Redirect to="/dashboard" />
+					) : (
+						<SignupPage inputRefs={inputRefs} onSignup={onSignup} />
+					)}
 				</Route>
 				<Route path="/profile">
 					{isLoggedIn ? <Profile loggedInUser={loggedInUser} /> : <Redirect to="/" />}

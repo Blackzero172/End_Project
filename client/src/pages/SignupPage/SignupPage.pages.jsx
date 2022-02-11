@@ -20,8 +20,15 @@ const SignupPage = ({ onSignup, inputRefs, errorTextRef }) => {
 						placeHolder="Enter first name..."
 						inputRef={firstNameRef}
 						required
+						autocomplete="firstName"
 					/>
-					<CustomInput label="Last Name" placeHolder="Enter last name..." inputRef={lastNameRef} required />
+					<CustomInput
+						label="Last Name"
+						placeHolder="Enter last name..."
+						inputRef={lastNameRef}
+						required
+						autocomplete="lastName"
+					/>
 
 					<CustomInput
 						label="ID Number"
@@ -29,6 +36,7 @@ const SignupPage = ({ onSignup, inputRefs, errorTextRef }) => {
 						inputRef={idNumberRef}
 						required
 						onChange={onNumberInputChange}
+						autocomplete="IdNumber"
 					/>
 					<CustomInput
 						label="Date of Birth"
@@ -36,6 +44,7 @@ const SignupPage = ({ onSignup, inputRefs, errorTextRef }) => {
 						inputRef={birthDateRef}
 						required
 						type="Date"
+						autocomplete="birthDate"
 					/>
 
 					<CustomInput label="Email" placeHolder="Enter email..." inputRef={emailRef} required />
@@ -45,6 +54,7 @@ const SignupPage = ({ onSignup, inputRefs, errorTextRef }) => {
 						placeHolder="Enter password..."
 						inputRef={passRef}
 						required
+						autocomplete="password"
 					/>
 				</div>
 				<CustomButton text="Signup" type="submit" />

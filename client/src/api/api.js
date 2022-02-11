@@ -5,5 +5,6 @@ export default axios.create({
 	baseURL,
 	headers: {
 		"Access-Control-Allow-Credentials": true,
+		"Content-Type": "application/json",
 	},
 });

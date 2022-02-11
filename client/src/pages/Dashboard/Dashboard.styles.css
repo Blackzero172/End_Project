@@ -61,4 +61,18 @@
 }
 .manage-users {
 	margin-top: 2rem;
+	width: 100%;
+}
+.manage-users .add-btn {
+	width: 20%;
+}
+.manage-users .users-container {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	padding: 1rem 1rem 0 1rem;
+	gap: 1rem;
 }

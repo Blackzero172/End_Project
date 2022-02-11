@@ -1,8 +1,22 @@
+import CustomButton from "../CustomButton/CustomButton.components";
 import "./UserCard.styles.css";
-const UserCard = ({ user }) => {
+const UserCard = ({ user, onDelete }) => {
 	return (
-		<div>
-			<p>Name:{user.firstName + user.lastName}</p>
+		<div className="user-card">
+			<p>Name: {`${user.firstName} ${user.lastName}`}</p>
+			<p>ID Number: {user.IdNumber}</p>
+			<div className="btns-container flex-content flex-column">
+				<CustomButton
+					onClick={() => {
+						onDelete(user);
+					}}
+				>
+					<i className="fas fa-times"></i>
+				</CustomButton>
+				<CustomButton>
+					<i className="fas fa-edit"></i>
+				</CustomButton>
+			</div>
 		</div>
 	);
 };

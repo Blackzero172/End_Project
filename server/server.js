@@ -14,9 +14,9 @@ const corsOptions = {
 	credentials: true,
 };
 
+server.use(express.json());
 server.use(cors(corsOptions));
 server.use(cookieParser());
-server.use(express.json());
 server.use("/api", Router);
 server.use(express.static(getReact()));
 

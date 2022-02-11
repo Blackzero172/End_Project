@@ -59,13 +59,3 @@ label {
 .input-container button {
 	margin: 1rem;
 }
-
-.users-container {
-	grid-template-columns: 1fr;
-	width: 90%;
-	margin-left: 1rem;
-	display: grid;
-	justify-content: center;
-	padding-bottom: 1rem;
-	gap: 0.5rem;
-}

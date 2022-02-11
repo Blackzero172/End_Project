@@ -1,26 +1,51 @@
-import "./Dashboard.styles.css";
-import CustomButton from "../../components/CustomButton/CustomButton.components";
-import CustomLink from "../../components/CustomLink/CustomLink.components";
 import moment from "moment";
-import { getWeekDays } from "../../utils/utils";
-import WeekCalendar from "../../components/WeekCalendar/WeekCalendar.components";
+import api from "../../api/api";
+
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { useEffect, useState } from "react";
-import api from "../../api/api";
+
+import CustomButton from "../../components/CustomButton/CustomButton.components";
+import CustomLink from "../../components/CustomLink/CustomLink.components";
+import WeekCalendar from "../../components/WeekCalendar/WeekCalendar.components";
+import UserCard from "../../components/UserCard/UserCard.components";
+
+import { getWeekDays } from "../../utils/utils";
+
+import "./Dashboard.styles.css";
+import axios from "axios";
+
 const Dashboard = ({ setLoading }) => {
+	const [users, setUsers] = useState([]);
+	const { path, url } = useRouteMatch();
+
 	const today = moment();
 	const formattedDate = today.format("MMMM YYYY");
 	const weekDays = getWeekDays(today);
-	const { path, url } = useRouteMatch();
-	const [users, setUsers] = useState([]);
+
 	const getUsers = async () => {
-		const res = await api.get("/users");
-		const users = res.data;
-		setUsers(users);
+		try {
+			setLoading();
+			const res = await api.get("/users");
+			const users = res.data;
+			setUsers(users);
+		} catch (e) {
+			console.error(e.response);
+		} finally {
+			setLoading();
+		}
+	};
+	const onDelete = async (user) => {
+		try {
+			const res = await api.delete("/users", { data: { email: user.email } });
+			console.log(res);
+		} catch (e) {
+			console.error(e.response);
+		}
 	};
 	useEffect(() => {
 		getUsers();
 	}, []);
+
 	return (
 		<div className="dashboard">
 			<ul className="side-menu">
@@ -42,11 +67,11 @@ const Dashboard = ({ setLoading }) => {
 						<WeekCalendar weekDays={weekDays} />
 					</Route>
 					<Route path={`${path}/manage`}>
-						<div className="manage-users">
-							<CustomButton text="Add User" />
+						<div className="manage-users flex-items flex-column">
+							<CustomButton text="Add User" classes="add-btn" />
 							<div className="users-container">
 								{users.map((user) => {
-									return <p>{user.firstName}</p>;
+									return <UserCard user={user} onDelete={onDelete} />;
 								})}
 							</div>
 						</div>
@@ -56,4 +81,5 @@ const Dashboard = ({ setLoading }) => {
 		</div>
 	);
 };
+
 export default Dashboard;

@@ -38,6 +38,7 @@ const userSchema = mongoose.Schema({
 				throw new Error("Invalid ID number");
 			}
 		},
+		unique: true,
 	},
 	email: {
 		type: String,

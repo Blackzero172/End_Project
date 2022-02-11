@@ -113,6 +113,7 @@ const postUser = async (req, res) => {
 		});
 		res.status(201).send({ user, genToken });
 	} catch (e) {
+		console.log(e.message);
 		if (e.message.includes("E11000")) return res.status(400).send("User already exists");
 		res.status(500).send(e.message);
 	}
@@ -132,9 +133,13 @@ const removeShift = async (req, res) => {
 
 const removeUser = async (req, res) => {
 	try {
-		const { userEmail } = req.body;
-		const user = await User.findOneAndDelete({ email: userEmail });
-		res.send(`Deleted User ${user.name} `);
+		// const { email } = req.body;
+		const { email } = req.body;
+		console.log(req.header("Content-Type"));
+		console.log(req.body);
+		const user = await User.findOneAndDelete({ email });
+		if (!user) return res.status(404).send("User doesn't Exist!");
+		res.send(`Deleted User`);
 	} catch (e) {
 		res.status(500).send(e.message);
 	}

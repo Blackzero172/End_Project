@@ -21,3 +21,6 @@ button:active {
 	border-color: var(--secondary-color-active);
 	background: var(--secondary-color-active);
 }
+button i {
+	pointer-events: none;
+}

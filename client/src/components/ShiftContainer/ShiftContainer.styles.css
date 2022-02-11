@@ -17,8 +17,9 @@
 	right: 1rem;
 	position: absolute;
 	height: 100%;
+	top: 0;
 }
 .btns-container button {
-	padding: 0.4rem;
+	padding: 0.2rem;
 	margin: 0.1rem 0;
 }
