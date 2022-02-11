@@ -19,6 +19,16 @@ const getProfile = (req, res) => {
 	const user = req.user;
 	res.send(user);
 };
+const getSchedule = async (req, res) => {
+	try {
+		const morningWorkers = await User.find({ "shifts.shift.shiftType": "Morning" });
+		const middleWorkers = await User.find({ "shifts.shift.shiftType": "Middle" });
+		const eveningWorkers = await User.find({ "shifts.shift.shiftType": "Evening" });
+		res.send({ morningWorkers, middleWorkers, eveningWorkers });
+	} catch (e) {
+		res.status(500).send(e.message);
+	}
+};
 const editUser = async (req, res) => {
 	try {
 		const { userEmail, newName, newEmail, newAccessLevel } = req.body;
@@ -140,4 +150,5 @@ module.exports = {
 	removeUser,
 	editProfile,
 	getProfile,
+	getSchedule,
 };

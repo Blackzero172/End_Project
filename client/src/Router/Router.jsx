@@ -5,7 +5,7 @@ import HomePage from "../pages/HomePage/HomePage.pages";
 import Navbar from "../components/Navbar/Navbar.components";
 import SignupPage from "../pages/SignupPage/SignupPage.pages";
 import Profile from "../pages/Profile/Profile.pages";
-const Router = ({ inputRefs, onLogin, onSignup, onLogout, isLoggedIn, loggedInUser }) => {
+const Router = ({ inputRefs, onLogin, onSignup, onLogout, isLoggedIn, loggedInUser, setLoading }) => {
 	return (
 		<>
 			<Navbar
@@ -20,7 +20,9 @@ const Router = ({ inputRefs, onLogin, onSignup, onLogout, isLoggedIn, loggedInUs
 				<Route path="/login">
 					{isLoggedIn ? <Redirect to="/dashboard" /> : <LoginPage inputRefs={inputRefs} onLogin={onLogin} />}
 				</Route>
-				<Route path="/dashboard">{isLoggedIn ? <Dashboard /> : <Redirect to="/" />}</Route>
+				<Route path="/dashboard">
+					{isLoggedIn ? <Dashboard setLoading={setLoading} /> : <Redirect to="/" />}
+				</Route>
 				<Route path="/signup">
 					<SignupPage inputRefs={inputRefs} onSignup={onSignup} />
 				</Route>

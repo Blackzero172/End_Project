@@ -3,7 +3,6 @@ import "./Profile.styles.css";
 import Property from "../../components/Property/Property.components";
 import ShiftContainer from "../../components/ShiftContainer/ShiftContainer.components";
 import moment from "moment";
-import { dateIsPast } from "../../utils/utils";
 const Profile = ({ loggedInUser }) => {
 	const { firstName, lastName, birthDate, IdNumber, email, shifts } = loggedInUser;
 	const birthDateText = moment(birthDate).format("DD MMMM YYYY");

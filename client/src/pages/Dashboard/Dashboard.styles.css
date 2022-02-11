@@ -8,22 +8,27 @@
 	height: 100%;
 }
 .dashboard ul li {
-	margin-bottom: 1rem;
+	margin: 2rem 0.5rem;
 }
-.dashboard button {
+.dashboard a {
 	width: 100%;
 	border-radius: 0;
-	border: transparent;
-	color: #999;
+	border: 2px solid var(--main-color);
+	color: var(--main-color);
 	text-align: left;
 	background-color: transparent;
 	text-indent: 0.5rem;
 }
-.dashboard button:hover {
-	color: var(--main-color);
+.dashboard a:hover {
+	color: var(--secondary-color);
+	background-color: var(--main-color);
 }
-.dashboard button:active {
-	color: var(--main-color-active);
+.dashboard a:active {
+	background-color: var(--main-color-active);
+	border-color: var(--main-color-active);
+}
+.dashboard button:hover {
+	border-color: var(--main-color);
 }
 .main-content {
 	width: 100%;
@@ -33,4 +38,27 @@
 }
 .month-selector i {
 	margin: 0.3rem 0.75rem;
+}
+.calendar {
+	width: 80%;
+	height: 80vh;
+	display: grid;
+	grid-template-columns: repeat(8, 1fr);
+	grid-template-rows: repeat(17, 600px);
+}
+.hours-container {
+	background-color: lightgray;
+	display: grid;
+	padding-top: 1rem;
+	grid-template-rows: repeat(17, 2fr);
+}
+.main-content .weekCalendar {
+	width: 80%;
+	color: var(--main-color);
+}
+.main-content .weekCalendar .title {
+	color: var(--main-color);
+}
+.manage-users {
+	margin-top: 2rem;
 }

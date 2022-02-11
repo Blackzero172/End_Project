@@ -2,6 +2,9 @@
 	display: flex;
 	justify-content: center;
 }
+.flex {
+	display: flex;
+}
 .flex-items {
 	display: flex;
 	align-items: center;
@@ -14,4 +17,16 @@
 .flex-column {
 	display: flex;
 	flex-direction: column;
+}
+.flex-around {
+	display: flex;
+	justify-content: space-around;
+}
+.flex-between {
+	display: flex;
+	justify-content: space-between;
+}
+.flex-evenly {
+	display: flex;
+	justify-content: space-evenly;
 }

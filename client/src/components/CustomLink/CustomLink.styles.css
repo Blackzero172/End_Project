@@ -5,10 +5,14 @@ a {
 	padding: 0.5rem;
 	border-radius: 7px;
 	transition: color 0.3s ease;
-	transition-property: color, background-color;
+	transition-property: color, background-color, border-color;
 	font-weight: 700;
 }
 a:hover {
 	color: var(--main-color);
 	background-color: var(--secondary-color);
+}
+a:active {
+	background-color: var(--secondary-color-active);
+	border-color: var(--secondary-color-active);
 }

@@ -11,6 +11,10 @@ const shiftSchema = mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	owner: {
+		type: mongoose.ObjectId,
+		required: true,
+	},
 });
 
 const userSchema = mongoose.Schema({
@@ -41,11 +45,6 @@ const userSchema = mongoose.Schema({
 		unique: true,
 		lowercase: true,
 	},
-	// phoneNumber: {
-	// 	type: String,
-	// 	required: true,
-	// 	unique: true,
-	// },
 	password: {
 		type: String,
 		required: true,
@@ -100,6 +99,7 @@ userSchema.methods.addShift = async function (shiftDate, shiftType) {
 	const shift = {
 		shiftDate,
 		shiftType,
+		owner: user._id,
 	};
 	user.shifts.forEach((currentShift) => {
 		if (currentShift.shiftDate === shift.shiftDate && currentShift.shiftType === shift.shiftType)

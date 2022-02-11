@@ -34,7 +34,8 @@ function App() {
 		}
 		try {
 			const res = await api.post("/users/login", credentials);
-			setUser(res.data.user);
+			const user = res.data.user;
+			setUser(user);
 		} catch (e) {
 			console.error(e.response.data);
 		} finally {
@@ -93,6 +94,7 @@ function App() {
 				isLoggedIn={loggedInUser.hasOwnProperty("firstName")}
 				loggedInUser={loggedInUser}
 				onLogout={onLogout}
+				setLoading={setLoading}
 			/>
 			<Spinner spinnerRef={spinnerRef} />
 		</BrowserRouter>

@@ -1,5 +1,5 @@
 import api from "../api/api";
-
+import moment from "moment";
 const getUsers = async () => {
 	const users = await api.get("/users");
 	return users;
@@ -61,15 +61,24 @@ const displayErrorMessage = (ref, message, id) => {
 };
 const getWeekDays = (date) => {
 	const end = date.endOf("week").toString();
-	const currentWeekDay = date.startOf("week");
+	const currentWeekDay = moment(date.startOf("week").toString());
 	const weekDays = [];
 	while (currentWeekDay.isBefore(end)) {
-		weekDays.push(currentWeekDay.format("dddd D"));
+		weekDays.push(currentWeekDay.format("dddd D/MM"));
 		currentWeekDay.add(1, "d");
 	}
 	return weekDays;
 };
-
+const getDayHours = (date) => {
+	const currentHour = moment(date.hour(7));
+	const end = date.hour(24).toString();
+	const dayHours = [];
+	while (currentHour.isBefore(end)) {
+		dayHours.push(currentHour.format("hh A"));
+		currentHour.add(1, "h");
+	}
+	return dayHours;
+};
 export {
 	getUsers,
 	sortArray,
@@ -82,4 +91,5 @@ export {
 	displayErrorMessage,
 	logoutRequest,
 	getWeekDays,
+	getDayHours,
 };
