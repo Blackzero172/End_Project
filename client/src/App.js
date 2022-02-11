@@ -22,11 +22,12 @@ function App() {
 		emailRef,
 		passRef,
 	};
-	const setLoading = () => {
-		spinnerRef.current.classList.toggle("hidden");
+	const setLoading = (isShown) => {
+		if (isShown) spinnerRef.current.classList.remove("hidden");
+		else if (!isShown) spinnerRef.current.classList.add("hidden");
 	};
 	const onLogin = async () => {
-		setLoading();
+		setLoading(true);
 		const [emailInput, passInput] = [emailRef.current, passRef.current];
 		let credentials;
 		if (emailInput) {
@@ -39,14 +40,14 @@ function App() {
 		} catch (e) {
 			console.error(e.response.data);
 		} finally {
-			setLoading();
+			setLoading(false);
 		}
 	};
 	useEffect(() => {
 		onLogin();
 	}, []);
 	const onSignup = async () => {
-		setLoading();
+		setLoading(true);
 		const [firstNameInput, lastNameInput, idNumberInput, birthDateInput, emailInput, passInput] = [
 			firstNameRef.current,
 			lastNameRef.current,
@@ -70,11 +71,11 @@ function App() {
 		} catch (e) {
 			console.error(e.response.data);
 		} finally {
-			setLoading();
+			setLoading(false);
 		}
 	};
 	const onLogout = async () => {
-		setLoading();
+		setLoading(true);
 		try {
 			const res = await api.post("/users/logout");
 			console.log(res);
@@ -82,7 +83,7 @@ function App() {
 		} catch (e) {
 			console.error(e.response.data);
 		} finally {
-			setLoading();
+			setLoading(false);
 		}
 	};
 	return (

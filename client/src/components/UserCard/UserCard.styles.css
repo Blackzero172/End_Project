@@ -5,3 +5,13 @@
 	width: 100%;
 	position: relative;
 }
+.user-card .btns-container {
+	right: 1rem;
+	position: absolute;
+	height: 100%;
+	top: 0;
+}
+.user-card .btns-container button {
+	padding: 0.2rem;
+	margin: 0.1rem 0;
+}

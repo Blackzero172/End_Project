@@ -8,7 +8,7 @@ const UserCard = ({ user, onDelete }) => {
 			<div className="btns-container flex-content flex-column">
 				<CustomButton
 					onClick={() => {
-						onDelete(user);
+						onDelete(true, user);
 					}}
 				>
 					<i className="fas fa-times"></i>

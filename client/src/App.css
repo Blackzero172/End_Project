@@ -11,6 +11,9 @@
 	box-sizing: border-box;
 	font-family: "Outfit", Courier, monospace;
 }
+ul {
+	list-style: none;
+}
 .background {
 	background: url("./assets/img/background.jpg") no-repeat center center/cover;
 	width: 100%;

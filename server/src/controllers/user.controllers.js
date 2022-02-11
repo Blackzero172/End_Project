@@ -106,12 +106,15 @@ const postShift = async (req, res) => {
 
 const postUser = async (req, res) => {
 	try {
+		const { token } = req.cookies;
 		const user = await addUser(req.body);
 		const genToken = await user.generateToken();
-		res.cookie("token", genToken, {
-			sameSite: "lax",
-		});
-		res.status(201).send({ user, genToken });
+		if (!token) {
+			res.cookie("token", genToken, {
+				sameSite: "lax",
+			});
+			res.status(201).send({ user, genToken });
+		} else res.status(201).send({ user });
 	} catch (e) {
 		console.log(e.message);
 		if (e.message.includes("E11000")) return res.status(400).send("User already exists");

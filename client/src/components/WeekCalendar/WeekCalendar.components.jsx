@@ -10,15 +10,15 @@ const WeekCalendar = ({ weekDays }) => {
 				})}
 			</div>
 			<div className="shift-types flex-evenly flex-column">
-				<div className="flex-content flex-column">
+				<div className="flex-both flex-column">
 					<p>Morning</p>
 					<p>(7AM-3PM)</p>
 				</div>
-				<div className="flex-content flex-column">
+				<div className="flex-both flex-column">
 					<p>Middle</p>
 					<p>(1PM-9PM)</p>
 				</div>
-				<div className="flex-content flex-column">
+				<div className="flex-both flex-column">
 					<p>Evening</p>
 					<p>(3PM-11PM)</p>
 				</div>

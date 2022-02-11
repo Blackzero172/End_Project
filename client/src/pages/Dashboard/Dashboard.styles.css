@@ -27,7 +27,7 @@
 	background-color: var(--main-color-active);
 	border-color: var(--main-color-active);
 }
-.dashboard button:hover {
+.dashboard .manage-users > button:hover {
 	border-color: var(--main-color);
 }
 .main-content {
@@ -45,19 +45,6 @@
 	display: grid;
 	grid-template-columns: repeat(8, 1fr);
 	grid-template-rows: repeat(17, 600px);
-}
-.hours-container {
-	background-color: lightgray;
-	display: grid;
-	padding-top: 1rem;
-	grid-template-rows: repeat(17, 2fr);
-}
-.main-content .weekCalendar {
-	width: 80%;
-	color: var(--main-color);
-}
-.main-content .weekCalendar .title {
-	color: var(--main-color);
 }
 .manage-users {
 	margin-top: 2rem;

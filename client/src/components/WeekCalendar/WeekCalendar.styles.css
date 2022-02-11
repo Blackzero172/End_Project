@@ -1,6 +1,7 @@
 .week-calendar {
 	width: 80%;
-	background-color: grey;
+	background-color: var(--main-color);
+	color: var(--secondary-color);
 	display: grid;
 	grid-template-columns: repeat(8, 1fr);
 }
@@ -9,8 +10,6 @@
 }
 .calendar-header p {
 	width: 100%;
-
-	border: black 2px solid;
 	display: flex;
 	justify-content: center;
 }
@@ -19,6 +18,7 @@
 }
 .shift-types div {
 	height: 100%;
+	width: 100%;
 }
 .workers-container {
 	grid-column: 2 / span 7;
@@ -26,7 +26,7 @@
 	max-height: 80vh;
 	height: 100vh;
 	overflow-y: scroll;
-	border: 2px solid black;
+	border: 2px solid var(--secondary-color);
 	margin-left: auto;
 	display: grid;
 	grid-template-columns: repeat(7, 1fr);
@@ -35,5 +35,5 @@
 	display: none;
 }
 .workers-container div {
-	border: 2px solid black;
+	border: 1px solid var(--secondary-color);
 }

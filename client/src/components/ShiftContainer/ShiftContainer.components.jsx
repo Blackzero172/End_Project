@@ -9,16 +9,6 @@ const ShiftContainer = ({ shift, accessLevel }) => {
 				<Property label="Date: " text={date} />
 				<Property label="Type: " text={type} />
 			</div>
-			{accessLevel === "Manager" && (
-				<div className="btns-container flex-content flex-column">
-					<CustomButton>
-						<i className="fas fa-times"></i>
-					</CustomButton>
-					<CustomButton>
-						<i className="fas fa-edit"></i>
-					</CustomButton>
-				</div>
-			)}
 		</div>
 	);
 };

@@ -2,20 +2,23 @@ import moment from "moment";
 import api from "../../api/api";
 
 import { Route, Switch, useRouteMatch } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import CustomButton from "../../components/CustomButton/CustomButton.components";
 import CustomLink from "../../components/CustomLink/CustomLink.components";
 import WeekCalendar from "../../components/WeekCalendar/WeekCalendar.components";
 import UserCard from "../../components/UserCard/UserCard.components";
+import ConfirmActionMenu from "../../components/ConfirmActionMenu/ConfirmActionMenu.components";
 
 import { getWeekDays } from "../../utils/utils";
 
 import "./Dashboard.styles.css";
-import axios from "axios";
+import CreateUserPage from "../CreateUserPage/CreateUserPage.pages";
 
-const Dashboard = ({ setLoading }) => {
+const Dashboard = ({ setLoading, loggedInUser }) => {
 	const [users, setUsers] = useState([]);
+	const [selectedUser, selectUser] = useState({});
+	const confirmMenuRef = useRef();
 	const { path, url } = useRouteMatch();
 
 	const today = moment();
@@ -24,22 +27,32 @@ const Dashboard = ({ setLoading }) => {
 
 	const getUsers = async () => {
 		try {
-			setLoading();
+			setLoading(true);
 			const res = await api.get("/users");
 			const users = res.data;
 			setUsers(users);
 		} catch (e) {
 			console.error(e.response);
 		} finally {
-			setLoading();
+			setLoading(false);
 		}
 	};
-	const onDelete = async (user) => {
+	const onDelete = async () => {
 		try {
-			const res = await api.delete("/users", { data: { email: user.email } });
-			console.log(res);
+			setLoading(true);
+			const res = await api.delete("/users", { data: { email: selectedUser.email } });
+			getUsers();
 		} catch (e) {
 			console.error(e.response);
+		}
+	};
+	const toggleConfirm = (isShown, user) => {
+		if (isShown) {
+			selectUser(user);
+			confirmMenuRef.current.classList.remove("hidden");
+		} else if (!isShown) {
+			selectUser({});
+			confirmMenuRef.current.classList.add("hidden");
 		}
 	};
 	useEffect(() => {
@@ -48,6 +61,12 @@ const Dashboard = ({ setLoading }) => {
 
 	return (
 		<div className="dashboard">
+			<ConfirmActionMenu
+				action="Delete"
+				menuRef={confirmMenuRef}
+				onConfirm={onDelete}
+				onCancel={toggleConfirm}
+			/>
 			<ul className="side-menu">
 				<li>
 					<CustomLink text="Schedule" path={url} />
@@ -68,13 +87,17 @@ const Dashboard = ({ setLoading }) => {
 					</Route>
 					<Route path={`${path}/manage`}>
 						<div className="manage-users flex-items flex-column">
-							<CustomButton text="Add User" classes="add-btn" />
+							<CustomLink text="Add User" path={`${url}/create`} classes="add-btn flex-content" />
 							<div className="users-container">
 								{users.map((user) => {
-									return <UserCard user={user} onDelete={onDelete} />;
+									if (user.IdNumber !== loggedInUser.IdNumber)
+										return <UserCard user={user} onDelete={toggleConfirm} />;
 								})}
 							</div>
 						</div>
+					</Route>
+					<Route path={`${path}/create`}>
+						<CreateUserPage />
 					</Route>
 				</Switch>
 			</div>
