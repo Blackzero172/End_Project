@@ -47,18 +47,3 @@ label {
 .app {
 	display: flex;
 }
-.left-menu {
-	background: #fefefe;
-	min-width: 375px;
-	width: 35%;
-	border-right: 1px solid lightgray;
-}
-.input-container {
-	display: flex;
-	margin-left: 1rem;
-	padding-top: 1rem;
-}
-.input-container input,
-.input-container button {
-	margin: 1rem;
-}

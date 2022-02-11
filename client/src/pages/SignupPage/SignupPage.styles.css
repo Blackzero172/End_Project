@@ -7,11 +7,11 @@
 	background-color: darkred;
 	padding: 2rem 5rem;
 }
-.signup-page .inputs-grid {
+.signup-page .input-containers-grid {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 }
-.signup-page .input {
+.signup-page .input-container {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -19,10 +19,10 @@
 	margin: 0.75rem;
 	width: 100%;
 }
-.signup-page .input input[type="Date"] {
+.signup-page .input-container input[type="Date"] {
 	text-indent: 0.8rem;
 }
-.signup-page .input label {
+.signup-page .input-container label {
 	margin-bottom: 1rem;
 }
 .signup-page h2 {

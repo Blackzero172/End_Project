@@ -1,6 +1,6 @@
 import CustomButton from "../CustomButton/CustomButton.components";
 import "./UserCard.styles.css";
-const UserCard = ({ user, onDelete }) => {
+const UserCard = ({ user, onDelete, onEdit }) => {
 	return (
 		<div className="user-card">
 			<p>Name: {`${user.firstName} ${user.lastName}`}</p>
@@ -13,7 +13,11 @@ const UserCard = ({ user, onDelete }) => {
 				>
 					<i className="fas fa-times"></i>
 				</CustomButton>
-				<CustomButton>
+				<CustomButton
+					onClick={() => {
+						onEdit(true, user);
+					}}
+				>
 					<i className="fas fa-edit"></i>
 				</CustomButton>
 			</div>

@@ -15,8 +15,15 @@ input::-webkit-inner-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
 }
+.input-container {
+	margin-left: 1rem;
+	padding-top: 1rem;
+}
+.input-container input,
+.input-container button {
+	margin: 1rem;
+}
 
-/* Firefox */
 input[type="number"] {
 	-moz-appearance: textfield;
 }

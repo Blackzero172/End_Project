@@ -2,7 +2,7 @@ import React from "react";
 import "./CustomInput.styles.css";
 const CustomInput = ({ type, onChange, placeHolder, label, name, inputRef, required, autocomplete }) => {
 	return (
-		<div className="input">
+		<div className="input-container flex-column flex-items">
 			<label htmlFor={name}>{label}</label>
 			<input
 				type={type}

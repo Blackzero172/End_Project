@@ -9,14 +9,14 @@
 
 	padding: 2rem;
 }
-.login-page .input {
+.login-page .input-container {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
 	align-items: center;
 	margin: 1rem;
 }
-.login-page .input label {
+.login-page .input-container label {
 	margin-bottom: 1rem;
 }
 .login-page h2 {

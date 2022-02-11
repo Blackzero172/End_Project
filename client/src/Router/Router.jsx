@@ -22,7 +22,12 @@ const Router = ({ inputRefs, onLogin, onSignup, onLogout, isLoggedIn, loggedInUs
 				</Route>
 				<Route path="/dashboard">
 					{isLoggedIn ? (
-						<Dashboard setLoading={setLoading} loggedInUser={loggedInUser} />
+						<Dashboard
+							setLoading={setLoading}
+							loggedInUser={loggedInUser}
+							inputRefs={inputRefs}
+							onCreateUser={onSignup}
+						/>
 					) : (
 						<Redirect to="/" />
 					)}

@@ -19,6 +19,7 @@
 .shift-types div {
 	height: 100%;
 	width: 100%;
+	border-bottom: 2px solid white;
 }
 .workers-container {
 	grid-column: 2 / span 7;

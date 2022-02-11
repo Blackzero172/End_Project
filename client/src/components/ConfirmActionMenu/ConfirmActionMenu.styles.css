@@ -8,7 +8,7 @@
 	z-index: 2;
 	transition: all 0.3s ease;
 }
-.window {
+.confirm-menu .window {
 	padding: 2rem;
 	background-color: var(--main-color);
 	color: var(--secondary-color);

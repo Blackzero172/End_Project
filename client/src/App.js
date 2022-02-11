@@ -67,7 +67,7 @@ function App() {
 		};
 		try {
 			const res = await api.post("/users/signup", credentials);
-			setUser(res.data.user);
+			if (!loggedInUser.hasOwnProperty("email")) setUser(res.data.user);
 		} catch (e) {
 			console.error(e.response.data);
 		} finally {

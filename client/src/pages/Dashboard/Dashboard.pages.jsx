@@ -1,7 +1,7 @@
 import moment from "moment";
 import api from "../../api/api";
 
-import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 
 import CustomButton from "../../components/CustomButton/CustomButton.components";
@@ -15,9 +15,10 @@ import { getWeekDays } from "../../utils/utils";
 import "./Dashboard.styles.css";
 import CreateUserPage from "../CreateUserPage/CreateUserPage.pages";
 
-const Dashboard = ({ setLoading, loggedInUser }) => {
+const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser }) => {
 	const [users, setUsers] = useState([]);
 	const [selectedUser, selectUser] = useState({});
+	const [isEditing, setEdit] = useState(false);
 	const confirmMenuRef = useRef();
 	const { path, url } = useRouteMatch();
 
@@ -55,6 +56,10 @@ const Dashboard = ({ setLoading, loggedInUser }) => {
 			confirmMenuRef.current.classList.add("hidden");
 		}
 	};
+	const setupEdit = (isEdit = false, user = {}) => {
+		selectUser(user);
+		setEdit(isEdit);
+	};
 	useEffect(() => {
 		getUsers();
 	}, []);
@@ -76,30 +81,29 @@ const Dashboard = ({ setLoading, loggedInUser }) => {
 				</li>
 			</ul>
 			<div className="main-content flex-items flex-column">
-				<Switch>
-					<Route path={path} exact>
-						<div className="month-selector flex-content">
-							<i className="fas fa-chevron-left"></i>
-							{formattedDate}
-							<i className="fas fa-chevron-right"></i>
+				{isEditing && <Redirect to={`${url}/create`} />}
+				<Route path={path} exact>
+					<div className="month-selector flex-content">
+						<i className="fas fa-chevron-left"></i>
+						{formattedDate}
+						<i className="fas fa-chevron-right"></i>
+					</div>
+					<WeekCalendar weekDays={weekDays} />
+				</Route>
+				<Route path={`${path}/manage`}>
+					<div className="manage-users flex-items flex-column">
+						<CustomLink text="Add User" path={`${url}/create`} classes="add-btn flex-content" />
+						<div className="users-container">
+							{users.map((user) => {
+								if (user.IdNumber !== loggedInUser.IdNumber)
+									return <UserCard user={user} onDelete={toggleConfirm} onEdit={setupEdit} />;
+							})}
 						</div>
-						<WeekCalendar weekDays={weekDays} />
-					</Route>
-					<Route path={`${path}/manage`}>
-						<div className="manage-users flex-items flex-column">
-							<CustomLink text="Add User" path={`${url}/create`} classes="add-btn flex-content" />
-							<div className="users-container">
-								{users.map((user) => {
-									if (user.IdNumber !== loggedInUser.IdNumber)
-										return <UserCard user={user} onDelete={toggleConfirm} />;
-								})}
-							</div>
-						</div>
-					</Route>
-					<Route path={`${path}/create`}>
-						<CreateUserPage />
-					</Route>
-				</Switch>
+					</div>
+				</Route>
+				<Route path={`${url}/create`}>
+					<CreateUserPage inputRefs={inputRefs} onCreateUser={onCreateUser} />
+				</Route>
 			</div>
 		</div>
 	);

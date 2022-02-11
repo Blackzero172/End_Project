@@ -1,0 +1,16 @@
+.create-user-page {
+	width: 100%;
+	margin-top: 2rem;
+	color: var(--main-color);
+}
+.create-user-page input {
+	border: 1px solid var(--main-color);
+}
+.create-user-page label {
+	background-color: var(--secondary-color);
+	color: var(--main-color);
+	border: 2px solid var(--main-color);
+}
+.create-user-page button:hover {
+	border-color: var(--main-color);
+}
