@@ -23,19 +23,8 @@ const CreateUserPage = ({ onCreateUser, inputRefs, errorTextRef, selectedUser, o
 
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
-		let message;
-		if (!selectedUser) {
-			message = await onCreateUser();
-		} else {
-			message = await onEditUser(selectedUser.email);
-		}
-		if (message) {
-			errorTextRef.current.innerText = message;
-			errorTextRef.current.classList.remove("hidden");
-			setTimeout(() => {
-				errorTextRef.current.classList.add("hidden");
-			}, 2000);
-		}
+		await onCreateUser();
+		await onEditUser(selectedUser.email);
 	};
 
 	return (

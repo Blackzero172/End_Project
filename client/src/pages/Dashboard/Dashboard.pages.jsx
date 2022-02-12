@@ -18,6 +18,7 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUs
 	const [users, setUsers] = useState([]);
 	const [selectedUser, selectUser] = useState({});
 	const confirmMenuRef = useRef();
+	const errorTextRef = useRef();
 	const { path, url } = useRouteMatch();
 	const history = useHistory();
 
@@ -60,22 +61,29 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUs
 		selectUser(user);
 	};
 	const onConfirmCreate = async () => {
-		try {
-			await onCreateUser();
-			await getUsers();
+		const message = await onCreateUser();
+		await getUsers();
+		if (!message) {
 			history.push("/dashboard/manage");
-		} catch (e) {
-			console.error(e);
+		} else {
+			errorTextRef.current.innerText = message;
+			errorTextRef.current.classList.remove("hidden");
+			setTimeout(() => {
+				errorTextRef.current.classList.add("hidden");
+			}, 2000);
 		}
 	};
 	const onConfirmEdit = async (email) => {
-		try {
-			await onEditUser(email);
-			await getUsers();
+		const message = await onEditUser(email);
+		await getUsers();
+		if (!message) {
 			history.push("/dashboard/manage");
-			console.log("pushed URL");
-		} catch (e) {
-			console.log(e);
+		} else {
+			errorTextRef.current.innerText = message.includes("Id") ? "Invalid ID Number" : message;
+			errorTextRef.current.classList.remove("hidden");
+			setTimeout(() => {
+				errorTextRef.current.classList.add("hidden");
+			}, 2000);
 		}
 	};
 	useEffect(() => {
@@ -130,7 +138,7 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUs
 					</div>
 				</Route>
 				<Route path={`${path}/create`}>
-					<CreateUserPage inputRefs={inputRefs} onCreateUser={onConfirmCreate} />
+					<CreateUserPage inputRefs={inputRefs} onCreateUser={onConfirmCreate} errorTextRef={errorTextRef} />
 				</Route>
 				<Route path={`${path}/edit`}>
 					<CreateUserPage
@@ -138,6 +146,7 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUs
 						onCreateUser={onConfirmCreate}
 						selectedUser={selectedUser}
 						onEditUser={onConfirmEdit}
+						errorTextRef={errorTextRef}
 					/>
 				</Route>
 			</div>

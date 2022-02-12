@@ -49,14 +49,13 @@ const editUser = async (req, res) => {
 		user.birthDate = newBirthDate;
 		user.IdNumber = newIdNumber;
 		if (newPassword !== "" && newPassword) {
-			console.log("Changed Password");
 			user.password = newPassword;
 		}
 		user.accessLevel = newAccessLevel;
 		await user.save();
 		res.send(user);
 	} catch (e) {
-		res.status(500).send("NOPE");
+		res.status(500).send(e.message);
 	}
 };
 const editProfile = async (req, res) => {
@@ -68,7 +67,6 @@ const editProfile = async (req, res) => {
 	user.birthDate = newBirthDate;
 	user.IdNumber = newIdNumber;
 	if (newPassword !== "" && newPassword) {
-		console.log("Changed Password");
 		user.password = newPassword;
 	}
 	await user.save();
@@ -139,7 +137,6 @@ const postUser = async (req, res) => {
 			res.status(201).send({ user, genToken });
 		} else res.status(201).send({ user });
 	} catch (e) {
-		console.log(e.message);
 		if (e.message.includes("E11000")) return res.status(400).send("User already exists");
 		res.status(500).send(e.message);
 	}
@@ -161,8 +158,6 @@ const removeUser = async (req, res) => {
 	try {
 		// const { email } = req.body;
 		const { email } = req.body;
-		console.log(req.header("Content-Type"));
-		console.log(req.body);
 		const user = await User.findOneAndDelete({ email });
 		if (!user) return res.status(404).send("User doesn't Exist!");
 		res.send(`Deleted User`);
