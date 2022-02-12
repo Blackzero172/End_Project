@@ -1,6 +1,6 @@
 import "./WeekCalendar.styles.css";
 import Daycell from "./Daycell/Daycell.components";
-const WeekCalendar = ({ weekDays }) => {
+const WeekCalendar = ({ weekDays, schedule, onClick }) => {
 	return (
 		<div className="week-calendar">
 			<div className="calendar-header flex-items">
@@ -24,8 +24,10 @@ const WeekCalendar = ({ weekDays }) => {
 				</div>
 			</div>
 			<div className="workers-container">
-				{weekDays.map((cell, index) => {
-					return <Daycell key={index} />;
+				{weekDays.map((day, index) => {
+					schedule.days = schedule.days || [];
+					day = schedule.days[index] || {};
+					return <Daycell key={index} day={day} onClick={onClick} weekDay={index} />;
 				})}
 			</div>
 		</div>

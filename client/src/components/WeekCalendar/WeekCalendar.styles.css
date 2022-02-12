@@ -19,7 +19,6 @@
 .shift-types div {
 	height: 100%;
 	width: 100%;
-	border-bottom: 2px solid white;
 }
 .workers-container {
 	grid-column: 2 / span 7;
@@ -27,7 +26,6 @@
 	max-height: 80vh;
 	height: 100vh;
 	overflow-y: scroll;
-	border: 2px solid var(--secondary-color);
 	margin-left: auto;
 	display: grid;
 	grid-template-columns: repeat(7, 1fr);
@@ -36,5 +34,7 @@
 	display: none;
 }
 .workers-container div {
-	border: 1px solid var(--secondary-color);
+	border: 2px solid var(--main-color);
+	border-bottom-width: 3px;
+	background-color: var(--secondary-color);
 }

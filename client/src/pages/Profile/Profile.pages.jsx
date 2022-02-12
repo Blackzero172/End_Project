@@ -1,6 +1,6 @@
 import moment from "moment";
 import { useRef } from "react";
-import { useRouteMatch, Route, useHistory } from "react-router-dom";
+import { useRouteMatch, Route } from "react-router-dom";
 
 import profileIcon from "../../assets/img/blank_profile.png";
 import CustomLink from "../../components/CustomLink/CustomLink.components";
@@ -12,7 +12,6 @@ import "./Profile.styles.css";
 
 const Profile = ({ loggedInUser, inputRefs, onEditProfile }) => {
 	const { path, url } = useRouteMatch();
-	const history = useHistory();
 	const errorTextRef = useRef();
 
 	const { firstName, lastName, birthDate, IdNumber, email, shifts } = loggedInUser;
@@ -37,7 +36,7 @@ const Profile = ({ loggedInUser, inputRefs, onEditProfile }) => {
 			<Route path={`${path}`} exact>
 				<div className="profile-window flex-column">
 					<div className="profile-icon flex-items">
-						<img src={profileIcon} />
+						<img src={profileIcon} alt="Profile" />
 						<div className="name-container">
 							<Property text={`${firstName} ${lastName}`} />
 						</div>

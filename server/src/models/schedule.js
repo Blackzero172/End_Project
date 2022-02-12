@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 const Schedule = mongoose.model("Schedule", {
 	startDate: {
 		type: Date,
@@ -12,25 +13,39 @@ const Schedule = mongoose.model("Schedule", {
 	},
 	days: [
 		{
+			date: {
+				type: Date,
+				required: true,
+				unique: true,
+			},
 			morningWorkers: [
 				{
-					type: mongoose.ObjectId,
+					type: String,
 					required: true,
 					unique: true,
+					validate(val) {
+						if (!validator.isEmail(val)) throw new Error("Invalid Email");
+					},
 				},
 			],
 			middleWorkers: [
 				{
-					type: mongoose.ObjectId,
+					type: String,
 					required: true,
 					unique: true,
+					validate(val) {
+						if (!validator.isEmail(val)) throw new Error("Invalid Email");
+					},
 				},
 			],
 			eveningWorkers: [
 				{
-					type: mongoose.ObjectId,
+					type: String,
 					required: true,
 					unique: true,
+					validate(val) {
+						if (!validator.isEmail(val)) throw new Error("Invalid Email");
+					},
 				},
 			],
 		},

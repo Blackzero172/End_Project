@@ -4,9 +4,9 @@ const checkPermissions = require("../middleware/checkPermissions");
 
 const ScheduleRouter = express.Router();
 
-const { getSchedule, postSchedule, putSchedule } = require("../controllers/schedule.controllers");
+const { getSchedule, putSchedule, postSchedule } = require("../controllers/schedule.controllers");
 
-ScheduleRouter.get("/schedule", auth, getSchedule);
+ScheduleRouter.post("/schedule/get", auth, getSchedule);
 
 ScheduleRouter.post("/schedule", auth, postSchedule);
 

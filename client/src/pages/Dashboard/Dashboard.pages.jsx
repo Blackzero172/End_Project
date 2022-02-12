@@ -13,12 +13,16 @@ import { getWeekDays } from "../../utils/utils";
 
 import "./Dashboard.styles.css";
 import CreateUserPage from "../CreateUserPage/CreateUserPage.pages";
+import EditDayPage from "../EditDayPage/EditDayPage.pages";
 
 const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUser }) => {
 	const [users, setUsers] = useState([]);
+	const [schedule, setSchedule] = useState({});
 	const [selectedUser, selectUser] = useState({});
+	const [selectedDay, selectDay] = useState({});
 	const confirmMenuRef = useRef();
 	const errorTextRef = useRef();
+	const editMenuRef = useRef();
 	const { path, url } = useRouteMatch();
 	const history = useHistory();
 
@@ -34,6 +38,29 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUs
 			setUsers(users);
 		} catch (e) {
 			console.error(e.response);
+		} finally {
+			setLoading(false);
+		}
+	};
+	const getSchedule = async () => {
+		try {
+			setLoading(true);
+			const res = await api.post("/schedule/get", { startDate: moment().startOf("week").toString() });
+			setSchedule(res.data);
+		} catch (e) {
+			if (e.response.status === 404) {
+				const days = [];
+				for (let i = 0; i < 7; i++) {
+					days.push({ date: moment().startOf("week").add(i, "d").toString() });
+				}
+				const res = await api.post("/schedule", {
+					startDate: moment().startOf("week").toString(),
+					endDate: moment().endOf("week").toString(),
+					days,
+				});
+				const schedule = res.data;
+				setSchedule(schedule);
+			} else console.error(e.response);
 		} finally {
 			setLoading(false);
 		}
@@ -86,11 +113,18 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUs
 			}, 2000);
 		}
 	};
+	const editDay = async (day) => {
+		await selectDay(schedule.days[day]);
+		editMenuRef.current.classList.remove("hidden");
+	};
 	useEffect(() => {
-		getUsers();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		try {
+			getUsers();
+			getSchedule();
+		} catch (e) {
+			console.error(e.response);
+		} // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
 	return (
 		<div className="dashboard">
 			<ConfirmActionMenu
@@ -99,6 +133,9 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUs
 				onConfirm={onDelete}
 				onCancel={toggleConfirm}
 			/>
+			{selectedDay.hasOwnProperty("date") && (
+				<EditDayPage users={users} day={selectedDay} menuRef={editMenuRef} />
+			)}
 			<ul className="side-menu">
 				<li>
 					<CustomLink text="Schedule" path={url} onClick={setupEdit} classes="dash" />
@@ -116,7 +153,7 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUs
 						{formattedDate}
 						<i className="fas fa-chevron-right"></i>
 					</div>
-					<WeekCalendar weekDays={weekDays} />
+					<WeekCalendar weekDays={weekDays} schedule={schedule} onClick={editDay} />
 				</Route>
 				<Route path={`${path}/manage`}>
 					<div className="manage-users flex-items flex-column">

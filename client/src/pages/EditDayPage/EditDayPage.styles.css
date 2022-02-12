@@ -1,0 +1,41 @@
+.edit-day-page {
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	background-color: #3335;
+	z-index: 2;
+	backdrop-filter: blur(2px);
+	transition: all 0.3s ease;
+}
+.edit-day-page .btns-container {
+	align-items: flex-end;
+}
+.edit-day-page .btns-container button {
+	margin-bottom: 0.75rem;
+}
+.edit-day-page .results-container {
+	border: 2px solid var(--secondary-color);
+	width: 100%;
+	height: 11vh;
+	text-align: center;
+	overflow-y: scroll;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+}
+.evening-container {
+	margin-bottom: 0.5rem;
+}
+.window > .btns-container button {
+	margin: 0 0.5rem;
+}
+.edit-day-page .results-container::-webkit-scrollbar {
+	display: none;
+}
+.window {
+	background-color: var(--main-color);
+	color: var(--secondary-color);
+	z-index: 3;
+	width: 80%;
+	height: 80%;
+}
