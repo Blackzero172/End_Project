@@ -13,7 +13,6 @@ const getSchedule = async (req, res) => {
 		res.send(schedule);
 	} catch (e) {
 		res.status(500).send(e.message);
-		console.log(e);
 	}
 };
 const postSchedule = async (req, res) => {
@@ -22,7 +21,6 @@ const postSchedule = async (req, res) => {
 		await schedule.save();
 		res.status(201).send(schedule);
 	} catch (e) {
-		console.log(e.message);
 		res.status(500).send(e.message);
 	}
 };

@@ -10,7 +10,6 @@ const LoginPage = ({ onLogin, inputRefs }) => {
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
 		const message = await onLogin();
-		console.log(errorTextRef);
 		if (message) {
 			errorTextRef.current.innerText = message;
 			errorTextRef.current.classList.remove("hidden");

@@ -6,6 +6,4 @@ const apiRouter = express.Router();
 
 apiRouter.use("/", UserRouter);
 apiRouter.use("/", ScheduleRouter);
-//To Return my React App on Refresh
-
 module.exports = apiRouter;
