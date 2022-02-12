@@ -14,21 +14,22 @@ import { getWeekDays } from "../../utils/utils";
 import "./Dashboard.styles.css";
 import CreateUserPage from "../CreateUserPage/CreateUserPage.pages";
 import EditDayPage from "../EditDayPage/EditDayPage.pages";
+import CustomButton from "../../components/CustomButton/CustomButton.components";
 
 const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUser }) => {
 	const [users, setUsers] = useState([]);
 	const [schedule, setSchedule] = useState({});
 	const [selectedUser, selectUser] = useState({});
 	const [selectedDay, selectDay] = useState({});
+	const [today, setToday] = useState(moment);
 	const confirmMenuRef = useRef();
 	const errorTextRef = useRef();
 	const editMenuRef = useRef();
 	const { path, url } = useRouteMatch();
 	const history = useHistory();
 
-	const today = moment();
-	const formattedDate = today.format("MMMM YYYY");
-	const weekDays = getWeekDays(today);
+	const formattedDate = moment().format("MMMM YYYY");
+	const weekDays = getWeekDays(moment());
 
 	const getUsers = async () => {
 		try {
@@ -117,6 +118,10 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUs
 		await selectDay(schedule.days[day]);
 		editMenuRef.current.classList.remove("hidden");
 	};
+	const hideEditDay = () => {
+		selectDay({});
+		editMenuRef.current.classList.add("hidden");
+	};
 	useEffect(() => {
 		try {
 			getUsers();
@@ -125,6 +130,7 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUs
 			console.error(e.response);
 		} // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
 	return (
 		<div className="dashboard">
 			<ConfirmActionMenu
@@ -133,9 +139,9 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUs
 				onConfirm={onDelete}
 				onCancel={toggleConfirm}
 			/>
-			{selectedDay.hasOwnProperty("date") && (
-				<EditDayPage users={users} day={selectedDay} menuRef={editMenuRef} />
-			)}
+
+			<EditDayPage users={users} day={selectedDay} menuRef={editMenuRef} onCancel={hideEditDay} />
+
 			<ul className="side-menu">
 				<li>
 					<CustomLink text="Schedule" path={url} onClick={setupEdit} classes="dash" />
@@ -153,7 +159,7 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUs
 						{formattedDate}
 						<i className="fas fa-chevron-right"></i>
 					</div>
-					<WeekCalendar weekDays={weekDays} schedule={schedule} onClick={editDay} />
+					<WeekCalendar weekDays={weekDays} schedule={schedule} onClick={editDay} users={users} />
 				</Route>
 				<Route path={`${path}/manage`}>
 					<div className="manage-users flex-items flex-column">

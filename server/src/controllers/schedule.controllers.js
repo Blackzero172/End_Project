@@ -2,6 +2,7 @@ const express = require("express");
 const Schedule = require("../models/schedule");
 const app = express();
 const moment = require("moment");
+const User = require("../models/user");
 app.use(express.json());
 
 const getSchedule = async (req, res) => {
@@ -34,6 +35,30 @@ const putSchedule = async (req, res) => {
 		weekDayObj.morningWorkers.push(...morningWorkers);
 		weekDayObj.middleWorkers.push(...middleWorkers);
 		weekDayObj.eveningWorkers.push(...eveningWorkers);
+		weekDayObj.morningWorkers.forEach(async (worker) => {
+			try {
+				const user = await User.findOne({ email: worker });
+				await user.addShift(schedule.days[weekDay].date.toDateString(), "Morning");
+			} catch (e) {
+				console.error(e);
+			}
+		});
+		weekDayObj.middleWorkers.forEach(async (worker) => {
+			try {
+				const user = await User.findOne({ email: worker });
+				await user.addShift(schedule.days[weekDay].date.toDateString(), "Middle");
+			} catch (e) {
+				console.error(e);
+			}
+		});
+		weekDayObj.eveningWorkers.forEach(async (worker) => {
+			try {
+				const user = await User.findOne({ email: worker });
+				await user.addShift(schedule.days[weekDay].date.toDateString(), "Evening");
+			} catch (e) {
+				console.error(e);
+			}
+		});
 		await schedule.save();
 		res.send(schedule);
 	} catch (e) {

@@ -1,5 +1,11 @@
 import "./Daycell.styles.css";
-const Daycell = ({ onClick, weekDay }) => {
+const Daycell = ({ onClick, weekDay, day, users = [] }) => {
+	let morningWorkers = [];
+	if (users.length > 0) {
+		morningWorkers = day.morningWorkers.map((workerEmail) => {
+			return users.find((user) => user.email === workerEmail.toLowerCase());
+		});
+	}
 	return (
 		<div
 			className="day-cell flex-column flex-evenly"
@@ -7,7 +13,11 @@ const Daycell = ({ onClick, weekDay }) => {
 				onClick(weekDay);
 			}}
 		>
-			<div></div>
+			<div>
+				{morningWorkers.map((worker) => {
+					return <p>{`${worker.firstName} ${worker.lastName}`}</p>;
+				})}
+			</div>
 			<div></div>
 			<div></div>
 		</div>
