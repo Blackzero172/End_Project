@@ -2,6 +2,14 @@
 	display: flex;
 	justify-content: center;
 }
+.flex-content-start {
+	display: flex;
+	justify-content: flex-start;
+}
+.flex-content-end {
+	display: flex;
+	justify-content: flex-end;
+}
 .flex {
 	display: flex;
 }

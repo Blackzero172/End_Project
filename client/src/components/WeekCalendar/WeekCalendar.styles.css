@@ -20,7 +20,7 @@
 	height: 100%;
 	width: 100%;
 }
-.workers-container {
+.week-calendar .workers-container {
 	grid-column: 2 / span 7;
 	width: 100%;
 	max-height: 80vh;
@@ -30,10 +30,10 @@
 	display: grid;
 	grid-template-columns: repeat(7, 1fr);
 }
-.workers-container::-webkit-scrollbar {
+.week-calendar .workers-container::-webkit-scrollbar {
 	display: none;
 }
-.workers-container div {
+.week-calendar .workers-container div {
 	border: 2px solid var(--main-color);
 	border-bottom-width: 3px;
 	background-color: var(--secondary-color);

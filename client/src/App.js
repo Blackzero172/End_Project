@@ -167,7 +167,10 @@ function App() {
 			setLoading(false);
 		}
 	};
-
+	const getProfile = async () => {
+		const user = await api.get("/users/me");
+		setUser(user.data);
+	};
 	return (
 		<BrowserRouter>
 			<Router
@@ -180,6 +183,7 @@ function App() {
 				setLoading={setLoading}
 				onEditUser={onEditUser}
 				onEditProfile={onEditProfile}
+				getProfile={getProfile}
 			/>
 			<Spinner spinnerRef={spinnerRef} />
 		</BrowserRouter>

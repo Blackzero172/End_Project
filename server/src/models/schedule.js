@@ -22,7 +22,6 @@ const Schedule = mongoose.model("Schedule", {
 				{
 					type: String,
 					required: true,
-					unique: true,
 					validate(val) {
 						if (!validator.isEmail(val)) throw new Error("Invalid Email");
 					},
@@ -32,7 +31,6 @@ const Schedule = mongoose.model("Schedule", {
 				{
 					type: String,
 					required: true,
-					unique: true,
 					validate(val) {
 						if (!validator.isEmail(val)) throw new Error("Invalid Email");
 					},
@@ -42,7 +40,6 @@ const Schedule = mongoose.model("Schedule", {
 				{
 					type: String,
 					required: true,
-					unique: true,
 					validate(val) {
 						if (!validator.isEmail(val)) throw new Error("Invalid Email");
 					},

@@ -7,6 +7,15 @@
 	border-right: 2px solid grey;
 	height: 100%;
 }
+.month-selector button.alt {
+	padding: 0;
+	margin: 0.3rem 1rem;
+	width: 5%;
+}
+.month-selector button i {
+	margin-right: 0.4rem;
+}
+
 .dashboard ul li {
 	margin: 2rem 0.5rem;
 }
@@ -19,10 +28,9 @@
 }
 .month-selector {
 	margin: 1rem 0;
+	width: 30%;
 }
-.month-selector i {
-	margin: 0.3rem 0.75rem;
-}
+
 .calendar {
 	width: 80%;
 	height: 80vh;

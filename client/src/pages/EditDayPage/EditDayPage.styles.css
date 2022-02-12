@@ -10,11 +10,12 @@
 }
 .edit-day-page .btns-container {
 	align-items: flex-end;
+	position: relative;
 }
 .edit-day-page .btns-container button {
 	margin-bottom: 0.75rem;
 }
-.edit-day-page .results-container {
+.edit-day-page .workers-container {
 	border: 2px solid var(--secondary-color);
 	width: 100%;
 	height: 11vh;
@@ -29,10 +30,23 @@
 .window > .btns-container button {
 	margin: 0 0.5rem;
 }
-.edit-day-page .results-container::-webkit-scrollbar {
+.edit-day-page .results-container {
+	width: 100%;
+	position: absolute;
+	top: 87.5%;
+	background-color: var(--secondary-color);
+	color: var(--main-color);
+	transition: all 0.3s ease;
+	max-height: 14vh;
+}
+.results-container button.alt {
+	width: 80%;
+	margin: 0.5rem;
+}
+.edit-day-page .workers-container::-webkit-scrollbar {
 	display: none;
 }
-.window {
+.edit-day-page .window {
 	background-color: var(--main-color);
 	color: var(--secondary-color);
 	z-index: 3;

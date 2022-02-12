@@ -16,20 +16,21 @@ import CreateUserPage from "../CreateUserPage/CreateUserPage.pages";
 import EditDayPage from "../EditDayPage/EditDayPage.pages";
 import CustomButton from "../../components/CustomButton/CustomButton.components";
 
-const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUser }) => {
+const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUser, getProfile }) => {
 	const [users, setUsers] = useState([]);
 	const [schedule, setSchedule] = useState({});
 	const [selectedUser, selectUser] = useState({});
 	const [selectedDay, selectDay] = useState({});
-	const [today, setToday] = useState(moment);
+	const [weekNumber, setWeek] = useState(0);
 	const confirmMenuRef = useRef();
 	const errorTextRef = useRef();
 	const editMenuRef = useRef();
 	const { path, url } = useRouteMatch();
 	const history = useHistory();
 
-	const formattedDate = moment().format("MMMM YYYY");
-	const weekDays = getWeekDays(moment());
+	const today = moment(weekNumber, "ww");
+	const formattedDate = today.format("MMMM YYYY");
+	const weekDays = getWeekDays(today);
 
 	const getUsers = async () => {
 		try {
@@ -46,17 +47,19 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUs
 	const getSchedule = async () => {
 		try {
 			setLoading(true);
-			const res = await api.post("/schedule/get", { startDate: moment().startOf("week").toString() });
+			const res = await api.post("/schedule/get", {
+				startDate: moment(weekNumber, "w").startOf("week").toString(),
+			});
 			setSchedule(res.data);
 		} catch (e) {
 			if (e.response.status === 404) {
 				const days = [];
 				for (let i = 0; i < 7; i++) {
-					days.push({ date: moment().startOf("week").add(i, "d").toString() });
+					days.push({ date: moment(weekNumber, "w").add(i, "d").toString() });
 				}
 				const res = await api.post("/schedule", {
-					startDate: moment().startOf("week").toString(),
-					endDate: moment().endOf("week").toString(),
+					startDate: moment(weekNumber, "w").startOf("week").toString(),
+					endDate: moment(weekNumber, "w").endOf("week").toString(),
 					days,
 				});
 				const schedule = res.data;
@@ -122,15 +125,44 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUs
 		selectDay({});
 		editMenuRef.current.classList.add("hidden");
 	};
+	const onConfirmEditDay = async (day) => {
+		setLoading(true);
+		try {
+			const { morningWorkers, middleWorkers, eveningWorkers } = day;
+			const req = {
+				startDate: schedule.startDate,
+				weekDay: schedule.days.indexOf(selectedDay),
+				morningWorkers,
+				middleWorkers,
+				eveningWorkers,
+				users,
+			};
+			const res = await api.put("/schedule", req);
+			setSchedule(res.data);
+			getProfile();
+			hideEditDay();
+		} catch (e) {
+			console.error(e.response);
+		} finally {
+			setLoading(false);
+		}
+	};
 	useEffect(() => {
 		try {
 			getUsers();
 			getSchedule();
+			setWeek(moment().week());
 		} catch (e) {
 			console.error(e.response);
 		} // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
+	useEffect(() => {
+		try {
+			getSchedule();
+		} catch (e) {
+			console.error(e.response);
+		}
+	}, [weekNumber]);
 	return (
 		<div className="dashboard">
 			<ConfirmActionMenu
@@ -140,7 +172,13 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUs
 				onCancel={toggleConfirm}
 			/>
 
-			<EditDayPage users={users} day={selectedDay} menuRef={editMenuRef} onCancel={hideEditDay} />
+			<EditDayPage
+				users={users}
+				day={selectedDay}
+				menuRef={editMenuRef}
+				onCancel={hideEditDay}
+				onConfirm={onConfirmEditDay}
+			/>
 
 			<ul className="side-menu">
 				<li>
@@ -155,9 +193,23 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUs
 			<div className="main-content flex-items flex-column">
 				<Route path={path} exact>
 					<div className="month-selector flex-content">
-						<i className="fas fa-chevron-left"></i>
+						<CustomButton
+							onClick={() => {
+								setWeek(weekNumber - 1);
+							}}
+							classes="alt flex-content flex-items minus-btn"
+						>
+							<i className="fas fa-chevron-left"></i>
+						</CustomButton>
 						{formattedDate}
-						<i className="fas fa-chevron-right"></i>
+						<CustomButton
+							onClick={() => {
+								setWeek(weekNumber + 1);
+							}}
+							classes="alt flex-content flex-items plus-btn"
+						>
+							<i className="fas fa-chevron-right"></i>
+						</CustomButton>
 					</div>
 					<WeekCalendar weekDays={weekDays} schedule={schedule} onClick={editDay} users={users} />
 				</Route>

@@ -17,6 +17,7 @@ const Router = ({
 	setLoading,
 	onEditUser,
 	onEditProfile,
+	getProfile,
 }) => {
 	return (
 		<>
@@ -40,6 +41,7 @@ const Router = ({
 							inputRefs={inputRefs}
 							onCreateUser={onSignup}
 							onEditUser={onEditUser}
+							getProfile={getProfile}
 						/>
 					) : (
 						<Redirect to="/" />

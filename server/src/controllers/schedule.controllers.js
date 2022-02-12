@@ -28,13 +28,23 @@ const postSchedule = async (req, res) => {
 };
 const putSchedule = async (req, res) => {
 	try {
-		const { weekDay, morningWorkers = [], middleWorkers = [], eveningWorkers = [] } = req.body;
+		const { weekDay, morningWorkers = [], middleWorkers = [], eveningWorkers = [], users = [] } = req.body;
 		const schedule = await Schedule.findOne({ startDate: req.body.startDate });
-		schedule.days[weekDay] = schedule.days[weekDay] || { date: moment(schedule.startDate).add(weekDay, "d") };
+		schedule.days[weekDay] = schedule.days[weekDay] || {
+			date: moment(schedule.startDate).add(weekDay, "d").toString(),
+		};
 		const weekDayObj = schedule.days[weekDay];
-		weekDayObj.morningWorkers.push(...morningWorkers);
-		weekDayObj.middleWorkers.push(...middleWorkers);
-		weekDayObj.eveningWorkers.push(...eveningWorkers);
+
+		weekDayObj.morningWorkers = morningWorkers;
+		weekDayObj.middleWorkers = middleWorkers;
+		weekDayObj.eveningWorkers = eveningWorkers;
+		users.forEach(async (user) => {
+			const dbUser = await User.findOne({ email: user.email });
+			dbUser.shifts = dbUser.shifts.filter(
+				(currentShift) => currentShift.shiftDate !== schedule.days[weekDay].date.toDateString()
+			);
+			await dbUser.save();
+		});
 		weekDayObj.morningWorkers.forEach(async (worker) => {
 			try {
 				const user = await User.findOne({ email: worker });

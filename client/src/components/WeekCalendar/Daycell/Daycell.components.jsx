@@ -1,8 +1,16 @@
 import "./Daycell.styles.css";
 const Daycell = ({ onClick, weekDay, day, users = [] }) => {
 	let morningWorkers = [];
+	let middleWorkers = [];
+	let eveningWorkers = [];
 	if (users.length > 0) {
 		morningWorkers = day.morningWorkers.map((workerEmail) => {
+			return users.find((user) => user.email === workerEmail.toLowerCase());
+		});
+		middleWorkers = day.middleWorkers.map((workerEmail) => {
+			return users.find((user) => user.email === workerEmail.toLowerCase());
+		});
+		eveningWorkers = day.eveningWorkers.map((workerEmail) => {
 			return users.find((user) => user.email === workerEmail.toLowerCase());
 		});
 	}
@@ -18,8 +26,16 @@ const Daycell = ({ onClick, weekDay, day, users = [] }) => {
 					return <p>{`${worker.firstName} ${worker.lastName}`}</p>;
 				})}
 			</div>
-			<div></div>
-			<div></div>
+			<div>
+				{middleWorkers.map((worker) => {
+					return <p>{`${worker.firstName} ${worker.lastName}`}</p>;
+				})}
+			</div>
+			<div>
+				{eveningWorkers.map((worker) => {
+					return <p>{`${worker.firstName} ${worker.lastName}`}</p>;
+				})}
+			</div>
 		</div>
 	);
 };
