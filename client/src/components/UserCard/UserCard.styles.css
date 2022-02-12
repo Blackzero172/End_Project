@@ -12,6 +12,22 @@
 	top: 0;
 }
 .user-card .btns-container button {
-	padding: 0.2rem;
-	margin: 0.1rem 0;
+	padding: 0.3rem;
+	margin: 0.2rem 0;
+}
+
+.user-card .btns-container i {
+	pointer-events: none;
+}
+.user-card .btns-container a:hover {
+	background: var(--secondary-color);
+	color: var(--main-color);
+}
+.user-card .btns-container a:active {
+	border-color: var(--secondary-color-active);
+	background: var(--secondary-color-active);
+}
+span {
+	color: green;
+	font-weight: 700;
 }

@@ -47,3 +47,10 @@ label {
 .app {
 	display: flex;
 }
+.window p.error-message {
+	position: absolute;
+	top: -10%;
+	color: #ff0000;
+	/* background-color: var(--secondary-color); */
+	transition: all 0.3s ease;
+}

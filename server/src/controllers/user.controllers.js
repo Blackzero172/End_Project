@@ -31,23 +31,46 @@ const getSchedule = async (req, res) => {
 };
 const editUser = async (req, res) => {
 	try {
-		const { userEmail, newName, newEmail, newAccessLevel } = req.body;
+		const {
+			userEmail,
+			newFirstName,
+			newLastName,
+			newEmail,
+			newAccessLevel,
+			newPassword,
+			newBirthDate,
+			newIdNumber,
+		} = req.body;
 		const user = await User.findOne({ email: userEmail });
-		user.name = newName;
+		if (!user) return res.status(404).send("User not found");
+		user.firstName = newFirstName;
+		user.lastName = newLastName;
 		user.email = newEmail;
+		user.birthDate = newBirthDate;
+		user.IdNumber = newIdNumber;
+		if (newPassword !== "" && newPassword) {
+			console.log("Changed Password");
+			user.password = newPassword;
+		}
 		user.accessLevel = newAccessLevel;
 		await user.save();
 		res.send(user);
 	} catch (e) {
-		res.status(500).send(e.message);
+		res.status(500).send("NOPE");
 	}
 };
 const editProfile = async (req, res) => {
 	const user = req.user;
-	const { name = user.name, email = user.email, password = user.password } = req.body;
-	user.name = name;
-	user.email = email;
-	user.password = password;
+	const { newFirstName, newLastName, newEmail, newPassword, newBirthDate, newIdNumber } = req.body;
+	user.firstName = newFirstName;
+	user.lastName = newLastName;
+	user.email = newEmail;
+	user.birthDate = newBirthDate;
+	user.IdNumber = newIdNumber;
+	if (newPassword !== "" && newPassword) {
+		console.log("Changed Password");
+		user.password = newPassword;
+	}
 	await user.save();
 	res.send(user);
 };

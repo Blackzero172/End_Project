@@ -24,8 +24,8 @@ const WeekCalendar = ({ weekDays }) => {
 				</div>
 			</div>
 			<div className="workers-container">
-				{weekDays.map(() => {
-					return <Daycell />;
+				{weekDays.map((cell, index) => {
+					return <Daycell key={index} />;
 				})}
 			</div>
 		</div>

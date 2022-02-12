@@ -1,6 +1,5 @@
 import Property from "../Property/Property.components";
 import "./ShiftContainer.styles.css";
-import CustomButton from "../CustomButton/CustomButton.components";
 const ShiftContainer = ({ shift, accessLevel }) => {
 	const { shiftDate: date, shiftType: type } = shift;
 	return (

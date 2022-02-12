@@ -1,10 +1,9 @@
 import moment from "moment";
 import api from "../../api/api";
 
-import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
+import { Route, useRouteMatch, useHistory } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 
-import CustomButton from "../../components/CustomButton/CustomButton.components";
 import CustomLink from "../../components/CustomLink/CustomLink.components";
 import WeekCalendar from "../../components/WeekCalendar/WeekCalendar.components";
 import UserCard from "../../components/UserCard/UserCard.components";
@@ -15,12 +14,12 @@ import { getWeekDays } from "../../utils/utils";
 import "./Dashboard.styles.css";
 import CreateUserPage from "../CreateUserPage/CreateUserPage.pages";
 
-const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser }) => {
+const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUser }) => {
 	const [users, setUsers] = useState([]);
 	const [selectedUser, selectUser] = useState({});
-	const [isEditing, setEdit] = useState(false);
 	const confirmMenuRef = useRef();
 	const { path, url } = useRouteMatch();
+	const history = useHistory();
 
 	const today = moment();
 	const formattedDate = today.format("MMMM YYYY");
@@ -41,8 +40,9 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser }) => {
 	const onDelete = async () => {
 		try {
 			setLoading(true);
-			const res = await api.delete("/users", { data: { email: selectedUser.email } });
-			getUsers();
+			await api.delete("/users", { data: { email: selectedUser.email } });
+			toggleConfirm(false);
+			await getUsers();
 		} catch (e) {
 			console.error(e.response);
 		}
@@ -56,12 +56,31 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser }) => {
 			confirmMenuRef.current.classList.add("hidden");
 		}
 	};
-	const setupEdit = (isEdit = false, user = {}) => {
+	const setupEdit = (user = {}) => {
 		selectUser(user);
-		setEdit(isEdit);
+	};
+	const onConfirmCreate = async () => {
+		try {
+			await onCreateUser();
+			await getUsers();
+			history.push("/dashboard/manage");
+		} catch (e) {
+			console.error(e);
+		}
+	};
+	const onConfirmEdit = async (email) => {
+		try {
+			await onEditUser(email);
+			await getUsers();
+			history.push("/dashboard/manage");
+			console.log("pushed URL");
+		} catch (e) {
+			console.log(e);
+		}
 	};
 	useEffect(() => {
 		getUsers();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
@@ -74,14 +93,15 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser }) => {
 			/>
 			<ul className="side-menu">
 				<li>
-					<CustomLink text="Schedule" path={url} />
+					<CustomLink text="Schedule" path={url} onClick={setupEdit} classes="dash" />
 				</li>
-				<li>
-					<CustomLink text="Manage" path={`${url}/manage`} />
-				</li>
+				{loggedInUser.accessLevel === "Manager" && (
+					<li>
+						<CustomLink text="Manage" path={`${url}/manage`} onClick={setupEdit} classes="dash" />
+					</li>
+				)}
 			</ul>
 			<div className="main-content flex-items flex-column">
-				{isEditing && <Redirect to={`${url}/create`} />}
 				<Route path={path} exact>
 					<div className="month-selector flex-content">
 						<i className="fas fa-chevron-left"></i>
@@ -92,17 +112,33 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser }) => {
 				</Route>
 				<Route path={`${path}/manage`}>
 					<div className="manage-users flex-items flex-column">
-						<CustomLink text="Add User" path={`${url}/create`} classes="add-btn flex-content" />
+						<CustomLink
+							text="Add User"
+							path={`${url}/create`}
+							classes="add-btn flex-content dash"
+							onClick={setupEdit}
+						/>
 						<div className="users-container">
 							{users.map((user) => {
 								if (user.IdNumber !== loggedInUser.IdNumber)
-									return <UserCard user={user} onDelete={toggleConfirm} onEdit={setupEdit} />;
+									return <UserCard user={user} key={user._id} onDelete={toggleConfirm} onEdit={setupEdit} />;
+								else {
+									return <></>;
+								}
 							})}
 						</div>
 					</div>
 				</Route>
-				<Route path={`${url}/create`}>
-					<CreateUserPage inputRefs={inputRefs} onCreateUser={onCreateUser} />
+				<Route path={`${path}/create`}>
+					<CreateUserPage inputRefs={inputRefs} onCreateUser={onConfirmCreate} />
+				</Route>
+				<Route path={`${path}/edit`}>
+					<CreateUserPage
+						inputRefs={inputRefs}
+						onCreateUser={onConfirmCreate}
+						selectedUser={selectedUser}
+						onEditUser={onConfirmEdit}
+					/>
 				</Route>
 			</div>
 		</div>

@@ -1,15 +1,15 @@
 img {
 	width: 100px;
 }
-.window .profile-icon p {
+.profile-window .profile-icon p {
 	font-size: 1.5rem;
 	margin-left: 1rem;
 }
-.profile-page .window {
+.profile-page .profile-window {
 	align-items: flex-start;
 	padding: 3% 20%;
 }
-.profile-page .window .info-container {
+.profile-page .profile-window .info-container {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 	justify-content: center;
@@ -29,8 +29,13 @@ img {
 	text-decoration: underline;
 }
 .shifts-container {
-	width: 100%;
+	max-height: 50vh;
+	overflow-y: scroll;
 }
+.shifts-container::-webkit-scrollbar {
+	display: none;
+}
+.shifts-container,
 .shifts-container .past-shifts,
 .shifts-container .upcoming-shifts {
 	width: 100%;
@@ -43,4 +48,9 @@ img {
 }
 .shifts-container button:hover {
 	border-color: var(--main-color);
+}
+.profile-page a.edit-btn {
+	width: 20%;
+	align-self: center;
+	text-align: center;
 }

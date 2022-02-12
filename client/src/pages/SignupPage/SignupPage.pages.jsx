@@ -3,16 +3,31 @@ import CustomInput from "../../components/CustomInput/CustomInput.components";
 import CustomButton from "../../components/CustomButton/CustomButton.components";
 import CustomLink from "../../components/CustomLink/CustomLink.components";
 import { onNumberInputChange } from "../../utils/utils";
-const SignupPage = ({ onSignup, inputRefs, errorTextRef }) => {
+import { useRef } from "react";
+const SignupPage = ({ onSignup, inputRefs }) => {
+	const errorTextRef = useRef();
+
 	const { firstNameRef, lastNameRef, idNumberRef, birthDateRef, emailRef, passRef } = inputRefs;
-	const handleFormSubmit = (e) => {
+
+	const handleFormSubmit = async (e) => {
 		e.preventDefault();
-		onSignup();
+		const message = await onSignup();
+		if (message) {
+			errorTextRef.current.innerText = message;
+			errorTextRef.current.classList.remove("hidden");
+			setTimeout(() => {
+				errorTextRef.current.classList.add("hidden");
+			}, 2000);
+		}
 	};
+
 	return (
 		<form className="signup-page flex-both flex-column" onSubmit={handleFormSubmit}>
 			<div className="background"></div>
 			<div className="window flex-both flex-column">
+				<p ref={errorTextRef} className="error-message hidden">
+					Texting
+				</p>
 				<h2>Signup</h2>
 				<div className="inputs-grid">
 					<CustomInput
@@ -58,7 +73,6 @@ const SignupPage = ({ onSignup, inputRefs, errorTextRef }) => {
 					/>
 				</div>
 				<CustomButton text="Signup" type="submit" />
-				<p ref={errorTextRef} className="error-message"></p>
 			</div>
 			<p>
 				Already have an account? <CustomLink text="Login " path="/login" />

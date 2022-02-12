@@ -1,19 +1,49 @@
+import moment from "moment";
+
 import CustomButton from "../../components/CustomButton/CustomButton.components";
 import CustomInput from "../../components/CustomInput/CustomInput.components";
+import CustomLink from "../../components/CustomLink/CustomLink.components";
 
 import { onNumberInputChange } from "../../utils/utils";
+import { useRouteMatch } from "react-router-dom";
 
 import "./CreateUserPage.styles.css";
 
-const CreateUserPage = ({ onCreateUser, inputRefs, errorTextRef, selectedUser }) => {
-	const { firstNameRef, lastNameRef, idNumberRef, birthDateRef, emailRef, passRef } = inputRefs;
-	const handleFormSubmit = (e) => {
+const CreateUserPage = ({ onCreateUser, inputRefs, errorTextRef, selectedUser, onEditUser }) => {
+	const { firstNameRef, lastNameRef, idNumberRef, birthDateRef, emailRef, passRef, accessRef } = inputRefs;
+
+	const { firstName, lastName, IdNumber, birthDate, email, accessLevel } = selectedUser || {};
+
+	const { path } = useRouteMatch();
+
+	let formattedBirthDate = moment(birthDate).format("YYYY-MM-DD");
+	if (!birthDate) {
+		formattedBirthDate = "";
+	}
+
+	const handleFormSubmit = async (e) => {
 		e.preventDefault();
-		onCreateUser();
+		let message;
+		if (!selectedUser) {
+			message = await onCreateUser();
+		} else {
+			message = await onEditUser(selectedUser.email);
+		}
+		if (message) {
+			errorTextRef.current.innerText = message;
+			errorTextRef.current.classList.remove("hidden");
+			setTimeout(() => {
+				errorTextRef.current.classList.add("hidden");
+			}, 2000);
+		}
 	};
+
 	return (
 		<form className="create-user-page flex-both flex-column" onSubmit={handleFormSubmit}>
 			<div className="window flex-both flex-column">
+				<p ref={errorTextRef} className="error-message hidden">
+					Texting
+				</p>
 				<h2>{selectedUser ? "Edit" : "Create"} User</h2>
 				<div className="inputs-grid">
 					<CustomInput
@@ -21,8 +51,15 @@ const CreateUserPage = ({ onCreateUser, inputRefs, errorTextRef, selectedUser })
 						placeHolder="Enter first name..."
 						inputRef={firstNameRef}
 						required
+						value={firstName}
 					/>
-					<CustomInput label="Last Name" placeHolder="Enter last name..." inputRef={lastNameRef} required />
+					<CustomInput
+						label="Last Name"
+						placeHolder="Enter last name..."
+						inputRef={lastNameRef}
+						required
+						value={lastName}
+					/>
 
 					<CustomInput
 						label="ID Number"
@@ -30,6 +67,7 @@ const CreateUserPage = ({ onCreateUser, inputRefs, errorTextRef, selectedUser })
 						inputRef={idNumberRef}
 						required
 						onChange={onNumberInputChange}
+						value={IdNumber}
 					/>
 					<CustomInput
 						label="Date of Birth"
@@ -37,19 +75,37 @@ const CreateUserPage = ({ onCreateUser, inputRefs, errorTextRef, selectedUser })
 						inputRef={birthDateRef}
 						required
 						type="Date"
+						value={formattedBirthDate}
 					/>
 
-					<CustomInput label="Email" placeHolder="Enter email..." inputRef={emailRef} required />
+					<CustomInput
+						label="Email"
+						placeHolder="Enter email..."
+						inputRef={emailRef}
+						required
+						value={email}
+					/>
+
 					<CustomInput
 						type="password"
 						label="Password"
 						placeHolder="Enter password..."
 						inputRef={passRef}
-						required
+						required={selectedUser ? false : true}
 					/>
 				</div>
-				<CustomButton text="Create User" type="submit" />
-				<p ref={errorTextRef} className="error-message"></p>
+				{!path.includes("profile") && (
+					<CustomInput
+						type="checkbox"
+						label="Is Manager"
+						inputRef={accessRef}
+						checked={accessLevel === "Manager"}
+					/>
+				)}
+				<div className="btns-container">
+					<CustomButton text={`${selectedUser ? "Edit" : "Create"} User`} type="submit" />
+					<CustomLink text="Cancel" path="/dashboard/manage" classes="dash" />
+				</div>
 			</div>
 		</form>
 	);

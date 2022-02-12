@@ -10,23 +10,7 @@
 .dashboard ul li {
 	margin: 2rem 0.5rem;
 }
-.dashboard a {
-	width: 100%;
-	border-radius: 0;
-	border: 2px solid var(--main-color);
-	color: var(--main-color);
-	text-align: left;
-	background-color: transparent;
-	text-indent: 0.5rem;
-}
-.dashboard a:hover {
-	color: var(--secondary-color);
-	background-color: var(--main-color);
-}
-.dashboard a:active {
-	background-color: var(--main-color-active);
-	border-color: var(--main-color-active);
-}
+
 .dashboard .manage-users > button:hover {
 	border-color: var(--main-color);
 }

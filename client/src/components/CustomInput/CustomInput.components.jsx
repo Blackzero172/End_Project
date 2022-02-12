@@ -1,6 +1,17 @@
 import React from "react";
 import "./CustomInput.styles.css";
-const CustomInput = ({ type, onChange, placeHolder, label, name, inputRef, required, autocomplete }) => {
+const CustomInput = ({
+	type,
+	onChange,
+	placeHolder,
+	label,
+	name,
+	inputRef,
+	required,
+	autocomplete,
+	value,
+	checked,
+}) => {
 	return (
 		<div className="input-container flex-column flex-items">
 			<label htmlFor={name}>{label}</label>
@@ -13,6 +24,8 @@ const CustomInput = ({ type, onChange, placeHolder, label, name, inputRef, requi
 				ref={inputRef}
 				required={required}
 				autoComplete={autocomplete}
+				defaultValue={value}
+				defaultChecked={checked}
 			/>
 		</div>
 	);

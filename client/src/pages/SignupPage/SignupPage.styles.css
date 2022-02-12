@@ -6,8 +6,9 @@
 .signup-page .window {
 	background-color: darkred;
 	padding: 2rem 5rem;
+	position: relative;
 }
-.signup-page .input-containers-grid {
+.signup-page .inputs-grid {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 }

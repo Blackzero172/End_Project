@@ -3,17 +3,27 @@ import CustomInput from "../../components/CustomInput/CustomInput.components";
 import CustomButton from "../../components/CustomButton/CustomButton.components";
 import { useRef } from "react";
 import CustomLink from "../../components/CustomLink/CustomLink.components";
-const LoginPage = ({ onLogin, inputRefs, errorTextRef }) => {
+const LoginPage = ({ onLogin, inputRefs }) => {
 	const { emailRef, passRef } = inputRefs;
+	const errorTextRef = useRef();
 	const formRef = useRef();
-	const handleFormSubmit = (e) => {
+	const handleFormSubmit = async (e) => {
 		e.preventDefault();
-		onLogin();
+		const message = await onLogin();
+		console.log(errorTextRef);
+		if (message) {
+			errorTextRef.current.innerText = message;
+			errorTextRef.current.classList.remove("hidden");
+			setTimeout(() => {
+				errorTextRef.current.classList.add("hidden");
+			}, 2000);
+		}
 	};
 	return (
 		<form className="login-page flex-both flex-column" onSubmit={handleFormSubmit} ref={formRef}>
 			<div className="background"></div>
 			<div className="window flex-both flex-column">
+				<p ref={errorTextRef} className="error-message hidden"></p>
 				<h2>Login</h2>
 				<CustomInput
 					label="Email"
@@ -31,7 +41,6 @@ const LoginPage = ({ onLogin, inputRefs, errorTextRef }) => {
 					autocomplete="password"
 				/>
 				<CustomButton text="Login" type="submit" />
-				<p ref={errorTextRef} className="error-message"></p>
 			</div>
 			<p>
 				Don't have an account? <CustomLink text="Signup" path="/signup" />

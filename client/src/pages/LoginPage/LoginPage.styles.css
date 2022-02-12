@@ -6,7 +6,7 @@
 .login-page .window {
 	background-color: darkred;
 	display: flex;
-
+	position: relative;
 	padding: 2rem;
 }
 .login-page .input-container {

@@ -1,10 +1,13 @@
 import CustomButton from "../CustomButton/CustomButton.components";
+import CustomLink from "../CustomLink/CustomLink.components";
+import Property from "../Property/Property.components";
 import "./UserCard.styles.css";
 const UserCard = ({ user, onDelete, onEdit }) => {
 	return (
 		<div className="user-card">
-			<p>Name: {`${user.firstName} ${user.lastName}`}</p>
-			<p>ID Number: {user.IdNumber}</p>
+			<Property label="Name: " text={`${user.firstName} ${user.lastName}`} />
+			<Property label="ID Number: " text={user.IdNumber} />
+			<Property label="Access Level: " text={<span>{user.accessLevel}</span>} />
 			<div className="btns-container flex-content flex-column">
 				<CustomButton
 					onClick={() => {
@@ -13,13 +16,15 @@ const UserCard = ({ user, onDelete, onEdit }) => {
 				>
 					<i className="fas fa-times"></i>
 				</CustomButton>
-				<CustomButton
+				<CustomLink
+					classes="button"
+					path="/dashboard/edit"
 					onClick={() => {
-						onEdit(true, user);
+						onEdit(user);
 					}}
 				>
 					<i className="fas fa-edit"></i>
-				</CustomButton>
+				</CustomLink>
 			</div>
 		</div>
 	);
