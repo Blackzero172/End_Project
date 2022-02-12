@@ -162,6 +162,7 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUs
 		} catch (e) {
 			console.error(e.response);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [weekNumber]);
 	return (
 		<div className="dashboard">
