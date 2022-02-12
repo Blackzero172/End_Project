@@ -19,7 +19,6 @@ server.use(cookieParser());
 server.use("/api", Router);
 server.use(express.static(getReact()));
 server.get("*", (req, res) => {
-	console.log("Test");
 	res.sendFile(path.resolve(__dirname, "../client/build/index.html"));
 });
 
