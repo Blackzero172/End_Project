@@ -18,6 +18,9 @@ server.use(express.json());
 server.use(cors(corsOptions));
 server.use(cookieParser());
 server.use("/api", Router);
+// server.get("*", (req, res) => {
+// 	res.sendFile(path.join(__dirname, "../../client/build/index.html"));
+// });
 server.use(express.static(getReact()));
 
 server.listen(port, () => {

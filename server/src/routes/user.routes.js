@@ -12,14 +12,12 @@ const {
 	removeUser,
 	editProfile,
 	getProfile,
-	getSchedule,
 } = require("../controllers/user.controllers");
 
 const UserRouter = express.Router();
 
 UserRouter.get("/users", [auth, checkPermissions], getAllUsers);
 UserRouter.get("/users/me", auth, getProfile);
-UserRouter.get("/users/schedule", auth, getSchedule);
 
 UserRouter.post("/users/login", login);
 UserRouter.post("/users/signup", postUser);
