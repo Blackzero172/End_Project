@@ -1,5 +1,5 @@
 import "./Daycell.styles.css";
-const Daycell = ({ onClick, weekDay, day, users = [] }) => {
+const Daycell = ({ onClick, weekDay, day, users = [], classes = "" }) => {
 	let morningWorkers = [];
 	let middleWorkers = [];
 	let eveningWorkers = [];
@@ -16,7 +16,7 @@ const Daycell = ({ onClick, weekDay, day, users = [] }) => {
 	}
 	return (
 		<div
-			className="day-cell flex-column flex-evenly"
+			className={`day-cell flex-column flex-evenly ${classes}`}
 			onClick={() => {
 				onClick(weekDay);
 			}}

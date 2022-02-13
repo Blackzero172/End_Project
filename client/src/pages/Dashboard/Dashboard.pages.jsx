@@ -212,7 +212,13 @@ const Dashboard = ({ setLoading, loggedInUser, inputRefs, onCreateUser, onEditUs
 							<i className="fas fa-chevron-right"></i>
 						</CustomButton>
 					</div>
-					<WeekCalendar weekDays={weekDays} schedule={schedule} onClick={editDay} users={users} />
+					<WeekCalendar
+						weekDays={weekDays}
+						schedule={schedule}
+						onClick={editDay}
+						users={users}
+						accessLevel={loggedInUser.accessLevel}
+					/>
 				</Route>
 				<Route path={`${path}/manage`}>
 					<div className="manage-users flex-items flex-column">

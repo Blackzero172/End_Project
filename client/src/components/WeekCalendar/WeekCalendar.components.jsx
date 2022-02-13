@@ -1,6 +1,6 @@
 import "./WeekCalendar.styles.css";
 import Daycell from "./Daycell/Daycell.components";
-const WeekCalendar = ({ weekDays, schedule, onClick, users }) => {
+const WeekCalendar = ({ weekDays, schedule, onClick, users, accessLevel }) => {
 	return (
 		<div className="week-calendar">
 			<div className="calendar-header flex-items">
@@ -31,7 +31,18 @@ const WeekCalendar = ({ weekDays, schedule, onClick, users }) => {
 						middleWorkers: [],
 						eveningWorkers: [],
 					};
-					return <Daycell key={index} day={weekDay} onClick={onClick} weekDay={index} users={users} />;
+					return (
+						<Daycell
+							key={index}
+							day={weekDay}
+							onClick={() => {
+								if (accessLevel === "Manager") onClick(index);
+							}}
+							weekDay={index}
+							users={users}
+							classes={accessLevel === "Manager" ? "clickable" : ""}
+						/>
+					);
 				})}
 			</div>
 		</div>
