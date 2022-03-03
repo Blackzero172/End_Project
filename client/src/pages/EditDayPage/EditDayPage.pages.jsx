@@ -74,7 +74,8 @@ const EditDayPage = ({ day, users, menuRef, onCancel, onConfirm }) => {
 	return (
 		<div className="edit-day-page flex-both hidden" ref={menuRef}>
 			<div className="window flex-items flex-column">
-				<h2>{moment(day.date).format("dddd DD/MM")}</h2>
+				<h2 className="flex-content">{moment(day.date).format("dddd DD/MM")}</h2>
+				<div className="times-container flex-both">
 				<div className="morning-container flex-items flex-column">
 					<div className="btns-container flex">
 						<CustomInput
@@ -171,7 +172,8 @@ const EditDayPage = ({ day, users, menuRef, onCancel, onConfirm }) => {
 						})}
 					</div>
 				</div>
-				<div className="btns-container">
+				</div>
+				<div className="btns-container flex-content">
 					<CustomButton
 						text="Confirm"
 						onClick={() => {
