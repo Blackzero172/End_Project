@@ -1,5 +1,5 @@
 const axios = require("axios");
-const baseURL = process.env.NODE_ENV === "production" ? "api" : "http://localhost:5555/api";
+const baseURL = process.env.NODE_ENV === "production" ? "api" : "../api";
 export default axios.create({
 	withCredentials: true,
 	baseURL,

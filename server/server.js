@@ -16,7 +16,7 @@ const corsOptions = {
 server.use(express.json());
 server.use(cors(corsOptions));
 server.use(cookieParser());
-server.use("/api", Router);
+server.use(["/api", "/dashboard/api"], Router);
 server.use(express.static(getReact()));
 server.get("*", (req, res) => {
 	res.sendFile(path.resolve(__dirname, "../client/build/index.html"));

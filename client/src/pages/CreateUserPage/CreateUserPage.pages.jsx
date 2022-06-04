@@ -93,7 +93,11 @@ const CreateUserPage = ({ onCreateUser, inputRefs, errorTextRef, selectedUser, o
 				)}
 				<div className="btns-container">
 					<CustomButton text={`${selectedUser ? "Edit" : "Create"} User`} type="submit" />
-					<CustomLink text="Cancel" path="/dashboard/manage" classes="dash" />
+					<CustomLink
+						text="Cancel"
+						path={path.includes("profile") ? "/profile" : "/dashboard/manage"}
+						classes="dash"
+					/>
 				</div>
 			</div>
 		</form>
