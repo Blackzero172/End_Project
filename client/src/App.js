@@ -27,7 +27,7 @@ function App() {
 
 	const setLoading = (isShown) => {
 		if (isShown) spinnerRef.current.classList.remove("hidden");
-		else if (!isShown) spinnerRef.current.classList.add("hidden");
+		else if (!isShown) spinnerRef.current?.classList.add("hidden");
 	};
 
 	const onLogin = async () => {
@@ -177,7 +177,7 @@ function App() {
 				inputRefs={inputRefs}
 				onLogin={onLogin}
 				onSignup={onSignup}
-				isLoggedIn={loggedInUser.hasOwnProperty("firstName") || false}
+				isLoggedIn={loggedInUser?.hasOwnProperty("firstName") || false}
 				loggedInUser={loggedInUser}
 				onLogout={onLogout}
 				setLoading={setLoading}

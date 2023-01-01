@@ -1,0 +1,4 @@
+{
+	"appService.defaultWebAppToDeploy": "/subscriptions/b699d813-c809-45d6-83af-ce8769e32deb/AppServices/subscriptions/b699d813-c809-45d6-83af-ce8769e32deb/resourceGroups/ali-shift-scheduler/providers/Microsoft.Web/sites/ali-shift-scheduler",
+	"appService.deploySubpath": "."
+}
